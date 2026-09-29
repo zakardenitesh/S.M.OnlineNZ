@@ -1,76 +1,4646 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>माझी वेबसाईट</title>
+<title>SM Online</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
+    margin:0;
+    padding:0;
     font-family:Arial,sans-serif;
     background:#f2f2f2;
-    margin:0;
-    padding:20px;
+    color:#222;
+}
+
+.page{
+    display:none;
+    width:100%;
+    min-height:100vh;
+    padding:15px;
+}
+
+.page.active{
+    display:block;
 }
 
 .container{
-    max-width:900px;
+    width:100%;
+    max-width:600px;
     margin:auto;
 }
 
-.card{
-    background:white;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+h1,h2,h3{
     text-align:center;
 }
 
-.photo{
+.appPhoto{
     width:100%;
-    max-width:500px;
     height:auto;
+    display:block;
+    object-fit:contain;
+    margin:10px auto;
     border-radius:10px;
 }
 
-h2{
-    color:#d40000;
-    margin-top:15px;
+.appName{
+    text-align:center;
+    font-size:26px;
+    font-weight:bold;
+    margin:15px 0;
 }
 
-p{
-    font-size:18px;
-    line-height:1.6;
+button{
+    width:100%;
+    padding:13px;
+    margin:7px 0;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
 }
+
+.nextBtn{
+    background:#2196f3;
+    color:white;
+}
+
+.backBtn{
+    background:#777;
+    color:white;
+}
+
+.loginBtn{
+    background:#333;
+    color:white;
+}
+
+.userBtn{
+    background:#00897b;
+    color:white;
+}
+
+.adminBtn{
+    background:#8e24aa;
+    color:white;
+}
+
+.payBtn{
+    background:#2e7d32;
+    color:white;
+}
+
+.rechargeBtn{
+    background:#ef6c00;
+    color:white;
+}
+
+.withdrawBtn{
+    background:#455a64;
+    color:white;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border:1px solid #bbb;
+    border-radius:7px;
+    font-size:16px;
+    background:white;
+}
+
+.box{
+    background:white;
+    padding:15px;
+    margin:12px 0;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+}
+
+.walletBox{
+    background:#fff3cd;
+    border:1px solid #e0b000;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    font-size:19px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.topBar{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:6px;
+    margin-bottom:12px;
+}
+
+.topBar button{
+    margin:0;
+    padding:9px 4px;
+    font-size:14px;
+}
+
+.marketGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.marketBtn{
+    background:white;
+    border:1px solid #ccc;
+    min-height:65px;
+    font-weight:bold;
+}
+
+.marketBtn:hover{
+    background:#f5f5f5;
+}
+
+.marketPageList{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.marketPageBtn{
+    background:#fff;
+    border:1px solid #bbb;
+    min-height:55px;
+}
+
+.itemBtn{
+    background:#fafafa;
+    border:1px solid #ccc;
+    text-align:left;
+}
+
+.qrPhoto{
+    width:100%;
+    max-width:400px;
+    height:auto;
+    display:block;
+    margin:10px auto;
+    object-fit:contain;
+}
+
+.adminPanel{
+    display:none;
+}
+
+.adminPanel.show{
+    display:block;
+}
+
+.adminSection{
+    background:white;
+    padding:15px;
+    margin:12px 0;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+}
+
+.adminSection h3{
+    margin-top:0;
+}
+
+.categoryRow{
+    display:flex;
+    gap:6px;
+    align-items:center;
+    margin:6px 0;
+}
+
+.categoryRow input{
+    flex:1;
+    margin:0;
+}
+
+.categoryRow button{
+    width:auto;
+    min-width:75px;
+    margin:0;
+    padding:10px;
+    font-size:14px;
+}
+
+.requestCard{
+    background:#f8f8f8;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:10px;
+    margin:8px 0;
+}
+
+.smallText{
+    font-size:13px;
+    color:#666;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.message{
+    padding:10px;
+    border-radius:7px;
+    background:#e8f5e9;
+    color:#1b5e20;
+    margin:8px 0;
+    display:none;
+}
+
+.errorMessage{
+    padding:10px;
+    border-radius:7px;
+    background:#ffebee;
+    color:#b71c1c;
+    margin:8px 0;
+    display:none;
+}
+
+hr{
+    border:none;
+    border-top:1px solid #ddd;
+    margin:15px 0;
+}
+
+@media(max-width:500px){
+
+    .marketGrid,
+    .marketPageList{
+        grid-template-columns:1fr;
+    }
+
+    .topBar button{
+        font-size:13px;
+    }
+
+}
+
 </style>
 
 </head>
 
 <body>
 
+
+<!-- ================= PAGE 1 ================= -->
+
+<div id="page1" class="page active">
+
 <div class="container">
 
-<div class="card">
+    <img
+        id="appPhoto"
+        class="appPhoto"
+        src=""
+        alt="App Photo"
+    >
 
-    <!-- इथे फोटो दिसेल -->
-    <img class="photo"
-    src="S.M.jpg"
-    alt="माझा फोटो">
+    <div
+        id="appName"
+        class="appName"
+    >
+        SM Online
+    </div>
 
-    <!-- इथे फक्त तुम्ही नाव बदलू शकता -->
-    <h2>S.M</h2>
 
-    <!-- इथे फक्त तुम्ही मजकूर बदलू शकता -->
-    <p>
-        माझ्या वेबसाईटवर आपले स्वागत आहे.
-</p>
-        हा मजकूर तुम्ही QuickEdit मध्ये बदलू शकता.
-    </p>
+
+    <button
+        class="userBtn"
+        onclick="openUserLogin()"
+    >
+        User Login
+    </button>
+
+    <button
+        class="adminBtn"
+        onclick="openAdminLogin()"
+    >
+        Admin Login
+    </button>
+
+
+    <!-- USER LOGIN -->
+
+    <div
+        id="userLoginBox"
+        class="box hidden"
+    >
+
+        <h3>User Login</h3>
+
+        <input
+            id="userEmail"
+            type="email"
+            placeholder="User Email"
+        >
+
+        <input
+            id="userPassword"
+            type="password"
+            placeholder="User Password"
+        >
+
+        <button
+            class="userBtn"
+            onclick="userLogin()"
+        >
+            Login
+        </button>
+
+        <button
+            class="backBtn"
+            onclick="closeUserLogin()"
+        >
+            Close
+        </button>
+
+        <div
+            id="userLoginMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="userLoginError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
+
+    <!-- ADMIN LOGIN -->
+
+    <div
+        id="adminLoginBox"
+        class="box hidden"
+    >
+
+        <h3>Admin Login</h3>
+
+        <input
+            id="adminEmail"
+            type="email"
+            placeholder="Admin Email"
+        >
+
+        <input
+            id="adminPassword"
+            type="password"
+            placeholder="Admin Password"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="adminLogin()"
+        >
+            Admin Login
+        </button>
+
+        <button
+            class="backBtn"
+            onclick="closeAdminLogin()"
+        >
+            Close
+        </button>
+
+        <div
+            id="adminLoginMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="adminLoginError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
 
 </div>
 
 </div>
+
+
+<!-- ================= PAGE 2 ================= -->
+
+<div id="page2" class="page">
+
+<div class="container">
+
+    <h2>Markets</h2>
+
+    <div class="topBar">
+
+        <button
+            class="rechargeBtn"
+            onclick="openRechargePage()"
+        >
+            Recharge
+        </button>
+
+        <button
+            class="withdrawBtn"
+            onclick="openWithdrawalPage()"
+        >
+            Withdrawal
+        </button>
+
+ <button
+    class="payBtn"
+    onclick="openWalletPage()"
+>
+    Wallet ₹<span id="page2WalletBalance">0</span>
+</button>
+    </div>
+
+
+    <div
+        id="marketGrid"
+        class="marketGrid"
+    >
+        Markets Loading...
+    </div>
+
+
+    <button
+        class="nextBtn"
+        onclick="showPage(3)"
+    >
+        Next
+    </button>
+
+    <button
+        class="backBtn"
+        onclick="showPage(1)"
+    >
+        Back
+    </button>
+
+    <button
+        class="adminBtn"
+        onclick="openAdminLogin()"
+    >
+        Admin Login
+    </button>
+
+
+</div>
+
+</div>
+
+
+<!-- ================= PAGE 3 ================= -->
+
+<div id="page3" class="page">
+
+<div class="container">
+
+    <h2>Payment / Wallet</h2>
+
+
+    <div class="walletBox">
+
+        Wallet Balance:
+        ₹<span id="walletBalance">0</span>
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>Payment Scanner</h3>
+
+        <img
+            id="scannerPhoto"
+            class="qrPhoto"
+            src=""
+            alt="Payment Scanner"
+        >
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>WhatsApp</h3>
+
+        <div
+            id="whatsappNumber"
+            style="text-align:center;font-size:20px;font-weight:bold;"
+        >
+            WhatsApp नंबर
+        </div>
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>My Recharge Requests</h3>
+
+        <div id="myRechargeRequests">
+            Recharge Requests Load झालेल्या नाहीत.
+        </div>
+
+    </div>
+
+
+    <button
+        class="backBtn"
+        onclick="showPage(2)"
+    >
+        Back
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= PAGE 4 ================= -->
+
+<div id="page4" class="page">
+
+<div class="container">
+
+    <h2 id="marketTitle">
+        Market
+    </h2>
+
+
+    <div
+        id="marketPageList"
+        class="marketPageList"
+    >
+    </div>
+
+
+    <div
+        id="marketItemsBox"
+        class="box hidden"
+    >
+
+        <h3 id="marketPageTitle">
+            Page
+        </h3>
+
+        <div id="marketItems">
+        </div>
+
+    </div>
+
+
+    <div
+        id="payBox"
+        class="box hidden"
+    >
+
+        <h3>Payment</h3>
+
+        <div>
+            Selected:
+            <b id="selectedItemName"></b>
+        </div>
+
+        <input
+            id="paymentAmount"
+            type="number"
+            min="5"
+            placeholder="Payment Amount"
+        >
+
+        <button
+            class="payBtn"
+            onclick="makeMarketPayment()"
+        >
+            Pay
+        </button>
+
+        <div
+            id="paymentMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="paymentError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
+
+    <button
+        class="backBtn"
+        onclick="showPage(2)"
+    >
+        Back
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= WITHDRAWAL PAGE ================= -->
+
+<div
+    id="withdrawalPage"
+    class="page"
+>
+
+<div class="container">
+
+    <h2>Withdrawal</h2>
+
+    <div class="walletBox">
+
+        Wallet Balance:
+        ₹<span id="withdrawWalletBalance">0</span>
+
+    </div>
+
+    <div class="box">
+
+        <input
+            id="withdrawAmount"
+            type="number"
+            placeholder="Withdrawal Amount"
+        >
+
+        <input
+            id="withdrawUPI"
+            type="text"
+            placeholder="UPI ID"
+        >
+
+        <button
+            class="withdrawBtn"
+            onclick="submitWithdrawal()"
+        >
+            Withdrawal Request
+        </button>
+
+        <div
+            id="withdrawMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="withdrawError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
+    <button
+        class="backBtn"
+        onclick="showPage(2)"
+    >
+        Back
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= RECHARGE PAGE ================= -->
+
+<div
+    id="rechargePage"
+    class="page"
+>
+
+<div class="container">
+
+    <h2>Wallet Recharge</h2>
+
+    <div class="walletBox">
+
+        Current Wallet:
+        ₹<span id="rechargeWalletBalance">0</span>
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>Payment Scanner</h3>
+
+        <img
+            id="rechargeScannerPhoto"
+            class="qrPhoto"
+            src=""
+            alt="QR"
+        >
+
+        <div
+            id="rechargeWhatsapp"
+            style="text-align:center;font-weight:bold;font-size:19px;"
+        >
+            WhatsApp नंबर
+        </div>
+
+    </div>
+
+
+    <div class="box">
+
+        <input
+            id="rechargeAmount"
+            type="number"
+            min="1"
+            placeholder="Recharge Amount"
+        >
+
+        <input
+            id="rechargeTxn"
+            type="text"
+            placeholder="Transaction ID"
+        >
+
+        <button
+            class="rechargeBtn"
+            onclick="submitRechargeRequest()"
+        >
+            Recharge Request
+        </button>
+
+        <div
+            id="rechargeMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="rechargeError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
+
+    <button
+        class="backBtn"
+        onclick="showPage(2)"
+    >
+        Back
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= ADMIN PANEL ================= -->
+
+<div
+    id="adminPanel"
+    class="page"
+>
+
+<div class="container">
+
+    <h2>Admin Panel</h2>
+
+
+    <!-- APP SETTINGS -->
+
+    <div class="adminSection">
+
+        <h3>App Settings</h3>
+
+
+        <input
+            id="adminAppName"
+            type="text"
+            placeholder="App Name"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="updateAppName()"
+        >
+            App Name Update
+        </button>
+
+
+        <input
+            id="adminAppPhoto"
+            type="file"
+            accept="image/*"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="updateAppPhoto()"
+        >
+            App Photo Update
+        </button>
+
+
+        <textarea
+            id="adminInfoText"
+            rows="3"
+            placeholder="माहिती"
+        ></textarea>
+
+        <button
+            class="adminBtn"
+            onclick="updateInfoText()"
+        >
+            माहिती Update
+        </button>
+
+
+        <input
+            id="adminWhatsapp"
+            type="text"
+            placeholder="+91XXXXXXXXXX"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="updateWhatsapp()"
+        >
+            WhatsApp नंबर Update
+        </button>
+
+
+        <input
+            id="adminScannerPhoto"
+            type="file"
+            accept="image/*"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="updateScannerPhoto()"
+        >
+            Scanner Photo Update
+        </button>
+
+
+        <input
+            id="adminBottomText"
+            type="text"
+            placeholder="उदा. 123 Kumar"
+        >
+
+        <button
+            class="adminBtn"
+            onclick="updateBottomText()"
+        >
+            Box Update
+        </button>
+
+
+        <div
+            id="adminSettingsMessage"
+            class="message"
+        ></div>
+
+        <div
+            id="adminSettingsError"
+            class="errorMessage"
+        ></div>
+
+    </div>
+
+
+    <!-- MARKET MANAGEMENT -->
+
+    <div class="adminSection">
+
+        <h3>Market Management</h3>
+
+        <div id="adminMarkets">
+            Markets Load झालेले नाहीत.
+        </div>
+
+        <button
+            class="adminBtn"
+            onclick="refreshAdminData()"
+        >
+            Markets Refresh
+        </button>
+
+    </div>
+
+
+    <!-- MARKET PAGE / CATEGORY -->
+
+    <div class="adminSection">
+
+        <h3>Market Page / Category</h3>
+
+
+        <select
+            id="adminMarketSelect"
+            onchange="loadAdminPageList()"
+        >
+        </select>
+
+
+        <select
+            id="adminPageSelect"
+            onchange="loadAdminCategoryList()"
+        >
+        </select>
+
+
+        <div
+            id="adminCategoryList"
+        >
+            Category Load झालेली नाही.
+        </div>
+
+
+        <button
+            class="adminBtn"
+            onclick="addCategory()"
+        >
+            Add Category
+        </button>
+
+
+        <button
+            class="adminBtn"
+            onclick="saveCategories()"
+        >
+            Save Categories
+        </button>
+
+    </div>
+
+
+    <!-- WALLET RECHARGE REQUESTS -->
+
+    <div class="adminSection">
+
+        <h3>Wallet Recharge Requests</h3>
+
+        <button
+            class="adminBtn"
+            onclick="loadRechargeRequests()"
+        >
+            Requests Refresh
+        </button>
+
+        <div
+            id="adminRechargeRequests"
+        >
+            Requests Load झाल्या नाहीत.
+        </div>
+
+    </div>
+
+
+    <!-- ================= PAYMENT HISTORY ================= -->
+
+    <div class="adminSection">
+
+        <h3>Payment History</h3>
+
+        <button
+            class="adminBtn"
+            onclick="loadPaymentHistory()"
+        >
+            Payment Refresh
+        </button>
+
+        <div
+            id="paymentHistory"
+        >
+            Payment History Load झालेली नाही.
+        </div>
+
+    </div>
+
+
+    <button
+        class="adminBtn"
+        onclick="closeAdminPanel()"
+    >
+        Close
+    </button>
+
+
+    <button
+        class="backBtn"
+        onclick="adminLogout()"
+    >
+        Admin Logout
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    addDoc,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    serverTimestamp,
+    runTransaction
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+/* ================= FIREBASE CONFIG ================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCNptG-KjGXiZC8m3aRqDRpLUsFczJIhlU",
+
+    authDomain:
+        "sm-online-nz.firebaseapp.com",
+
+    projectId:
+        "sm-online-nz",
+
+    storageBucket:
+        "sm-online-nz.firebasestorage.app",
+
+    messagingSenderId:
+        "926453668307",
+
+    appId:
+        "1:926453668307:web:eea1694724c0c2e73db726",
+
+    measurementId:
+        "G-81B2SYWD23"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
+
+const auth =
+    getAuth(app);
+
+
+/* ================= ADMIN UID ================= */
+
+const ADMIN_UID =
+    "gOmc0VeiakVc6aKikc7Km2uw1Du2";
+
+
+/* ================= STATE ================= */
+
+let currentUser = null;
+
+let isAdmin = false;
+
+let selectedMarket = "1";
+
+let selectedMarketPage = "1";
+
+let selectedItem = "";
+
+
+let marketNames = {
+
+    "1":"Market 1",
+    "2":"Market 2",
+    "3":"Market 3",
+    "4":"Market 4",
+    "5":"Market 5",
+    "6":"Market 6",
+    "7":"Market 7",
+    "8":"Market 8",
+    "9":"Market 9",
+    "10":"Market 10"
+
+};
+
+
+/* ================= GLOBALS ================= */
+
+window.db = db;
+
+window.auth = auth;
+
+window.currentUser = null;
+
+window.isAdmin = false;
+
+window.runTransaction =
+    runTransaction;
+
+window.serverTimestamp =
+    serverTimestamp;
+
+window.doc =
+    doc;
+
+window.getDocs =
+    getDocs;
+
+window.getDoc =
+    getDoc;
+
+window.setDoc =
+    setDoc;
+
+window.addDoc =
+    addDoc;
+
+window.collection =
+    collection;
+
+window.marketNames =
+    marketNames;
+
+
+/* ================= HELPER ================= */
+
+function el(id){
+
+    return document.getElementById(id);
+
+}
+
+
+function showMessage(id,text){
+
+    const box = el(id);
+
+    if(!box) return;
+
+    box.textContent = text;
+
+    box.style.display = "block";
+
+}
+
+
+function hideMessage(id){
+
+    const box = el(id);
+
+    if(!box) return;
+
+    box.style.display = "none";
+
+}
+
+
+function showError(id,text){
+
+    const box = el(id);
+
+    if(!box) return;
+
+    box.textContent = text;
+
+    box.style.display = "block";
+
+}
+
+
+function hideError(id){
+
+    const box = el(id);
+
+    if(!box) return;
+
+    box.style.display = "none";
+
+}
+
+
+/* ================= PAGE ================= */
+
+window.showPage =
+function(pageNumber){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    const page =
+        el("page" + pageNumber);
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+};
+
+
+/* ================= USER LOGIN BOX ================= */
+
+window.openUserLogin =
+function(){
+
+    el("userLoginBox")
+        ?.classList.remove("hidden");
+
+    el("adminLoginBox")
+        ?.classList.add("hidden");
+
+};
+
+
+window.closeUserLogin =
+function(){
+
+    el("userLoginBox")
+        ?.classList.add("hidden");
+
+};
+
+
+/* ================= ADMIN LOGIN BOX ================= */
+
+window.openAdminLogin =
+function(){
+
+    el("adminLoginBox")
+        ?.classList.remove("hidden");
+
+    el("userLoginBox")
+        ?.classList.add("hidden");
+
+};
+
+
+window.closeAdminLogin =
+function(){
+
+    el("adminLoginBox")
+        ?.classList.add("hidden");
+
+};
+
+
+/* ================= USER LOGIN ================= */
+
+window.userLogin =
+async function(){
+
+    hideMessage("userLoginMessage");
+
+    hideError("userLoginError");
+
+
+    const email =
+        el("userEmail")?.value.trim();
+
+    const password =
+        el("userPassword")?.value;
+
+
+    if(!email || !password){
+
+        showError(
+            "userLoginError",
+            "Email आणि Password भरा."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        currentUser =
+            result.user;
+
+        window.currentUser =
+            currentUser;
+
+
+        isAdmin =
+            currentUser.uid === ADMIN_UID;
+
+        window.isAdmin =
+            isAdmin;
+
+
+        showMessage(
+            "userLoginMessage",
+            "User Login झाले."
+        );
+
+
+        await loadOnlineData();
+
+        await loadMarkets();
+
+        await loadWallet();
+
+
+        setTimeout(function(){
+
+            el("userLoginBox")
+                ?.classList.add("hidden");
+
+            showPage(2);
+
+        },500);
+
+
+    }catch(error){
+
+        console.error(
+            "User Login Error:",
+            error
+        );
+
+
+        showError(
+            "userLoginError",
+            "Email किंवा Password तपासा."
+        );
+
+    }
+
+};
+
+
+/* ================= ADMIN LOGIN ================= */
+
+window.adminLogin =
+async function(){
+
+    hideMessage("adminLoginMessage");
+
+    hideError("adminLoginError");
+
+
+    const email =
+        el("adminEmail")?.value.trim();
+
+    const password =
+        el("adminPassword")?.value;
+
+
+    if(!email || !password){
+
+        showError(
+            "adminLoginError",
+            "Admin Email आणि Password भरा."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        currentUser =
+            result.user;
+
+        window.currentUser =
+            currentUser;
+
+
+        isAdmin =
+            currentUser.uid === ADMIN_UID;
+
+        window.isAdmin =
+            isAdmin;
+
+
+        if(!isAdmin){
+
+            await signOut(auth);
+
+            currentUser = null;
+
+            window.currentUser = null;
+
+            isAdmin = false;
+
+            window.isAdmin = false;
+
+
+            showError(
+                "adminLoginError",
+                "हे Admin Account नाही."
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "adminLoginMessage",
+            "Admin Login झाले."
+        );
+
+
+        el("adminPanel")
+            ?.classList.add("show");
+
+
+        await loadOnlineData();
+
+        await loadMarkets();
+
+        await loadAdminCategoryList();
+
+        await loadRechargeRequests();
+
+        await loadPaymentHistory();
+
+
+        setTimeout(function(){
+
+            el("adminLoginBox")
+                ?.classList.add("hidden");
+
+            showAdminPanel();
+
+        },500);
+
+
+    }catch(error){
+
+        console.error(
+            "Admin Login Error:",
+            error
+        );
+
+
+        showError(
+            "adminLoginError",
+            "Email किंवा Password तपासा."
+        );
+
+    }
+
+};
+
+
+/* ================= SHOW ADMIN ================= */
+
+function showAdminPanel(){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    el("adminPanel")
+        ?.classList.add("active");
+
+}
+
+
+window.showAdminPanel =
+showAdminPanel;
+
+
+/* ================= ADMIN LOGOUT ================= */
+
+window.adminLogout =
+async function(){
+
+    try{
+
+        await signOut(auth);
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+
+    currentUser = null;
+
+    window.currentUser = null;
+
+    isAdmin = false;
+
+    window.isAdmin = false;
+
+
+    el("adminPanel")
+        ?.classList.remove("show");
+
+    el("adminPanel")
+        ?.classList.remove("active");
+
+
+    showPage(1);
+
+};
+
+
+/* ================= CLOSE ADMIN PANEL ================= */
+
+window.closeAdminPanel =
+function(){
+
+    el("adminPanel")
+        ?.classList.remove("show");
+
+    el("adminPanel")
+        ?.classList.remove("active");
+
+    showPage(1);
+
+};
+
+
+/* ================= ONLINE DATA ================= */
+
+async function loadOnlineData(){
+
+    try{
+
+        const snap =
+            await getDoc(
+                doc(
+                    db,
+                    "settings",
+                    "main"
+                )
+            );
+
+
+        if(!snap.exists()){
+
+            return;
+
+        }
+
+
+        const data =
+            snap.data();
+
+
+        if(data.appName){
+
+            el("appName").textContent =
+                data.appName;
+
+            el("adminAppName").value =
+                data.appName;
+
+        }
+
+
+        if(data.appPhoto){
+
+            el("appPhoto").src =
+                data.appPhoto;
+
+        }
+
+
+        if(data.infoText){
+
+            if(el("adminInfoText")){
+
+                el("adminInfoText").value =
+                    data.infoText;
+
+            }
+
+        }
+
+
+        if(data.whatsapp){
+
+            el("whatsappNumber").textContent =
+                data.whatsapp;
+
+            el("rechargeWhatsapp").textContent =
+                data.whatsapp;
+
+            if(el("adminWhatsapp")){
+
+                el("adminWhatsapp").value =
+                    data.whatsapp;
+
+            }
+
+        }
+
+
+        if(data.scannerPhoto){
+
+            el("scannerPhoto").src =
+                data.scannerPhoto;
+
+            el("rechargeScannerPhoto").src =
+                data.scannerPhoto;
+
+        }
+
+
+        if(data.bottomText){
+
+            if(el("adminBottomText")){
+
+                el("adminBottomText").value =
+                    data.bottomText;
+
+            }
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Load Online Data Error:",
+            error
+        );
+
+    }
+
+}
+
+
+window.loadOnlineData =
+loadOnlineData;
+
+
+/* ================= APP NAME UPDATE ================= */
+
+window.updateAppName =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const value =
+        el("adminAppName")
+            ?.value.trim();
+
+
+    if(!value){
+
+        alert("App Name भरा.");
+
+        return;
+
+    }
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "settings",
+                "main"
+            ),
+
+            {
+                appName:value
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        el("appName").textContent =
+            value;
+
+
+        showMessage(
+            "adminSettingsMessage",
+            "नाव update झाले."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showError(
+            "adminSettingsError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= APP PHOTO UPDATE ================= */
+
+window.updateAppPhoto =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const file =
+        el("adminAppPhoto")
+            ?.files?.[0];
+
+
+    if(!file){
+
+        alert("Photo select करा.");
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    async function(){
+
+        try{
+
+            const dataUrl =
+                reader.result;
+
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "settings",
+                    "main"
+                ),
+
+                {
+                    appPhoto:dataUrl
+                },
+
+                {
+                    merge:true
+                }
+
+            );
+
+
+            el("appPhoto").src =
+                dataUrl;
+
+
+            showMessage(
+                "adminSettingsMessage",
+                "Photo सेव झाला."
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showError(
+                "adminSettingsError",
+                error.message
+            );
+
+        }
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+};
+
+
+/* ================= INFO UPDATE ================= */
+
+window.updateInfoText =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const value =
+        el("adminInfoText")
+            ?.value || "";
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "settings",
+                "main"
+            ),
+
+            {
+                infoText:value
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        showMessage(
+            "adminSettingsMessage",
+            "माहिती update झाली."
+        );
+
+
+    }catch(error){
+
+        showError(
+            "adminSettingsError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= WHATSAPP UPDATE ================= */
+
+window.updateWhatsapp =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const value =
+        el("adminWhatsapp")
+            ?.value.trim();
+
+
+    if(!value){
+
+        alert("WhatsApp नंबर भरा.");
+
+        return;
+
+    }
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "settings",
+                "main"
+            ),
+
+            {
+                whatsapp:value
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        el("whatsappNumber").textContent =
+            value;
+
+        el("rechargeWhatsapp").textContent =
+            value;
+
+
+        showMessage(
+            "adminSettingsMessage",
+            "WhatsApp नंबर update झाला."
+        );
+
+
+    }catch(error){
+
+        showError(
+            "adminSettingsError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= SCANNER UPDATE ================= */
+
+window.updateScannerPhoto =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const file =
+        el("adminScannerPhoto")
+            ?.files?.[0];
+
+
+    if(!file){
+
+        alert("Scanner Photo select करा.");
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    async function(){
+
+        try{
+
+            const dataUrl =
+                reader.result;
+
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "settings",
+                    "main"
+                ),
+
+                {
+                    scannerPhoto:dataUrl
+                },
+
+                {
+                    merge:true
+                }
+
+            );
+
+
+            el("scannerPhoto").src =
+                dataUrl;
+
+            el("rechargeScannerPhoto").src =
+                dataUrl;
+
+
+            showMessage(
+                "adminSettingsMessage",
+                "Scanner Photo update झाला."
+            );
+
+
+        }catch(error){
+
+            showError(
+                "adminSettingsError",
+                error.message
+            );
+
+        }
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+};
+
+
+/* ================= BOTTOM TEXT UPDATE ================= */
+
+window.updateBottomText =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const value =
+        el("adminBottomText")
+            ?.value || "";
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "settings",
+                "main"
+            ),
+
+            {
+                bottomText:value
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        showMessage(
+            "adminSettingsMessage",
+            "Box update झाला."
+        );
+
+
+    }catch(error){
+
+        showError(
+            "adminSettingsError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= MARKETS ================= */
+
+async function loadMarkets(){
+
+    try{
+
+        const snap =
+            await getDoc(
+
+                doc(
+                    db,
+                    "settings",
+                    "main"
+                )
+
+            );
+
+
+        if(
+            snap.exists() &&
+            snap.data().marketNames
+        ){
+
+            marketNames =
+                snap.data().marketNames;
+
+            window.marketNames =
+                marketNames;
+
+        }
+
+
+        renderMarkets();
+
+        renderAdminMarkets();
+
+        renderAdminMarketSelect();
+
+
+    }catch(error){
+
+        console.error(
+            "Load Markets Error:",
+            error
+        );
+
+    }
+
+}
+
+
+window.loadMarkets =
+loadMarkets;
+
+
+/* ================= RENDER MARKETS ================= */
+
+function renderMarkets(){
+
+    const box =
+        el("marketGrid");
+
+    if(!box) return;
+
+
+    box.innerHTML = "";
+
+
+    for(
+        let i=1;
+        i<=10;
+        i++
+    ){
+
+        const button =
+            document.createElement("button");
+
+
+        button.className =
+            "marketBtn";
+
+
+        button.textContent =
+            marketNames[String(i)] ||
+            ("Market " + i);
+
+
+        button.onclick =
+        function(){
+
+            openMarket(String(i));
+
+        };
+
+
+        box.appendChild(button);
+
+    }
+
+}
+
+
+/* ================= OPEN MARKET ================= */
+
+window.openMarket =
+function(marketId){
+
+    selectedMarket =
+        String(marketId);
+
+    window.selectedMarket =
+        selectedMarket;
+
+
+    el("marketTitle").textContent =
+        marketNames[selectedMarket] ||
+        ("Market " + selectedMarket);
+
+
+    showPage(4);
+
+    renderMarketPages();
+
+};
+
+
+/* ================= MARKET PAGES ================= */
+
+async function renderMarketPages(){
+
+    const box =
+        el("marketPageList");
+
+    if(!box) return;
+
+
+    box.innerHTML =
+        "Loading...";
+
+
+    box.innerHTML = "";
+
+
+    for(
+        let i=1;
+        i<=4;
+        i++
+    ){
+
+        const button =
+            document.createElement("button");
+
+
+        button.className =
+            "marketPageBtn";
+
+
+        button.textContent =
+            "Page " + i;
+
+
+        button.onclick =
+        function(){
+
+            openMarketPage(
+                selectedMarket,
+                String(i)
+            );
+
+        };
+
+
+        box.appendChild(button);
+
+    }
+
+}
+
+
+/* ================= OPEN MARKET PAGE ================= */
+
+window.openMarketPage =
+async function(
+    marketId,
+    pageId
+){
+
+    selectedMarket =
+        String(marketId);
+
+    selectedMarketPage =
+        String(pageId);
+
+
+    window.selectedMarket =
+        selectedMarket;
+
+    window.selectedMarketPage =
+        selectedMarketPage;
+
+
+    const box =
+        el("marketItemsBox");
+
+    const title =
+        el("marketPageTitle");
+
+    const itemsBox =
+        el("marketItems");
+
+
+    if(!box || !itemsBox){
+
+        return;
+
+    }
+
+
+    box.classList.remove("hidden");
+
+
+    title.textContent =
+        "Page " + pageId;
+
+
+    itemsBox.innerHTML =
+        "Loading...";
+
+
+    try{
+
+        const snap =
+            await getDoc(
+
+                doc(
+                    db,
+                    "marketPages",
+                    selectedMarket +
+                    "_page" +
+                    selectedMarketPage
+                )
+
+            );
+
+
+        itemsBox.innerHTML = "";
+
+
+        if(
+            !snap.exists()
+        ){
+
+            itemsBox.innerHTML =
+                "<div class='smallText'>या Page मध्ये Category नाही.</div>";
+
+            return;
+
+        }
+
+
+        const data =
+            snap.data();
+
+
+        const categories =
+            Array.isArray(data.categories)
+                ? data.categories
+                : [];
+
+
+        if(categories.length === 0){
+
+            itemsBox.innerHTML =
+                "<div class='smallText'>या Page मध्ये Category नाही.</div>";
+
+            return;
+
+        }
+
+
+        categories.forEach(
+        function(name){
+
+            const button =
+                document.createElement("button");
+
+
+            button.className =
+                "itemBtn";
+
+
+            button.textContent =
+                name;
+
+
+            button.onclick =
+            function(){
+
+                selectMarketItem(name);
+
+            };
+
+
+            itemsBox.appendChild(button);
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        itemsBox.innerHTML =
+            "<div class='smallText'>Category Load झाली नाही.</div>";
+
+    }
+
+};
+
+
+/* ================= SELECT ITEM ================= */
+
+window.selectMarketItem =
+function(name){
+
+    selectedItem =
+        String(name);
+
+    window.selectedItem =
+        selectedItem;
+
+
+    el("selectedItemName").textContent =
+        selectedItem;
+
+
+    el("payBox")
+        ?.classList.remove("hidden");
+
+
+    el("paymentAmount").value =
+        "";
+
+    hideMessage("paymentMessage");
+
+    hideError("paymentError");
+
+};
+
+
+/* ================= WALLET ================= */
+
+async function loadWallet(){
+
+    if(!currentUser){
+
+        return;
+
+    }
+
+
+    try{
+
+        const snap =
+            await getDoc(
+
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+
+            );
+
+
+        let wallet =
+            0;
+
+
+        if(snap.exists()){
+
+            wallet =
+                Number(
+                    snap.data().wallet || 0
+                );
+
+        }
+
+
+        el("walletBalance").textContent =
+            wallet;
+if(el("page2WalletBalance")){
+    el("page2WalletBalance").textContent =
+        wallet;
+}
+
+        el("rechargeWalletBalance").textContent =
+            wallet;
+
+
+        el("withdrawWalletBalance").textContent =
+            wallet;
+
+
+    }catch(error){
+
+        console.error(
+            "Wallet Error:",
+            error
+        );
+
+    }
+
+}
+
+
+window.loadWallet =
+loadWallet;
+
+
+/* ================= MARKET PAYMENT ================= */
+
+window.makeMarketPayment =
+async function(){
+
+    hideMessage("paymentMessage");
+
+    hideError("paymentError");
+
+
+    if(!currentUser){
+
+        showError(
+            "paymentError",
+            "आधी User Login करा."
+        );
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            el("paymentAmount")
+                ?.value || 0
+        );
+
+
+    const itemName =
+        window.selectedItem ||
+        selectedItem ||
+        "";
+
+
+    if(!itemName){
+
+        showError(
+            "paymentError",
+            "Category select करा."
+        );
+
+        return;
+
+    }
+
+
+    if(amount < 5){
+
+        showError(
+            "paymentError",
+            "कमीत कमी ₹5 Payment करा."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
+
+
+        const paymentRef =
+            doc(
+                collection(
+                    db,
+                    "payments"
+                )
+            );
+
+
+        await runTransaction(
+
+            db,
+
+            async function(transaction){
+
+                const userSnap =
+                    await transaction.get(
+                        userRef
+                    );
+
+
+                let wallet =
+                    0;
+
+
+                if(userSnap.exists()){
+
+                    wallet =
+                        Number(
+                            userSnap.data().wallet || 0
+                        );
+
+                }
+
+
+                if(wallet < amount){
+
+                    throw new Error(
+                        "Wallet Balance कमी आहे."
+                    );
+
+                }
+
+
+                const newWallet =
+                    wallet - amount;
+
+
+                transaction.set(
+
+                    userRef,
+
+                    {
+                        wallet:newWallet,
+                        updatedAt:serverTimestamp()
+                    },
+
+                    {
+                        merge:true
+                    }
+
+                );
+
+
+                transaction.set(
+
+                    paymentRef,
+
+                    {
+
+                        userId:
+                            currentUser.uid,
+
+                        userEmail:
+                            currentUser.email || "",
+
+                        marketId:
+                            selectedMarket,
+
+                        marketName:
+                            marketNames[selectedMarket] ||
+                            ("Market " + selectedMarket),
+
+                        page:
+                            selectedMarketPage,
+
+                        itemName:
+                            itemName,
+
+                        amount:
+                            amount,
+
+                        status:
+                            "Paid",
+
+                        type:
+                            "MarketPay",
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+            }
+
+        );
+
+
+        showMessage(
+            "paymentMessage",
+            "Payment झाले."
+        );
+
+
+        await loadWallet();
+
+
+    }catch(error){
+
+        console.error(
+            "Payment Error:",
+            error
+        );
+
+
+        showError(
+            "paymentError",
+            error.message ||
+            "Payment झाले नाही."
+        );
+
+    }
+
+};
+
+
+/* ================= RECHARGE ================= */
+
+window.openRechargePage =
+async function(){
+
+    await loadWallet();
+
+    showPageById(
+        "rechargePage"
+    );
+
+};
+
+
+function showPageById(id){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    el(id)
+        ?.classList.add("active");
+
+}
+
+
+window.showPageById =
+showPageById;
+
+
+/* ================= RECHARGE REQUEST ================= */
+
+window.submitRechargeRequest =
+async function(){
+
+    hideMessage("rechargeMessage");
+
+    hideError("rechargeError");
+
+
+    if(!currentUser){
+
+        showError(
+            "rechargeError",
+            "आधी User Login करा."
+        );
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            el("rechargeAmount")
+                ?.value || 0
+        );
+
+
+    const txn =
+        el("rechargeTxn")
+            ?.value.trim();
+
+
+    if(amount <= 0){
+
+        showError(
+            "rechargeError",
+            "Recharge Amount भरा."
+        );
+
+        return;
+
+    }
+
+
+    if(!txn){
+
+        showError(
+            "rechargeError",
+            "Transaction ID भरा."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await addDoc(
+
+            collection(
+                db,
+                "walletRequests"
+            ),
+
+            {
+
+                userId:
+                    currentUser.uid,
+
+                userEmail:
+                    currentUser.email || "",
+
+                amount:
+                    amount,
+
+                transactionId:
+                    txn,
+
+                status:
+                    "Pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+
+        );
+
+
+        showMessage(
+            "rechargeMessage",
+            "Recharge Request पाठवली."
+        );
+
+
+        el("rechargeAmount").value =
+            "";
+
+        el("rechargeTxn").value =
+            "";
+
+
+        await loadMyRechargeRequests();
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        showError(
+            "rechargeError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= MY RECHARGE REQUESTS ================= */
+
+async function loadMyRechargeRequests(){
+
+    const box =
+        el("myRechargeRequests");
+
+    if(!box) return;
+
+
+    if(!currentUser){
+
+        box.innerHTML =
+            "User Login करा.";
+
+        return;
+
+    }
+
+
+    try{
+
+        const snap =
+            await getDocs(
+
+                collection(
+                    db,
+                    "walletRequests"
+                )
+
+            );
+
+
+        box.innerHTML = "";
+
+
+        let count = 0;
+
+
+        snap.forEach(
+        function(docSnap){
+
+            const data =
+                docSnap.data();
+
+
+            if(
+                data.userId !==
+                currentUser.uid
+            ){
+
+                return;
+
+            }
+
+
+            count++;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "requestCard";
+
+
+            card.innerHTML =
+
+                "<b>₹" +
+                Number(data.amount || 0) +
+                "</b><br>" +
+
+                "Transaction: " +
+                (data.transactionId || "") +
+                "<br>" +
+
+                "Status: " +
+                (data.status || "Pending");
+
+
+            box.appendChild(card);
+
+        });
+
+
+        if(count === 0){
+
+            box.innerHTML =
+                "अजून Recharge Request नाही.";
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        box.innerHTML =
+            "Requests Load झाल्या नाहीत.";
+
+    }
+
+}
+
+
+window.loadMyRechargeRequests =
+loadMyRechargeRequests;
+
+
+/* ================= ADMIN MARKET RENDER ================= */
+
+function renderAdminMarkets(){
+
+    const box =
+        el("adminMarkets");
+
+    if(!box) return;
+
+
+    box.innerHTML = "";
+
+
+    for(
+        let i=1;
+        i<=10;
+        i++
+    ){
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "categoryRow";
+
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+
+        input.id =
+            "marketName_" + i;
+
+
+        input.value =
+            marketNames[String(i)] ||
+            ("Market " + i);
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "adminBtn";
+
+
+        button.textContent =
+            "Update";
+
+
+        button.onclick =
+        function(){
+
+            updateMarketName(
+                String(i)
+            );
+
+        };
+
+
+        row.appendChild(input);
+
+        row.appendChild(button);
+
+        box.appendChild(row);
+
+    }
+
+}
+
+
+/* ================= ADMIN MARKET SELECT ================= */
+
+function renderAdminMarketSelect(){
+
+    const select =
+        el("adminMarketSelect");
+
+    if(!select) return;
+
+
+    select.innerHTML = "";
+
+
+    for(
+        let i=1;
+        i<=10;
+        i++
+    ){
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            String(i);
+
+
+        option.textContent =
+            marketNames[String(i)] ||
+            ("Market " + i);
+
+
+        select.appendChild(option);
+
+    }
+
+
+    loadAdminPageList();
+
+}
+
+
+/* ================= UPDATE MARKET NAME ================= */
+
+window.updateMarketName =
+async function(id){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const input =
+        el("marketName_" + id);
+
+
+    if(!input){
+
+        return;
+
+    }
+
+
+    const value =
+        input.value.trim();
+
+
+    if(!value){
+
+        alert("Market Name भरा.");
+
+        return;
+
+    }
+
+
+    try{
+
+        const oldNames =
+            {
+                ...(window.marketNames || marketNames)
+            };
+
+
+        oldNames[String(id)] =
+            value;
+
+
+        await setDoc(
+
+            doc(
+                db,
+                "settings",
+                "main"
+            ),
+
+            {
+                marketNames:
+                    oldNames
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        marketNames =
+            oldNames;
+
+        window.marketNames =
+            marketNames;
+
+
+        renderMarkets();
+
+        renderAdminMarketSelect();
+
+
+        alert(
+            "Market Name Update झाला."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Update झाले नाही: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= ADMIN PAGE LIST ================= */
+
+window.loadAdminPageList =
+async function(){
+
+    const select =
+        el("adminPageSelect");
+
+    if(!select) return;
+
+
+    select.innerHTML = "";
+
+
+    for(
+        let i=1;
+        i<=4;
+        i++
+    ){
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            String(i);
+
+
+        option.textContent =
+            "Page " + i;
+
+
+        select.appendChild(option);
+
+    }
+
+
+    await loadAdminCategoryList();
+
+};
+
+
+/* ================= ADMIN CATEGORY LIST ================= */
+
+window.loadAdminCategoryList =
+async function(){
+
+    const box =
+        el("adminCategoryList");
+
+    if(!box) return;
+
+
+    const market =
+        el("adminMarketSelect")
+            ?.value || "1";
+
+
+    const page =
+        el("adminPageSelect")
+            ?.value || "1";
+
+
+    box.innerHTML =
+        "Loading...";
+
+
+    try{
+
+        const snap =
+            await getDoc(
+
+                doc(
+                    db,
+                    "marketPages",
+                    market +
+                    "_page" +
+                    page
+                )
+
+            );
+
+
+        box.innerHTML = "";
+
+
+        let categories = [];
+
+
+        if(snap.exists()){
+
+            const data =
+                snap.data();
+
+
+            if(
+                Array.isArray(
+                    data.categories
+                )
+            ){
+
+                categories =
+                    data.categories;
+
+            }
+
+        }
+
+
+        if(categories.length === 0){
+
+            categories =
+                ["Category 1"];
+
+        }
+
+
+        categories.forEach(
+        function(name,index){
+
+            createCategoryRow(
+                box,
+                name,
+                index
+            );
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        box.innerHTML =
+            "Category Load झाली नाही.";
+
+    }
+
+};
+
+
+/* ================= CREATE CATEGORY ROW ================= */
+
+function createCategoryRow(
+    box,
+    name,
+    index
+){
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "categoryRow";
+
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+
+    input.className =
+        "adminCategoryInput";
+
+
+    input.value =
+        name || "";
+
+
+    const remove =
+        document.createElement(
+            "button"
+        );
+
+
+    remove.className =
+        "backBtn";
+
+
+    remove.textContent =
+        "Remove";
+
+
+    remove.onclick =
+    function(){
+
+        row.remove();
+
+    };
+
+
+    row.appendChild(input);
+
+    row.appendChild(remove);
+
+    box.appendChild(row);
+
+}
+
+
+/* ================= ADD CATEGORY ================= */
+
+window.addCategory =
+function(){
+
+    const box =
+        el("adminCategoryList");
+
+    if(!box) return;
+
+
+    createCategoryRow(
+        box,
+        "",
+        box.children.length
+    );
+
+};
+
+
+/* ================= SAVE CATEGORIES ================= */
+
+window.saveCategories =
+async function(){
+
+    if(!isAdmin){
+
+        alert("फक्त Admin update करू शकतो.");
+
+        return;
+
+    }
+
+
+    const market =
+        el("adminMarketSelect")
+            ?.value || "1";
+
+
+    const page =
+        el("adminPageSelect")
+            ?.value || "1";
+
+
+    const inputs =
+        document.querySelectorAll(
+            ".adminCategoryInput"
+        );
+
+
+    const categories = [];
+
+
+    inputs.forEach(
+    function(input){
+
+        const value =
+            input.value.trim();
+
+
+        if(value){
+
+            categories.push(value);
+
+        }
+
+    });
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "marketPages",
+                market +
+                "_page" +
+                page
+            ),
+
+            {
+                categories:
+                    categories
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        alert(
+            "Categories Save झाल्या."
+        );
+
+
+        if(
+            selectedMarket === market &&
+            selectedMarketPage === page
+        ){
+
+            await openMarketPage(
+                market,
+                page
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        alert(
+            "Save झाले नाही: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= ADMIN RECHARGE REQUESTS ================= */
+
+window.loadRechargeRequests =
+async function(){
+
+    const box =
+        el("adminRechargeRequests");
+
+    if(!box) return;
+
+
+    if(!isAdmin){
+
+        box.innerHTML =
+            "फक्त Admin Requests पाहू शकतो.";
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        "Loading...";
+
+
+    try{
+
+        const snap =
+            await getDocs(
+
+                collection(
+                    db,
+                    "walletRequests"
+                )
+
+            );
+
+
+        box.innerHTML = "";
+
+
+        const requests = [];
+
+
+        snap.forEach(
+        function(docSnap){
+
+            requests.push({
+
+                id:
+                    docSnap.id,
+
+                data:
+                    docSnap.data()
+
+            });
+
+        });
+
+
+        requests.sort(
+        function(a,b){
+
+            const aTime =
+                a.data.createdAt?.seconds || 0;
+
+            const bTime =
+                b.data.createdAt?.seconds || 0;
+
+
+            return bTime - aTime;
+
+        });
+
+
+        if(requests.length === 0){
+
+            box.innerHTML =
+                "<div class='smallText'>अजून Recharge Request नाही.</div>";
+
+            return;
+
+        }
+
+
+        requests.forEach(
+        function(item){
+
+            const data =
+                item.data;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "requestCard";
+
+
+            card.innerHTML =
+
+                "<b>Recharge: ₹" +
+                Number(data.amount || 0) +
+                "</b><br>" +
+
+                "User: " +
+                (data.userEmail || "") +
+                "<br>" +
+
+                "Transaction: " +
+                (data.transactionId || "") +
+                "<br>" +
+
+                "Status: " +
+                (data.status || "Pending");
+
+
+            if(
+                data.status ===
+                "Pending"
+            ){
+
+                const approve =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                approve.className =
+                    "payBtn";
+
+
+                approve.textContent =
+                    "Approve";
+
+
+                approve.onclick =
+                function(){
+
+                    approveRecharge(
+                        item.id,
+                        data
+                    );
+
+                };
+
+
+                card.appendChild(
+                    approve
+                );
+
+
+                const reject =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                reject.className =
+                    "backBtn";
+
+
+                reject.textContent =
+                    "Reject";
+
+
+                reject.onclick =
+                function(){
+
+                    rejectRecharge(
+                        item.id
+                    );
+
+                };
+
+
+                card.appendChild(
+                    reject
+                );
+
+            }
+
+
+            box.appendChild(card);
+
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Recharge Requests Error:",
+            error
+        );
+
+
+        box.innerHTML =
+            "Requests Load झाल्या नाहीत: " +
+            error.message;
+
+    }
+
+};
+
+
+/* ================= APPROVE RECHARGE ================= */
+
+window.approveRecharge =
+async function(
+    requestId,
+    requestData
+){
+
+    if(!isAdmin){
+
+        return;
+
+    }
+
+
+    try{
+
+        const userId =
+            requestData.userId;
+
+
+        const amount =
+            Number(
+                requestData.amount || 0
+            );
+
+
+        const requestRef =
+            doc(
+                db,
+                "walletRequests",
+                requestId
+            );
+
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                userId
+            );
+
+
+        await runTransaction(
+
+            db,
+
+            async function(transaction){
+
+                const requestSnap =
+                    await transaction.get(
+                        requestRef
+                    );
+
+
+                if(
+                    !requestSnap.exists()
+                ){
+
+                    throw new Error(
+                        "Request सापडली नाही."
+                    );
+
+                }
+
+
+                const request =
+                    requestSnap.data();
+
+
+                if(
+                    request.status !==
+                    "Pending"
+                ){
+
+                    throw new Error(
+                        "ही Request आधीच Process झाली आहे."
+                    );
+
+                }
+
+
+                const userSnap =
+                    await transaction.get(
+                        userRef
+                    );
+
+
+                let wallet =
+                    0;
+
+
+                if(userSnap.exists()){
+
+                    wallet =
+                        Number(
+                            userSnap.data().wallet || 0
+                        );
+
+                }
+
+
+                transaction.set(
+
+                    userRef,
+
+                    {
+                        wallet:
+                            wallet + amount,
+
+                        updatedAt:
+                            serverTimestamp()
+                    },
+
+                    {
+                        merge:true
+                    }
+
+                );
+
+
+                transaction.update(
+
+                    requestRef,
+
+                    {
+                        status:
+                            "Approved",
+
+                        approvedAt:
+                            serverTimestamp()
+                    }
+
+                );
+
+            }
+
+        );
+
+
+        alert(
+            "Recharge Approved."
+        );
+
+
+        await loadRechargeRequests();
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        alert(
+            "Approve झाले नाही: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= REJECT RECHARGE ================= */
+
+window.rejectRecharge =
+async function(requestId){
+
+    if(!isAdmin){
+
+        return;
+
+    }
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+                db,
+                "walletRequests",
+                requestId
+            ),
+
+            {
+                status:
+                    "Rejected",
+
+                rejectedAt:
+                    serverTimestamp()
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        alert(
+            "Recharge Request Reject झाली."
+        );
+
+
+        await loadRechargeRequests();
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        alert(
+            "Reject झाले नाही: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= PAYMENT HISTORY ================= */
+
+window.loadPaymentHistory =
+async function(){
+
+    const box =
+        el("paymentHistory");
+
+    if(!box) return;
+
+
+    if(!window.isAdmin){
+
+        box.innerHTML =
+            "फक्त Admin Payment History पाहू शकतो.";
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        "Loading...";
+
+
+    try{
+
+        const snap =
+            await getDocs(
+
+                collection(
+                    db,
+                    "payments"
+                )
+
+            );
+
+
+        box.innerHTML = "";
+
+
+        const payments = [];
+
+
+        snap.forEach(
+        function(docSnap){
+
+            const data =
+                docSnap.data();
+
+
+            payments.push({
+
+                id:
+                    docSnap.id,
+
+                data:
+                    data
+
+            });
+
+        });
+
+
+        payments.sort(
+        function(a,b){
+
+            const aTime =
+                a.data.createdAt?.seconds || 0;
+
+            const bTime =
+                b.data.createdAt?.seconds || 0;
+
+
+            return bTime - aTime;
+
+        });
+
+
+        if(payments.length === 0){
+
+            box.innerHTML =
+                "<div class='smallText'>अजून Payment झालेले नाही.</div>";
+
+            return;
+
+        }
+
+
+        payments.forEach(
+        function(item){
+
+            const data =
+                item.data;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "requestCard";
+
+
+            let dateText =
+                "";
+
+
+            if(data.createdAt){
+
+                try{
+
+                    const date =
+                        data.createdAt.toDate();
+
+
+                    dateText =
+                        date.toLocaleString(
+                            "en-IN"
+                        );
+
+                }catch(error){
+
+                    dateText =
+                        "";
+
+                }
+
+            }
+
+
+            card.innerHTML =
+
+                "<b>Payment: ₹" +
+                Number(
+                    data.amount || 0
+                ) +
+                "</b><br>" +
+
+                "User: " +
+                (data.userEmail || "") +
+                "<br>" +
+
+                "Market: " +
+                (
+                    data.marketName ||
+                    data.market ||
+                    ""
+                ) +
+                "<br>" +
+
+                "Page: " +
+                (data.page || "") +
+                "<br>" +
+
+                "Category: " +
+                (data.itemName || "") +
+                "<br>" +
+
+                "Status: " +
+                (data.status || "") +
+                "<br>" +
+
+                "Date/Time: " +
+                dateText;
+
+
+            box.appendChild(card);
+
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Payment History Error:",
+            error
+        );
+
+
+        box.innerHTML =
+            "<div class='smallText'>Payment History Load झाली नाही: " +
+            (
+                error.code ||
+                error.message
+            ) +
+            "</div>";
+
+    }
+
+};
+
+
+/* ================= REFRESH ADMIN DATA ================= */
+
+window.refreshAdminData =
+async function(){
+
+    if(!isAdmin){
+
+        return;
+
+    }
+
+
+    await window.loadOnlineData();
+
+    await window.loadMarkets();
+
+    await window.loadAdminCategoryList();
+
+    await window.loadRechargeRequests();
+
+    await window.loadPaymentHistory();
+
+};
+
+
+/* ================= WALLET PAGE ================= */
+
+window.openWalletPage =
+async function(){
+
+    await loadWallet();
+
+    await loadMyRechargeRequests();
+
+    showPage(3);
+
+};
+
+
+/* ================= WITHDRAWAL ================= */
+
+window.openWithdrawalPage =
+async function(){
+
+    await loadWallet();
+
+    showPageById(
+        "withdrawalPage"
+    );
+
+};
+
+
+window.submitWithdrawal =
+async function(){
+
+    hideMessage("withdrawMessage");
+
+    hideError("withdrawError");
+
+
+    if(!currentUser){
+
+        showError(
+            "withdrawError",
+            "आधी User Login करा."
+        );
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            el("withdrawAmount")
+                ?.value || 0
+        );
+
+
+    const upi =
+        el("withdrawUPI")
+            ?.value.trim();
+
+
+    if(amount <= 0){
+
+        showError(
+            "withdrawError",
+            "Withdrawal Amount भरा."
+        );
+
+        return;
+
+    }
+
+
+    if(!upi){
+
+        showError(
+            "withdrawError",
+            "UPI ID भरा."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        alert(
+            "Withdrawal Request नोंदवली."
+        );
+
+
+        el("withdrawAmount").value =
+            "";
+
+        el("withdrawUPI").value =
+            "";
+
+
+    }catch(error){
+
+        showError(
+            "withdrawError",
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ================= AUTH STATE ================= */
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        currentUser =
+            user;
+
+        window.currentUser =
+            user;
+
+
+        if(user){
+
+            isAdmin =
+                user.uid === ADMIN_UID;
+
+            window.isAdmin =
+                isAdmin;
+
+
+            await loadOnlineData();
+
+            await loadMarkets();
+
+            await loadWallet();
+
+
+            if(isAdmin){
+
+                el("adminPanel")
+                    ?.classList.add("show");
+
+            }
+
+        }else{
+
+            isAdmin = false;
+
+            window.isAdmin = false;
+
+        }
+
+    }
+
+);
+
+
+/* ================= START ================= */
+
+loadOnlineData();
+
+loadMarkets();
+
+</script>
+
+
+<script>
+
+/* ================= EXTRA MARKET WRAPPER ================= */
+
+window.selectedMarket =
+    window.selectedMarket || "1";
+
+window.selectedMarketPage =
+    window.selectedMarketPage || "1";
+
+window.selectedItem =
+    window.selectedItem || "";
+
+
+/* ================= PAYMENT ITEM DISPLAY FIX ================= */
+
+const originalSelectMarketItem =
+    window.selectMarketItem;
+
+
+window.selectMarketItem =
+function(name){
+
+    window.selectedItem =
+        String(name);
+
+
+    const itemBox =
+        document.getElementById(
+            "selectedItemName"
+        );
+
+
+    if(itemBox){
+
+        itemBox.textContent =
+            String(name);
+
+    }
+
+
+    const payBox =
+        document.getElementById(
+            "payBox"
+        );
+
+
+    if(payBox){
+
+        payBox.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    const amount =
+        document.getElementById(
+            "paymentAmount"
+        );
+
+
+    if(amount){
+
+        amount.value = "";
+
+    }
+
+};
+
+
+/* ================= OPEN MARKET FIX ================= */
+
+const originalOpenMarket =
+    window.openMarket;
+
+
+window.openMarket =
+function(marketId){
+
+    window.selectedMarket =
+        String(marketId);
+
+
+    return originalOpenMarket(
+        marketId
+    );
+
+};
+
+
+/* ================= OPEN MARKET PAGE FIX ================= */
+
+const originalOpenMarketPage =
+    window.openMarketPage;
+
+
+window.openMarketPage =
+async function(
+    marketId,
+    pageId
+){
+
+    window.selectedMarket =
+        String(marketId);
+
+    window.selectedMarketPage =
+        String(pageId);
+
+
+    return originalOpenMarketPage(
+        marketId,
+        pageId
+    );
+
+};
+
+
+/* ================= PAGE 3 DATA REFRESH ================= */
+
+window.refreshUserData =
+async function(){
+
+    try{
+
+        if(window.loadWallet){
+
+            await window.loadWallet();
+
+        }
+
+        if(window.loadMyRechargeRequests){
+
+            await window.loadMyRechargeRequests();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+};
+
+</script>
+
+
+<script>
+
+/* ================= START USER DATA ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setTimeout(
+        async function(){
+
+            try{
+
+                if(
+                    window.loadOnlineData
+                ){
+
+                    await window.loadOnlineData();
+
+                }
+
+
+                if(
+                    window.loadMarkets
+                ){
+
+                    await window.loadMarkets();
+
+                }
+
+            }catch(error){
+
+                console.error(error);
+
+            }
+
+        },
+        500
+        );
+
+    }
+
+);
+
+</script>
 
 </body>
 </html>
