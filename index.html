@@ -214,17 +214,8 @@ id="phone"
 class="input"
 placeholder="Mobile number e.g. 9876543210">
 
-<div id="recaptcha"></div>
 
-<button class="btn"
-onclick="sendOTP()">
-Send OTP
-</button>
 
-<input
-id="otp"
-class="input"
-placeholder="OTP">
 
 <input
 id="newUsername"
@@ -707,10 +698,7 @@ from
 import {
  getAuth,
  signInWithEmailAndPassword,
- signInWithPhoneNumber,
- RecaptchaVerifier,
- EmailAuthProvider,
- linkWithCredential,
+ createUserWithEmailAndPassword,
  onAuthStateChanged,
  signOut
 }
@@ -765,9 +753,6 @@ let currentUser=null;
 
 let isAdmin=false;
 
-let confirmationResult=null;
-
-let recaptchaVerifier=null;
 
 let settings={};
 
@@ -885,24 +870,7 @@ window.openUserCreate=()=>{
  .classList
  .remove("hidden");
 
- if(!recaptchaVerifier){
-
-  recaptchaVerifier=
-  new RecaptchaVerifier(
-   auth,
-   "recaptcha",
-   {
-    size:"normal"
-   }
-  );
-
-  recaptchaVerifier.render();
-
- }
-
 };
-
-
 /* ================= ADMIN LOGIN OPEN ================= */
 
 window.openAdminLogin=()=>{
@@ -916,63 +884,6 @@ window.openAdminLogin=()=>{
 };
 
 
-/* ================= SEND OTP ================= */
-
-window.sendOTP=async()=>{
-
- try{
-
-  let p=
-  $("phone")
-  .value
-  .trim()
-  .replace(/\D/g,"");
-
-  if(p.length===10)
-  p="+91"+p;
-
-  if(!/^\+91\d{10}$/.test(p))
-  throw Error(
-   "योग्य 10 अंकी मोबाइल नंबर टाका."
-  );
-
-  if(!recaptchaVerifier){
-
-   recaptchaVerifier=
-   new RecaptchaVerifier(
-    auth,
-    "recaptcha",
-    {
-     size:"normal"
-    }
-   );
-
-  }
-
-  confirmationResult=
-  await signInWithPhoneNumber(
-   auth,
-   p,
-   recaptchaVerifier
-  );
-
-  msg(
-   "createMsg",
-   "OTP पाठवला आहे."
-  );
-
- }
- catch(e){
-
-  msg(
-   "createMsg",
-   e.message
-  );
-
- }
-
-};
-
 
 /* ================= CREATE USER ================= */
 
@@ -980,11 +891,11 @@ window.createUser=async()=>{
 
  try{
 
-  if(!confirmationResult)
-  throw Error(
-   "आधी Send OTP करा."
-  );
-
+  let phone=
+  $("phone")
+  .value
+  .trim()
+  .replace(/\D/g,"");
 
   let u=
   $("newUsername")
@@ -998,21 +909,21 @@ window.createUser=async()=>{
   let pw2=
   $("newPassword2").value;
 
-  let otp=
-  $("otp")
-  .value
-  .trim();
+
+  if(phone.length!==10)
+  throw Error(
+   "योग्य 10 अंकी मोबाइल नंबर टाका."
+  );
 
 
   if(
    !u||
    !pw||
    pw.length<6||
-   pw!==pw2||
-   !otp
+   pw!==pw2
   )
   throw Error(
-   "Username, Password, Confirm Password आणि OTP तपासा."
+   "Username, Password आणि Confirm Password तपासा."
   );
 
 
@@ -1028,31 +939,26 @@ window.createUser=async()=>{
   );
 
 
-  let r=
-  await confirmationResult.confirm(otp);
-
-
   let email=
   u+"@sm-online-nz.firebaseapp.com";
 
 
-  let cred=
-  EmailAuthProvider.credential(
+  let userCredential=
+  await createUserWithEmailAndPassword(
+   auth,
    email,
    pw
   );
 
 
-  await linkWithCredential(
-   r.user,
-   cred
-  );
+  let user=
+  userCredential.user;
 
 
   await setDoc(
    doc(db,"usernames",u),
    {
-    uid:r.user.uid,
+    uid:user.uid,
     email:email,
     username:u,
     createdAt:serverTimestamp()
@@ -1061,20 +967,19 @@ window.createUser=async()=>{
 
 
   await setDoc(
-   doc(db,"users",r.user.uid),
+   doc(db,"users",user.uid),
    {
-    uid:r.user.uid,
+    uid:user.uid,
     username:u,
+    phone:phone,
     wallet:0,
     createdAt:serverTimestamp()
-   },
-   {merge:true}
+   }
   );
 
 
   await signOut(auth);
 
-  confirmationResult=null;
 
   msg(
    "createMsg",
@@ -1092,8 +997,6 @@ window.createUser=async()=>{
  }
 
 };
-
-
 /* ================= USER LOGIN ================= */
 
 window.userLogin=async()=>{
@@ -1381,7 +1284,7 @@ async function getMP(){
  let d=
  s.exists()
  ?s.data()
- :{categories:[]};
+ :{categories:[]}; 
 
 
  let cats=
@@ -3309,7 +3212,7 @@ onAuthStateChanged(
 
   await loadWallet();
 
-  showPage(2);
+
 
  }
 );
@@ -3319,7 +3222,7 @@ onAuthStateChanged(
 
 await loadSettings();
 
-await loadMarkets();
+await loadMarkets(); 
 
 </script>
 
