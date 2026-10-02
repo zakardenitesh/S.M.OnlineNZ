@@ -323,7 +323,12 @@ hr{
     >
         User Login
     </button>
-
+<button
+    class="userBtn"
+    onclick="openUserCreate()"
+>
+    User Create
+</button>
     <button
         class="adminBtn"
         onclick="openAdminLogin()"
@@ -378,7 +383,64 @@ hr{
         ></div>
 
     </div>
+<!-- USER CREATE -->
 
+<div
+    id="userCreateBox"
+    class="box hidden"
+>
+
+    <h3>User Create</h3>
+
+    <input
+        id="createMobile"
+        type="tel"
+        placeholder="Mobile Number"
+    >
+
+    <input
+        id="createUsername"
+        type="text"
+        placeholder="Username"
+    >
+
+    <input
+        id="createPassword"
+        type="password"
+        placeholder="Password"
+    >
+
+    <input
+        id="createConfirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+    >
+
+    <button
+        class="userBtn"
+        onclick="createUser()"
+    >
+        Create User
+    </button>
+
+    <button
+        class="backBtn"
+        onclick="closeUserCreate()"
+    >
+        Close
+    </button>
+
+    <div
+        id="userCreateMessage"
+        class="message"
+    ></div>
+
+    <div
+        id="userCreateError"
+        class="errorMessage"
+    ></div>
+
+</div>
 
     <!-- ADMIN LOGIN -->
 
@@ -1076,6 +1138,7 @@ import {
 import {
     getAuth,
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
@@ -1275,7 +1338,7 @@ function(pageNumber){
 };
 
 
-/* ================= USER LOGIN BOX ================= */
+/* ================= BOX ================= */
 
 window.openUserLogin =
 function(){
@@ -1297,6 +1360,30 @@ function(){
 
 };
 
+/* ================= USER CREATE BOX ================= */
+
+window.openUserCreate =
+function(){
+
+    el("userCreateBox")
+        ?.classList.remove("hidden");
+
+    el("userLoginBox")
+        ?.classList.add("hidden");
+
+    el("adminLoginBox")
+        ?.classList.add("hidden");
+
+};
+
+
+window.closeUserCreate =
+function(){
+
+    el("userCreateBox")
+        ?.classList.add("hidden");
+
+};
 
 /* ================= ADMIN LOGIN BOX ================= */
 
@@ -1309,8 +1396,10 @@ function(){
     el("userLoginBox")
         ?.classList.add("hidden");
 
-};
+    el("userCreateBox")
+        ?.classList.add("hidden");
 
+};
 
 window.closeAdminLogin =
 function(){
@@ -1321,22 +1410,121 @@ function(){
 };
 
 
+/* ================= CREATE USER ================= */
+
+window.createUser =
+async function(){
+
+    hideMessage("userCreateMessage");
+    hideError("userCreateError");
+
+    const mobile =
+        el("createMobile")?.value.trim();
+
+    const username =
+        el("createUsername")?.value.trim();
+
+    const password =
+        el("createPassword")?.value;
+
+    const confirmPassword =
+        el("createConfirmPassword")?.value;
+
+    if(
+        !mobile ||
+        !username ||
+        !password ||
+        !confirmPassword
+    ){
+
+        showError(
+            "userCreateError",
+            "सर्व माहिती भरा."
+        );
+
+        return;
+    }
+
+    if(password !== confirmPassword){
+
+        showError(
+            "userCreateError",
+            "Password आणि Confirm Password समान नाहीत."
+        );
+
+        return;
+    }
+
+    if(password.length < 6){
+
+        showError(
+            "userCreateError",
+            "Password किमान 6 अक्षरांचा असावा."
+        );
+
+        return;
+    }
+
+    const email =
+        username.toLowerCase() +
+        "@sm-online-nz.firebaseapp.com";
+
+    try{
+
+        const result =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        currentUser =
+            result.user;
+
+        window.currentUser =
+            currentUser;
+
+        isAdmin =
+            currentUser.uid === ADMIN_UID;
+
+        window.isAdmin =
+            isAdmin;
+
+        showMessage(
+            "userCreateMessage",
+            "User तयार झाला."
+        );
+
+    }catch(error){
+
+        console.error(
+            "User Create Error:",
+            error
+        );
+
+        showError(
+            "userCreateError",
+            error.message
+        );
+
+    }
+
+};
+
+
 /* ================= USER LOGIN ================= */
 
 window.userLogin =
 async function(){
 
     hideMessage("userLoginMessage");
-
     hideError("userLoginError");
-
 
     const email =
         el("userEmail")?.value.trim();
 
     const password =
         el("userPassword")?.value;
-
 
     if(!email || !password){
 
@@ -1346,9 +1534,7 @@ async function(){
         );
 
         return;
-
     }
-
 
     try{
 
@@ -1359,13 +1545,11 @@ async function(){
                 password
             );
 
-
         currentUser =
             result.user;
 
         window.currentUser =
             currentUser;
-
 
         isAdmin =
             currentUser.uid === ADMIN_UID;
@@ -1373,19 +1557,16 @@ async function(){
         window.isAdmin =
             isAdmin;
 
-
         showMessage(
             "userLoginMessage",
             "User Login झाले."
         );
-
 
         await loadOnlineData();
 
         await loadMarkets();
 
         await loadWallet();
-
 
         setTimeout(function(){
 
@@ -1396,14 +1577,12 @@ async function(){
 
         },500);
 
-
     }catch(error){
 
         console.error(
             "User Login Error:",
             error
         );
-
 
         showError(
             "userLoginError",
@@ -1413,8 +1592,7 @@ async function(){
     }
 
 };
-
-
+        
 /* ================= ADMIN LOGIN ================= */
 
 window.adminLogin =
@@ -1552,7 +1730,7 @@ function showAdminPanel(){
 
         });
 
-
+ 
     el("adminPanel")
         ?.classList.add("active");
 
