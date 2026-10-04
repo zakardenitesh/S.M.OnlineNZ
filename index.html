@@ -1,2520 +1,2372 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SM Online</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SM.OnlineNZ</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
     padding:0;
     font-family:Arial,sans-serif;
-    background:#f2f2f2;
+    background:#f1f3f6;
     color:#222;
 }
 
-.page{
-    display:none;
-    width:100%;
-    min-height:100vh;
-    padding:15px;
-}
-
-.page.active{
-    display:block;
-}
-
-.container{
-    width:100%;
-    max-width:600px;
-    margin:auto;
-}
-
-h1,h2,h3{
-    text-align:center;
-}
-
-.appPhoto{
-    width:100%;
-    height:auto;
-    display:block;
-    object-fit:contain;
-    margin:10px auto;
-    border-radius:10px;
-}
-
-.appName{
-    text-align:center;
-    font-size:26px;
-    font-weight:bold;
-    margin:15px 0;
-}
-
 button{
-    width:100%;
-    padding:13px;
-    margin:7px 0;
-    border:none;
+    border:0;
     border-radius:8px;
-    font-size:17px;
+    padding:12px 15px;
     cursor:pointer;
-}
-
-.nextBtn{
-    background:#2196f3;
-    color:white;
-}
-
-.backBtn{
-    background:#777;
-    color:white;
-}
-
-.loginBtn{
-    background:#333;
-    color:white;
-}
-
-.userBtn{
-    background:#00897b;
-    color:white;
-}
-
-.adminBtn{
-    background:#8e24aa;
-    color:white;
-}
-
-.payBtn{
-    background:#2e7d32;
-    color:white;
-}
-
-.rechargeBtn{
-    background:#ef6c00;
-    color:white;
-}
-
-.withdrawBtn{
-    background:#455a64;
-    color:white;
+    font-size:15px;
 }
 
 input,select,textarea{
     width:100%;
     padding:12px;
     margin:6px 0;
-    border:1px solid #bbb;
-    border-radius:7px;
-    font-size:16px;
-    background:white;
-}
-
-.box{
-    background:white;
-    padding:15px;
-    margin:12px 0;
-    border-radius:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
-}
-
-.walletBox{
-    background:#fff3cd;
-    border:1px solid #e0b000;
-    padding:10px;
+    border:1px solid #ccc;
     border-radius:8px;
+    font-size:15px;
+    box-sizing:border-box;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.hidden{display:none!important}
+
+.page{
+    display:none;
+    min-height:100vh;
+}
+
+.page.active{
+    display:block;
+}
+
+.center{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    margin:12px 0;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+h1,h2,h3{
+    margin-top:5px;
+}
+
+.top{
+    background:#111827;
+    color:white;
+    padding:14px;
     text-align:center;
-    font-size:19px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.appPhoto{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid white;
+    background:#ddd;
+    display:block;
+    margin:10px auto;
+}
+
+.appTitle{
+    text-align:center;
+    font-size:27px;
     font-weight:bold;
-    margin:10px 0;
+    margin:10px 0 20px;
 }
 
-.topBar{
+.btn{
+    width:100%;
+    margin:5px 0;
+    background:#2563eb;
+    color:white;
+}
+
+.btn.green{background:#16a34a}
+.btn.red{background:#dc2626}
+.btn.orange{background:#ea580c}
+.btn.gray{background:#64748b}
+.btn.dark{background:#111827}
+.btn.purple{background:#7c3aed}
+
+.smallBtn{
+    padding:8px 11px;
+    font-size:13px;
+    margin:2px;
+}
+
+.nav{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:repeat(4,1fr);
     gap:6px;
-    margin-bottom:12px;
+    padding:8px;
+    background:white;
+    position:sticky;
+    top:58px;
+    z-index:15;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.topBar button{
-    margin:0;
+.nav button{
     padding:9px 4px;
-    font-size:14px;
+    font-size:12px;
+    background:#e5e7eb;
+}
+
+.balance{
+    background:#16a34a;
+    color:white;
+    padding:16px;
+    border-radius:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:12px;
 }
 
 .marketGrid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,1fr);
     gap:10px;
 }
 
-.marketBtn{
+.marketBox{
     background:white;
-    border:1px solid #ccc;
-    min-height:65px;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    border:2px solid #e5e7eb;
+}
+
+.marketBox.closed{
+    opacity:.55;
+}
+
+.marketName{
+    font-size:18px;
     font-weight:bold;
 }
 
-.marketBtn:hover{
-    background:#f5f5f5;
-}
-
-.marketPageList{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.marketPageBtn{
-    background:#fff;
-    border:1px solid #bbb;
-    min-height:55px;
-}
-
-.itemBtn{
-    background:#fafafa;
-    border:1px solid #ccc;
-    text-align:left;
-}
-
-.qrPhoto{
-    width:100%;
-    max-width:400px;
-    height:auto;
-    display:block;
-    margin:10px auto;
-    object-fit:contain;
-}
-
-.adminPanel{
-    display:none;
-}
-
-.adminPanel.show{
-    display:block;
-}
-
-.adminSection{
-    background:white;
-    padding:15px;
-    margin:12px 0;
-    border-radius:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
-}
-
-.adminSection h3{
-    margin-top:0;
-}
-
-.categoryRow{
-    display:flex;
-    gap:6px;
-    align-items:center;
-    margin:6px 0;
-}
-
-.categoryRow input{
-    flex:1;
-    margin:0;
-}
-
-.categoryRow button{
-    width:auto;
-    min-width:75px;
-    margin:0;
-    padding:10px;
-    font-size:14px;
-}
-
-.requestCard{
-    background:#f8f8f8;
-    border:1px solid #ccc;
-    border-radius:8px;
-    padding:10px;
-    margin:8px 0;
-}
-
-.smallText{
-    font-size:13px;
+.marketTime{
+    font-size:12px;
+    margin:7px 0;
     color:#666;
 }
 
-.hidden{
-    display:none !important;
+.statusOpen{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+.statusClosed{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+.pageButtons{
+    display:flex;
+    gap:7px;
+    margin-bottom:10px;
+}
+
+.pageButtons button{
+    flex:1;
+}
+
+.category{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    margin:7px 0;
+}
+
+.categoryHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
 .message{
     padding:10px;
-    border-radius:7px;
-    background:#e8f5e9;
-    color:#1b5e20;
+    border-radius:8px;
     margin:8px 0;
-    display:none;
+    background:#e0f2fe;
 }
 
-.errorMessage{
-    padding:10px;
-    border-radius:7px;
-    background:#ffebee;
-    color:#b71c1c;
-    margin:8px 0;
-    display:none;
+.error{
+    background:#fee2e2;
+    color:#991b1b;
 }
 
-hr{
-    border:none;
-    border-top:1px solid #ddd;
-    margin:15px 0;
+.success{
+    background:#dcfce7;
+    color:#166534;
 }
 
-@media(max-width:500px){
+.warning{
+    background:#fef3c7;
+    color:#92400e;
+}
 
-    .marketGrid,
-    .marketPageList{
-        grid-template-columns:1fr;
+.historyItem{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+}
+
+.historyItem:last-child{
+    border-bottom:0;
+}
+
+.adminSection{
+    border-left:4px solid #7c3aed;
+    padding-left:10px;
+}
+
+.notification{
+    border-left:4px solid #2563eb;
+    background:white;
+    padding:12px;
+    border-radius:8px;
+    margin:7px 0;
+}
+
+.notification.unread{
+    background:#eff6ff;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:11px;
+    background:#e5e7eb;
+}
+
+.badge.pending{background:#fef3c7}
+.badge.approved{background:#dcfce7}
+.badge.rejected{background:#fee2e2}
+
+.qrImage{
+    max-width:250px;
+    width:100%;
+    display:block;
+    margin:10px auto;
+}
+
+.infoBox{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    padding:12px;
+    border-radius:10px;
+}
+
+.footer{
+    text-align:center;
+    padding:20px;
+    color:#666;
+}
+
+@media(max-width:420px){
+    .marketGrid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .topBar button{
-        font-size:13px;
+    .nav{
+        grid-template-columns:repeat(4,1fr);
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
+<!-- ================= HOME ================= -->
 
-<!-- ================= PAGE 1 ================= -->
+<div id="homePage" class="page active">
+    <div class="center">
 
-<div id="page1" class="page active">
+        <div class="card">
+            <img id="homeAppPhoto"
+                 class="appPhoto"
+                 src=""
+                 alt="App Photo">
 
-<div class="container">
+            <div id="homeAppName" class="appTitle">
+                SM.OnlineNZ
+            </div>
 
-    <img
-        id="appPhoto"
-        class="appPhoto"
-        src=""
-        alt="App Photo"
-    >
+            <button class="btn" onclick="openUserLogin()">
+                User Login
+            </button>
 
-    <div
-        id="appName"
-        class="appName"
-    >
-        SM Online
-    </div>
+            <button class="btn green" onclick="openUserCreate()">
+                User Create
+            </button>
 
+            <button class="btn purple" onclick="openAdminLogin()">
+                Admin Login
+            </button>
+        </div>
 
+        <div id="homeInfo" class="card">
+            <h3>माहिती</h3>
+            <div id="homeInfoText">
+                SM.OnlineNZ
+            </div>
+        </div>
 
-    <button
-        class="userBtn"
-        onclick="openUserLogin()"
-    >
-        User Login
-    </button>
-<button
-    class="userBtn"
-    onclick="openUserCreate()"
->
-    User Create
-</button>
-    <button
-        class="adminBtn"
-        onclick="openAdminLogin()"
-    >
-        Admin Login
-    </button>
+        <div class="card">
+            <div id="homeWhatsApp"></div>
+            <img id="homeQR" class="qrImage hidden">
+        </div>
 
-
-    <!-- USER LOGIN -->
-
-    <div
-        id="userLoginBox"
-        class="box hidden"
-    >
-
-        <h3>User Login</h3>
-
-        <input
-            id="userEmail"
-            type="email"
-            placeholder="User Email"
-        >
-
-        <input
-            id="userPassword"
-            type="password"
-            placeholder="User Password"
-        >
-
-        <button
-            class="userBtn"
-            onclick="userLogin()"
-        >
-            Login
-        </button>
-
-        <button
-            class="backBtn"
-            onclick="closeUserLogin()"
-        >
-            Close
-        </button>
-
-        <div
-            id="userLoginMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="userLoginError"
-            class="errorMessage"
-        ></div>
+        <div id="homeBottomText" class="footer">
+            SM.OnlineNZ
+        </div>
 
     </div>
-<!-- USER CREATE -->
-
-<div
-    id="userCreateBox"
-    class="box hidden"
->
-
-    <h3>User Create</h3>
-
-    <input
-        id="createMobile"
-        type="tel"
-        placeholder="Mobile Number"
-    >
-
-    <input
-        id="createUsername"
-        type="text"
-        placeholder="Username"
-    >
-
-    <input
-        id="createPassword"
-        type="password"
-        placeholder="Password"
-    >
-
-    <input
-        id="createConfirmPassword"
-        type="password"
-        placeholder="Confirm Password"
-    >
-
-    <button
-        class="userBtn"
-        onclick="createUser()"
-    >
-        Create User
-    </button>
-
-    <button
-        class="backBtn"
-        onclick="closeUserCreate()"
-    >
-        Close
-    </button>
-
-    <div
-        id="userCreateMessage"
-        class="message"
-    ></div>
-
-    <div
-        id="userCreateError"
-        class="errorMessage"
-    ></div>
-
-</div>
-
-    <!-- ADMIN LOGIN -->
-
-    <div
-        id="adminLoginBox"
-        class="box hidden"
-    >
-
-        <h3>Admin Login</h3>
-
-        <input
-            id="adminEmail"
-            type="email"
-            placeholder="Admin Email"
-        >
-
-        <input
-            id="adminPassword"
-            type="password"
-            placeholder="Admin Password"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="adminLogin()"
-        >
-            Admin Login
-        </button>
-
-        <button
-            class="backBtn"
-            onclick="closeAdminLogin()"
-        >
-            Close
-        </button>
-
-        <div
-            id="adminLoginMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="adminLoginError"
-            class="errorMessage"
-        ></div>
-
-    </div>
-
-
-</div>
-
 </div>
 
 
-<!-- ================= PAGE 2 ================= -->
+<!-- ================= USER LOGIN ================= -->
 
-<div id="page2" class="page">
+<div id="userLoginPage" class="page">
+    <div class="center">
 
-<div class="container">
+        <div class="card">
+            <h2>User Login</h2>
 
-    <h2>Markets</h2>
+            <input id="loginUsername"
+                   placeholder="Username">
 
-    <div class="topBar">
+            <input id="loginPassword"
+                   type="password"
+                   placeholder="Password">
 
-        <button
-            class="rechargeBtn"
-            onclick="openRechargePage()"
-        >
+            <div id="loginMessage"></div>
+
+            <button class="btn"
+                    onclick="userLogin()">
+                Login
+            </button>
+
+            <button class="btn gray"
+                    onclick="goHome()">
+                Close
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ================= USER CREATE ================= -->
+
+<div id="userCreatePage" class="page">
+    <div class="center">
+
+        <div class="card">
+
+            <h2>User Create</h2>
+
+            <div id="createStep1">
+
+                <p>
+                    प्रथम Mobile Number टाका.
+                </p>
+
+                <input id="createPhone"
+                       placeholder="Mobile Number"
+                       type="tel">
+
+                <div id="recaptcha-container"></div>
+
+                <button class="btn green"
+                        onclick="sendOTP()">
+                    Send OTP
+                </button>
+
+            </div>
+
+
+            <div id="createStep2" class="hidden">
+
+                <input id="createOTP"
+                       placeholder="OTP">
+
+                <button class="btn"
+                        onclick="verifyOTP()">
+                    Verify OTP
+                </button>
+
+            </div>
+
+
+            <div id="createStep3" class="hidden">
+
+                <input id="createUsername"
+                       placeholder="New Username">
+
+                <input id="createPassword"
+                       type="password"
+                       placeholder="New Password">
+
+                <input id="createPassword2"
+                       type="password"
+                       placeholder="Confirm Password">
+
+                <input id="createName"
+                       placeholder="Name">
+
+                <div id="createMessage"></div>
+
+                <button class="btn green"
+                        onclick="finishUserCreate()">
+                    Create User
+                </button>
+
+            </div>
+
+            <button class="btn gray"
+                    onclick="goHome()">
+                Close
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= ADMIN LOGIN ================= -->
+
+<div id="adminLoginPage" class="page">
+    <div class="center">
+
+        <div class="card">
+
+            <h2>Admin Login</h2>
+
+            <input id="adminEmail"
+                   type="email"
+                   placeholder="Admin Email">
+
+            <input id="adminPassword"
+                   type="password"
+                   placeholder="Admin Password">
+
+            <div id="adminLoginMessage"></div>
+
+            <button class="btn purple"
+                    onclick="adminLogin()">
+                Admin Login
+            </button>
+
+            <button class="btn gray"
+                    onclick="goHome()">
+                Close
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= USER DASHBOARD ================= -->
+
+<div id="userPage" class="page">
+
+    <div class="top">
+        <b id="userAppTitle">SM.OnlineNZ</b>
+    </div>
+
+    <div class="nav">
+        <button onclick="showUserSection('markets')">
+            Markets
+        </button>
+
+        <button onclick="showUserSection('recharge')">
             Recharge
         </button>
 
-        <button
-            class="withdrawBtn"
-            onclick="openWithdrawalPage()"
-        >
+        <button onclick="showUserSection('withdrawal')">
             Withdrawal
         </button>
 
- <button
-    class="payBtn"
-    onclick="openWalletPage()"
->
-    Wallet ₹<span id="page2WalletBalance">0</span>
-</button>
+        <button onclick="showUserSection('wallet')">
+            Wallet
+        </button>
+
+        <button onclick="showUserSection('notifications')">
+            🔔 Notifications
+        </button>
+
+        <button onclick="showUserSection('history')">
+            History
+        </button>
+
+        <button onclick="showUserSection('profile')">
+            Profile
+        </button>
+
+        <button onclick="logoutUser()">
+            Logout
+        </button>
     </div>
 
 
-    <div
-        id="marketGrid"
-        class="marketGrid"
-    >
-        Markets Loading...
-    </div>
+    <div class="center">
+
+        <!-- MARKET SECTION -->
+
+        <div id="userMarketsSection">
+
+            <div class="card">
+                <div class="balance">
+                    Wallet ₹<span id="userBalanceTop">0</span>
+                </div>
+
+                <h2>16 Markets</h2>
+
+                <div id="marketGrid"
+                     class="marketGrid">
+                </div>
+            </div>
+
+        </div>
 
 
-    <button
-        class="nextBtn"
-        onclick="showPage(3)"
-    >
-        Next
-    </button>
+        <!-- MARKET PAGES -->
 
-    <button
-        class="backBtn"
-        onclick="showPage(1)"
-    >
-        Back
-    </button>
+        <div id="marketPageSection"
+             class="hidden">
 
-<button
-    id="page2AdminLoginBtn"
-    class="adminBtn"
-    onclick="openAdminLogin()"
->
-    Admin Login
-</button>
-</div>
+            <div class="card">
 
-</div>
+                <h2 id="selectedMarketTitle">
+                    Market
+                </h2>
 
+                <div id="selectedMarketStatus"></div>
 
-<!-- ================= PAGE 3 ================= -->
+                <div class="pageButtons">
 
-<div id="page3" class="page">
+                    <button class="btn gray"
+                            onclick="previousMarketPage()">
+                        Previous
+                    </button>
 
-<div class="container">
+                    <button class="btn gray"
+                            onclick="nextMarketPage()">
+                        Next
+                    </button>
 
-    <h2>Payment / Wallet</h2>
+                </div>
 
+                <h3 id="marketPageTitle">
+                    Page 1
+                </h3>
 
-    <div class="walletBox">
+                <div id="categoriesContainer"></div>
 
-        Wallet Balance:
-        ₹<span id="walletBalance">0</span>
+                <button class="btn gray"
+                        onclick="backToMarkets()">
+                    Back To Markets
+                </button>
 
-    </div>
+            </div>
 
-
-    <div class="box">
-
-        <h3>Payment Scanner</h3>
-
-        <img
-            id="scannerPhoto"
-            class="qrPhoto"
-            src=""
-            alt="Payment Scanner"
-        >
-
-    </div>
+        </div>
 
 
-    <div class="box">
+        <!-- RECHARGE -->
 
-        <h3>WhatsApp</h3>
+        <div id="userRechargeSection"
+             class="hidden">
 
-        <div
-            id="whatsappNumber"
-            style="text-align:center;font-size:20px;font-weight:bold;"
-        >
-            WhatsApp नंबर
+            <div class="card">
+
+                <h2>Recharge</h2>
+
+                <div class="infoBox">
+                    Minimum Recharge: ₹200
+                </div>
+
+                <div id="rechargeQRBox">
+                    <img id="rechargeQR"
+                         class="qrImage hidden">
+                </div>
+
+                <div id="rechargeWhatsApp"></div>
+
+                <input id="rechargeAmount"
+                       type="number"
+                       min="200"
+                       placeholder="Recharge Amount">
+
+                <input id="rechargeTransaction"
+                       placeholder="Transaction ID / UTR">
+
+                <div id="rechargeMessage"></div>
+
+                <button class="btn green"
+                        onclick="submitRecharge()">
+                    Send Recharge Request
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- WITHDRAWAL -->
+
+        <div id="userWithdrawalSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Withdrawal</h2>
+
+                <div class="balance">
+                    Available ₹<span id="withdrawBalance">0</span>
+                </div>
+
+                <input id="withdrawAmount"
+                       type="number"
+                       placeholder="Withdrawal Amount">
+
+                <input id="withdrawUPI"
+                       placeholder="UPI ID">
+
+                <div id="withdrawMessage"></div>
+
+                <button class="btn orange"
+                        onclick="submitWithdrawal()">
+                    Send Withdrawal Request
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- WALLET -->
+
+        <div id="userWalletSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Wallet</h2>
+
+                <div class="balance">
+                    ₹<span id="walletBalance">0</span>
+                </div>
+
+                <button class="btn green"
+                        onclick="showUserSection('recharge')">
+                    Recharge
+                </button>
+
+                <button class="btn orange"
+                        onclick="showUserSection('withdrawal')">
+                    Withdrawal
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div id="userNotificationsSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>All Notifications</h2>
+
+                <div id="userNotifications"></div>
+
+                <button class="btn gray"
+                        onclick="loadUserNotifications()">
+                    Refresh
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div id="userHistorySection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Recharge History</h2>
+                <div id="rechargeHistory"></div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Withdrawal History</h2>
+                <div id="withdrawalHistory"></div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Payment History</h2>
+                <div id="paymentHistory"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div id="userProfileSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Profile</h2>
+
+                <p>
+                    Username:
+                    <b id="profileUsername"></b>
+                </p>
+
+                <p>
+                    Name:
+                    <b id="profileName"></b>
+                </p>
+
+                <p>
+                    UID:
+                    <small id="profileUID"></small>
+                </p>
+
+            </div>
+
         </div>
 
     </div>
 
+</div>
 
-    <div class="box">
 
-        <h3>My Recharge Requests</h3>
+<!-- ================= ADMIN DASHBOARD ================= -->
 
-        <div id="myRechargeRequests">
-            Recharge Requests Load झालेल्या नाहीत.
+<div id="adminPage" class="page">
+
+    <div class="top">
+        <b>SM.OnlineNZ - Admin Panel</b>
+    </div>
+
+    <div class="nav">
+
+        <button onclick="showAdminSection('settings')">
+            Settings
+        </button>
+
+        <button onclick="showAdminSection('markets')">
+            Markets
+        </button>
+
+        <button onclick="showAdminSection('recharge')">
+            Recharge
+        </button>
+
+        <button onclick="showAdminSection('withdrawal')">
+            Withdrawal
+        </button>
+
+        <button onclick="showAdminSection('payments')">
+            Payments
+        </button>
+
+        <button onclick="showAdminSection('notifications')">
+            Notifications
+        </button>
+
+        <button onclick="showAdminSection('users')">
+            Users
+        </button>
+
+        <button onclick="adminLogout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <div class="center">
+
+        <!-- SETTINGS -->
+
+        <div id="adminSettingsSection">
+
+            <div class="card adminSection">
+
+                <h2>App Settings</h2>
+
+                <input id="settingAppName"
+                       placeholder="App Name">
+
+                <button class="btn"
+                        onclick="saveAppName()">
+                    Save App Name
+                </button>
+
+                <label>App Photo</label>
+
+                <input id="settingAppPhoto"
+                       type="file"
+                       accept="image/*">
+
+                <button class="btn"
+                        onclick="saveAppPhoto()">
+                    Save App Photo
+                </button>
+
+                <textarea id="settingInfo"
+                          placeholder="माहिती"></textarea>
+
+                <button class="btn"
+                        onclick="saveInfo()">
+                    Save माहिती
+                </button>
+
+                <input id="settingWhatsApp"
+                       placeholder="WhatsApp Number / Link">
+
+                <button class="btn"
+                        onclick="saveWhatsApp()">
+                    Save WhatsApp
+                </button>
+
+                <label>Scanner QR</label>
+
+                <input id="settingQR"
+                       type="file"
+                       accept="image/*">
+
+                <button class="btn"
+                        onclick="saveQR()">
+                    Save Scanner QR
+                </button>
+
+                <textarea id="settingBottom"
+                          placeholder="Bottom Text"></textarea>
+
+                <button class="btn"
+                        onclick="saveBottomText()">
+                    Save Bottom Text
+                </button>
+
+                <div id="settingsMessage"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN MARKETS -->
+
+        <div id="adminMarketsSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Markets</h2>
+
+                <div id="adminMarketsList"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN RECHARGE -->
+
+        <div id="adminRechargeSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Recharge Requests</h2>
+
+                <div id="adminRechargeList"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN WITHDRAWAL -->
+
+        <div id="adminWithdrawalSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Withdrawal Requests</h2>
+
+                <div id="adminWithdrawalList"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN PAYMENTS -->
+
+        <div id="adminPaymentsSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Payment History</h2>
+
+                <div id="adminPaymentsList"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN NOTIFICATIONS -->
+
+        <div id="adminNotificationsSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Send Notification</h2>
+
+                <select id="notificationTarget">
+                    <option value="all">
+                        All Users
+                    </option>
+                </select>
+
+                <input id="notificationTitle"
+                       placeholder="Notification Title">
+
+                <textarea id="notificationMessage"
+                          placeholder="Notification Message"></textarea>
+
+                <button class="btn purple"
+                        onclick="sendAdminNotification()">
+                    Send Notification
+                </button>
+
+                <div id="adminNotificationMessage"></div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Sent Notifications</h2>
+
+                <div id="adminNotificationsList"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- USERS -->
+
+        <div id="adminUsersSection"
+             class="hidden">
+
+            <div class="card">
+
+                <h2>Users</h2>
+
+                <div id="adminUsersList"></div>
+
+            </div>
+
         </div>
 
     </div>
 
-
-    <button
-        class="backBtn"
-        onclick="showPage(2)"
-    >
-        Back
-    </button>
-
 </div>
 
-</div>
-
-
-<!-- ================= PAGE 4 ================= -->
-
-<div id="page4" class="page">
-
-<div class="container">
-
-    <h2 id="marketTitle">
-        Market
-    </h2>
-
-
-    <div
-        id="marketPageList"
-        class="marketPageList"
-    >
-    </div>
-
-
-    <div
-        id="marketItemsBox"
-        class="box hidden"
-    >
-
-        <h3 id="marketPageTitle">
-            Page
-        </h3>
-
-        <div id="marketItems">
-        </div>
-
-    </div>
-
-
-    <div
-        id="payBox"
-        class="box hidden"
-    >
-
-        <h3>Payment</h3>
-
-        <div>
-            Selected:
-            <b id="selectedItemName"></b>
-        </div>
-
-        <input
-            id="paymentAmount"
-            type="number"
-            min="5"
-            placeholder="Payment Amount"
-        >
-
-        <button
-            class="payBtn"
-            onclick="makeMarketPayment()"
-        >
-            Pay
-        </button>
-
-        <div
-            id="paymentMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="paymentError"
-            class="errorMessage"
-        ></div>
-
-    </div>
-
-
-    <button
-        class="backBtn"
-        onclick="showPage(2)"
-    >
-        Back
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= WITHDRAWAL PAGE ================= -->
-
-<div
-    id="withdrawalPage"
-    class="page"
->
-
-<div class="container">
-
-    <h2>Withdrawal</h2>
-
-    <div class="walletBox">
-
-        Wallet Balance:
-        ₹<span id="withdrawWalletBalance">0</span>
-
-    </div>
-
-    <div class="box">
-
-        <input
-            id="withdrawAmount"
-            type="number"
-            placeholder="Withdrawal Amount"
-        >
-
-        <input
-            id="withdrawUPI"
-            type="text"
-            placeholder="UPI ID"
-        >
-
-        <button
-            class="withdrawBtn"
-            onclick="submitWithdrawal()"
-        >
-            Withdrawal Request
-        </button>
-
-        <div
-            id="withdrawMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="withdrawError"
-            class="errorMessage"
-        ></div>
-
-    </div>
-
-    <button
-        class="backBtn"
-        onclick="showPage(2)"
-    >
-        Back
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= RECHARGE PAGE ================= -->
-
-<div
-    id="rechargePage"
-    class="page"
->
-
-<div class="container">
-
-    <h2>Wallet Recharge</h2>
-
-    <div class="walletBox">
-
-        Current Wallet:
-        ₹<span id="rechargeWalletBalance">0</span>
-
-    </div>
-
-
-    <div class="box">
-
-        <h3>Payment Scanner</h3>
-
-        <img
-            id="rechargeScannerPhoto"
-            class="qrPhoto"
-            src=""
-            alt="QR"
-        >
-
-        <div
-            id="rechargeWhatsapp"
-            style="text-align:center;font-weight:bold;font-size:19px;"
-        >
-            WhatsApp नंबर
-        </div>
-
-    </div>
-
-
-    <div class="box">
-
-        <input
-            id="rechargeAmount"
-            type="number"
-            min="1"
-            placeholder="Recharge Amount"
-        >
-
-        <input
-            id="rechargeTxn"
-            type="text"
-            placeholder="Transaction ID"
-        >
-
-        <button
-            class="rechargeBtn"
-            onclick="submitRechargeRequest()"
-        >
-            Recharge Request
-        </button>
-
-        <div
-            id="rechargeMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="rechargeError"
-            class="errorMessage"
-        ></div>
-
-    </div>
-
-
-    <button
-        class="backBtn"
-        onclick="showPage(2)"
-    >
-        Back
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= ADMIN PANEL ================= -->
-
-<div
-    id="adminPanel"
-    class="page"
->
-
-<div class="container">
-
-    <h2>Admin Panel</h2>
-
-
-    <!-- APP SETTINGS -->
-
-    <div class="adminSection">
-
-        <h3>App Settings</h3>
-
-
-        <input
-            id="adminAppName"
-            type="text"
-            placeholder="App Name"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="updateAppName()"
-        >
-            App Name Update
-        </button>
-
-
-        <input
-            id="adminAppPhoto"
-            type="file"
-            accept="image/*"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="updateAppPhoto()"
-        >
-            App Photo Update
-        </button>
-
-
-        <textarea
-            id="adminInfoText"
-            rows="3"
-            placeholder="माहिती"
-        ></textarea>
-
-        <button
-            class="adminBtn"
-            onclick="updateInfoText()"
-        >
-            माहिती Update
-        </button>
-
-
-        <input
-            id="adminWhatsapp"
-            type="text"
-            placeholder="+91XXXXXXXXXX"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="updateWhatsapp()"
-        >
-            WhatsApp नंबर Update
-        </button>
-
-
-        <input
-            id="adminScannerPhoto"
-            type="file"
-            accept="image/*"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="updateScannerPhoto()"
-        >
-            Scanner Photo Update
-        </button>
-
-
-        <input
-            id="adminBottomText"
-            type="text"
-            placeholder="उदा. 123 Kumar"
-        >
-
-        <button
-            class="adminBtn"
-            onclick="updateBottomText()"
-        >
-            Box Update
-        </button>
-
-
-        <div
-            id="adminSettingsMessage"
-            class="message"
-        ></div>
-
-        <div
-            id="adminSettingsError"
-            class="errorMessage"
-        ></div>
-
-    </div>
-
-
-    <!-- MARKET MANAGEMENT -->
-
-    <div class="adminSection">
-
-        <h3>Market Management</h3>
-
-        <div id="adminMarkets">
-            Markets Load झालेले नाहीत.
-        </div>
-
-        <button
-            class="adminBtn"
-            onclick="refreshAdminData()"
-        >
-            Markets Refresh
-        </button>
-
-    </div>
-
-
-    <!-- MARKET PAGE / CATEGORY -->
-
-    <div class="adminSection">
-
-        <h3>Market Page / Category</h3>
-
-
-        <select
-            id="adminMarketSelect"
-            onchange="loadAdminPageList()"
-        >
-        </select>
-
-
-        <select
-            id="adminPageSelect"
-            onchange="loadAdminCategoryList()"
-        >
-        </select>
-
-
-        <div
-            id="adminCategoryList"
-        >
-            Category Load झालेली नाही.
-        </div>
-
-
-        <button
-            class="adminBtn"
-            onclick="addCategory()"
-        >
-            Add Category
-        </button>
-
-
-        <button
-            class="adminBtn"
-            onclick="saveCategories()"
-        >
-            Save Categories
-        </button>
-
-    </div>
-
-
-    <!-- WALLET RECHARGE REQUESTS -->
-
-    <div class="adminSection">
-
-        <h3>Wallet Recharge Requests</h3>
-
-        <button
-            class="adminBtn"
-            onclick="loadRechargeRequests()"
-        >
-            Requests Refresh
-        </button>
-
-        <div
-            id="adminRechargeRequests"
-        >
-            Requests Load झाल्या नाहीत.
-        </div>
-
-    </div>
-
-
-    <!-- ================= PAYMENT HISTORY ================= -->
-
-    <div class="adminSection">
-
-        <h3>Payment History</h3>
-
-        <button
-            class="adminBtn"
-            onclick="loadPaymentHistory()"
-        >
-            Payment Refresh
-        </button>
-
-        <div
-            id="paymentHistory"
-        >
-            Payment History Load झालेली नाही.
-        </div>
-
-    </div>
-
-
-    <button
-        class="adminBtn"
-        onclick="closeAdminPanel()"
-    >
-        Close
-    </button>
-
-
-    <button
-        class="backBtn"
-        onclick="adminLogout()"
-    >
-        Admin Logout
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= FIREBASE ================= -->
 
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+/* ============================================================
+   FIREBASE
+============================================================ */
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getFirestore,
     doc,
     getDoc,
     setDoc,
+    updateDoc,
     addDoc,
     collection,
     getDocs,
     query,
+    where,
     orderBy,
     serverTimestamp,
-    runTransaction
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    runTransaction,
+    increment
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
     getAuth,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
     onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+    signOut,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    EmailAuthProvider,
+    linkWithCredential,
+    updateProfile
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-import {
-    getMessaging,
-    getToken,
-    onMessage
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
-
-
-/* ================= FIREBASE CONFIG ================= */
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCNptG-KjGXiZC8m3aRqDRpLUsFczJIhlU",
+    "AIzaSyCNptG-KjGXiZC8m3aRqDRpLUsFczJIhlU",
 
     authDomain:
-        "sm-online-nz.firebaseapp.com",
+    "sm-online-nz.firebaseapp.com",
 
     projectId:
-        "sm-online-nz",
+    "sm-online-nz",
 
     storageBucket:
-        "sm-online-nz.firebasestorage.app",
+    "sm-online-nz.firebasestorage.app",
 
     messagingSenderId:
-        "926453668307",
+    "926453668307",
 
     appId:
-        "1:926453668307:web:eea1694724c0c2e73db726",
+    "1:926453668307:web:eea1694724c0c2e73db726",
 
     measurementId:
-        "G-81B2SYWD23"
-
+    "G-81B2SYWD23"
 };
 
 
-/* ================= FIREBASE START ================= */
+const app = initializeApp(firebaseConfig);
 
-const app =
-    initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const db =
-    getFirestore(app);
-
-const auth =
-    getAuth(app);
-
-const messaging =
-    getMessaging(app);
+const auth = getAuth(app);
 
 
-/* ================= WEB PUSH PUBLIC KEY ================= */
-
-const VAPID_KEY =
-    "BL5YB8zIjT8--Tbc7DO51_XAuE0ngiPXeLa7rPyGEdBdlsS1HsTQehDr1v0duqIX5cUtu-LMhxaGCHNRw7fmDwk";
-async function saveNotificationToken(){
-
-    try{
-
-        if(!currentUser) return;
-
-        if(!("Notification" in window)) return;
-
-        if(!("serviceWorker" in navigator)) return;
-
-        const permission = await Notification.requestPermission();
-
-        if(permission !== "granted"){
-            console.log("Notification permission denied");
-            return;
-        }
-
-        const registration =
-            await navigator.serviceWorker.register(
-                "./firebase-messaging-sw.js"
-            );
-
-        const token = await getToken(messaging,{
-            vapidKey: VAPID_KEY,
-            serviceWorkerRegistration: registration
-        });
-
-        if(!token){
-            console.log("FCM Token मिळाला नाही.");
-            return;
-        }
-
-        await setDoc(
-            doc(db,"fcmTokens",currentUser.uid),
-            {
-                userId: currentUser.uid,
-                token: token,
-                updatedAt: serverTimestamp()
-            },
-            {merge:true}
-        );
-
-        console.log("Notification Token Save झाला.");
-
-    }catch(error){
-
-        console.error(
-            "Notification Token Error:",
-            error
-        );
-
-    }
-}
-
-window.saveNotificationToken = saveNotificationToken;
-
-/* ================= ADMIN UID ================= */
+/* ============================================================
+   BASIC VARIABLES
+============================================================ */
 
 const ADMIN_UID =
     "gOmc0VeiakVc6aKikc7Km2uw1Du2";
 
-
-/* ================= STATE ================= */
+const MARKET_COUNT = 16;
 
 let currentUser = null;
 
-let isAdmin = false;
+let currentMarket = null;
 
-let selectedMarket = "1";
+let currentMarketPage = 1;
 
-let selectedMarketPage = "1";
+let confirmationResult = null;
 
-let selectedItem = "";
+let recaptchaVerifier = null;
 
+let appSettings = {};
 
-/* ================= 16 MARKETS ================= */
-
-let marketNames = {
-
-    "1":"Market 1",
-
-    "2":"Market 2",
-
-    "3":"Market 3",
-
-    "4":"Market 4",
-
-    "5":"Market 5",
-
-    "6":"Market 6",
-
-    "7":"Market 7",
-
-    "8":"Market 8",
-
-    "9":"Market 9",
-
-    "10":"Market 10",
-
-    "11":"Market 11",
-
-    "12":"Market 12",
-
-    "13":"Market 13",
-
-    "14":"Market 14",
-
-    "15":"Market 15",
-
-    "16":"Market 16"
-
-};
+let markets = [];
 
 
-/* ================= GLOBALS ================= */
-
-window.db =
-    db;
-
-window.auth =
-    auth;
-
-window.messaging =
-    messaging;
-
-window.VAPID_KEY =
-    VAPID_KEY;
-
-window.currentUser =
-    null;
-
-window.isAdmin =
-    false;
-
-window.runTransaction =
-    runTransaction;
-
-window.serverTimestamp =
-    serverTimestamp;
-
-window.doc =
-    doc;
-
-window.getDoc =
-    getDoc;
-
-window.setDoc =
-    setDoc;
-
-window.addDoc =
-    addDoc;
-
-window.getDocs =
-    getDocs;
-
-window.collection =
-    collection;
-
-window.marketNames =
-    marketNames;
-
-/* ================= HELPER ================= */
+/* ============================================================
+   HELPER
+============================================================ */
 
 function el(id){
-
     return document.getElementById(id);
-
 }
 
+function show(id){
+    el(id)?.classList.remove("hidden");
+}
 
-function showMessage(id,text){
+function hide(id){
+    el(id)?.classList.add("hidden");
+}
+
+function msg(id,text,type="message"){
 
     const box = el(id);
 
     if(!box) return;
 
-    box.textContent = text;
+    box.className = type;
 
-    box.style.display = "block";
+    box.innerHTML = text || "";
+
+}
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+function formatDate(timestamp){
+
+    if(!timestamp) return "-";
+
+    try{
+
+        const d =
+            timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+        return d.toLocaleString("en-IN");
+
+    }catch(e){
+
+        return "-";
+
+    }
+
+}
+
+function money(value){
+
+    return Number(value || 0).toFixed(2);
 
 }
 
 
-function hideMessage(id){
+/* ============================================================
+   PAGE CONTROL
+============================================================ */
 
-    const box = el(id);
-
-    if(!box) return;
-
-    box.style.display = "none";
-
-}
-
-
-function showError(id,text){
-
-    const box = el(id);
-
-    if(!box) return;
-
-    box.textContent = text;
-
-    box.style.display = "block";
-
-}
-
-
-function hideError(id){
-
-    const box = el(id);
-
-    if(!box) return;
-
-    box.style.display = "none";
-
-}
-
-
-/* ================= PAGE ================= */
-
-window.showPage =
-function(pageNumber){
+function hideAllPages(){
 
     document
-        .querySelectorAll(".page")
-        .forEach(function(page){
+    .querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
 
-            page.classList.remove("active");
+}
 
-        });
+window.goHome = function(){
+
+    hideAllPages();
+
+    el("homePage").classList.add("active");
+
+    loadSettings();
+
+};
 
 
-    const page =
-        el("page" + pageNumber);
+window.openUserLogin = function(){
 
-    if(page){
+    hideAllPages();
 
-        page.classList.add("active");
+    el("userLoginPage").classList.add("active");
+
+};
+
+
+window.openUserCreate = function(){
+
+    hideAllPages();
+
+    el("userCreatePage").classList.add("active");
+
+};
+
+
+window.openAdminLogin = function(){
+
+    hideAllPages();
+
+    el("adminLoginPage").classList.add("active");
+
+};
+
+
+/* ============================================================
+   SETTINGS
+============================================================ */
+
+async function loadSettings(){
+
+    try{
+
+        const snap =
+            await getDoc(doc(db,"settings","main"));
+
+        if(snap.exists()){
+
+            appSettings = snap.data();
+
+        }else{
+
+            appSettings = {
+
+                appName:"SM.OnlineNZ",
+
+                info:"SM.OnlineNZ",
+
+                whatsapp:"",
+
+                bottomText:"SM.OnlineNZ",
+
+                appPhoto:"",
+
+                qr:""
+
+            };
+
+            await setDoc(
+                doc(db,"settings","main"),
+                appSettings,
+                {merge:true}
+            );
+
+        }
+
+        applySettings();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+function applySettings(){
+
+    const name =
+        appSettings.appName || "SM.OnlineNZ";
+
+    const photo =
+        appSettings.appPhoto || "";
+
+    el("homeAppName").textContent = name;
+
+    el("userAppTitle").textContent = name;
+
+    el("homeInfoText").textContent =
+        appSettings.info || "";
+
+    el("homeWhatsApp").innerHTML =
+        appSettings.whatsapp
+        ? `<p><b>WhatsApp:</b>
+           ${escapeHTML(appSettings.whatsapp)}</p>`
+        : "";
+
+    el("homeBottomText").textContent =
+        appSettings.bottomText || name;
+
+    if(photo){
+
+        el("homeAppPhoto").src = photo;
+
+    }else{
+
+        el("homeAppPhoto").src =
+            "data:image/svg+xml;charset=UTF-8,"+
+            encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg"
+                 width="300" height="300">
+                 <rect width="100%" height="100%"
+                 fill="#dddddd"/>
+                 <text x="50%" y="50%"
+                 dominant-baseline="middle"
+                 text-anchor="middle"
+                 font-size="30"
+                 fill="#555">App Photo</text>
+                 </svg>`
+            );
+
+    }
+
+    if(appSettings.qr){
+
+        el("homeQR").src = appSettings.qr;
+
+        el("homeQR").classList.remove("hidden");
+
+        el("rechargeQR").src = appSettings.qr;
+
+        el("rechargeQR").classList.remove("hidden");
+
+    }else{
+
+        el("homeQR").classList.add("hidden");
+
+        el("rechargeQR").classList.add("hidden");
+
+    }
+
+    if(el("rechargeWhatsApp")){
+
+        el("rechargeWhatsApp").innerHTML =
+            appSettings.whatsapp
+            ? `<div class="infoBox">
+               Recharge WhatsApp:
+               <b>${escapeHTML(appSettings.whatsapp)}</b>
+               </div>`
+            : "";
+
+    }
+
+    if(el("settingAppName")){
+
+        el("settingAppName").value =
+            appSettings.appName || "";
+
+        el("settingInfo").value =
+            appSettings.info || "";
+
+        el("settingWhatsApp").value =
+            appSettings.whatsapp || "";
+
+        el("settingBottom").value =
+            appSettings.bottomText || "";
+
+    }
+
+}
+
+
+/* ============================================================
+   IMAGE TO DATA URL
+============================================================ */
+
+function readImage(file){
+
+    return new Promise((resolve,reject)=>{
+
+        const reader = new FileReader();
+
+        reader.onload =
+            ()=>resolve(reader.result);
+
+        reader.onerror =
+            reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* ============================================================
+   ADMIN SETTINGS
+============================================================ */
+
+window.saveAppName = async function(){
+
+    if(!isAdmin()) return;
+
+    const value =
+        el("settingAppName").value.trim();
+
+    if(!value){
+
+        msg(
+            "settingsMessage",
+            "App Name टाका.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    await setDoc(
+        doc(db,"settings","main"),
+        {appName:value},
+        {merge:true}
+    );
+
+    await loadSettings();
+
+    msg(
+        "settingsMessage",
+        "App Name update झाले.",
+        "success"
+    );
+
+};
+
+
+window.saveInfo = async function(){
+
+    if(!isAdmin()) return;
+
+    const value =
+        el("settingInfo").value;
+
+    await setDoc(
+        doc(db,"settings","main"),
+        {info:value},
+        {merge:true}
+    );
+
+    await loadSettings();
+
+    msg(
+        "settingsMessage",
+        "माहिती update झाली.",
+        "success"
+    );
+
+};
+
+
+window.saveWhatsApp = async function(){
+
+    if(!isAdmin()) return;
+
+    const value =
+        el("settingWhatsApp").value.trim();
+
+    await setDoc(
+        doc(db,"settings","main"),
+        {whatsapp:value},
+        {merge:true}
+    );
+
+    await loadSettings();
+
+    msg(
+        "settingsMessage",
+        "WhatsApp update झाले.",
+        "success"
+    );
+
+};
+
+
+window.saveBottomText = async function(){
+
+    if(!isAdmin()) return;
+
+    const value =
+        el("settingBottom").value;
+
+    await setDoc(
+        doc(db,"settings","main"),
+        {bottomText:value},
+        {merge:true}
+    );
+
+    await loadSettings();
+
+    msg(
+        "settingsMessage",
+        "Bottom Text update झाला.",
+        "success"
+    );
+
+};
+
+
+window.saveAppPhoto = async function(){
+
+    if(!isAdmin()) return;
+
+    const file =
+        el("settingAppPhoto").files[0];
+
+    if(!file){
+
+        msg(
+            "settingsMessage",
+            "Photo निवडा.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const data =
+            await readImage(file);
+
+        await setDoc(
+            doc(db,"settings","main"),
+            {appPhoto:data},
+            {merge:true}
+        );
+
+        await loadSettings();
+
+        msg(
+            "settingsMessage",
+            "App Photo update झाला.",
+            "success"
+        );
+
+    }catch(error){
+
+        msg(
+            "settingsMessage",
+            error.message,
+            "error"
+        );
 
     }
 
 };
 
 
-/* ================= BOX ================= */
+window.saveQR = async function(){
 
-window.openUserLogin =
-function(){
+    if(!isAdmin()) return;
 
-    el("userLoginBox")
-        ?.classList.remove("hidden");
+    const file =
+        el("settingQR").files[0];
 
-    el("adminLoginBox")
-        ?.classList.add("hidden");
+    if(!file){
 
-};
+        msg(
+            "settingsMessage",
+            "QR Photo निवडा.",
+            "error"
+        );
 
+        return;
 
-window.closeUserLogin =
-function(){
+    }
 
-    el("userLoginBox")
-        ?.classList.add("hidden");
+    try{
 
-};
+        const data =
+            await readImage(file);
 
-/* ================= USER CREATE BOX ================= */
+        await setDoc(
+            doc(db,"settings","main"),
+            {qr:data},
+            {merge:true}
+        );
 
-window.openUserCreate =
-function(){
+        await loadSettings();
 
-    el("userCreateBox")
-        ?.classList.remove("hidden");
+        msg(
+            "settingsMessage",
+            "Scanner QR update झाला.",
+            "success"
+        );
 
-    el("userLoginBox")
-        ?.classList.add("hidden");
+    }catch(error){
 
-    el("adminLoginBox")
-        ?.classList.add("hidden");
+        msg(
+            "settingsMessage",
+            error.message,
+            "error"
+        );
 
-};
-
-
-window.closeUserCreate =
-function(){
-
-    el("userCreateBox")
-        ?.classList.add("hidden");
-
-};
-
-/* ================= ADMIN LOGIN BOX ================= */
-
-window.openAdminLogin =
-function(){
-
-    el("adminLoginBox")
-        ?.classList.remove("hidden");
-
-    el("userLoginBox")
-        ?.classList.add("hidden");
-
-    el("userCreateBox")
-        ?.classList.add("hidden");
-
-};
-
-window.closeAdminLogin =
-function(){
-
-    el("adminLoginBox")
-        ?.classList.add("hidden");
+    }
 
 };
 
 
-/* ================= CREATE USER ================= */
+/* ============================================================
+   ADMIN CHECK
+============================================================ */
 
-window.createUser =
-async function(){
+function isAdmin(){
 
-    hideMessage("userCreateMessage");
-    hideError("userCreateError");
+    return currentUser &&
+           currentUser.uid === ADMIN_UID;
 
-    const mobile =
-        el("createMobile")?.value.trim();
+}
+
+
+/* ============================================================
+   USER LOGIN
+============================================================ */
+
+window.userLogin = async function(){
+
+    msg("loginMessage","");
 
     const username =
-        el("createUsername")?.value.trim();
+        el("loginUsername").value.trim();
 
     const password =
-        el("createPassword")?.value;
+        el("loginPassword").value;
 
-    const confirmPassword =
-        el("createConfirmPassword")?.value;
+    if(!username || !password){
 
-    if(
-        !mobile ||
-        !username ||
-        !password ||
-        !confirmPassword
-    ){
-
-        showError(
-            "userCreateError",
-            "सर्व माहिती भरा."
+        msg(
+            "loginMessage",
+            "Username आणि Password टाका.",
+            "error"
         );
 
         return;
+
     }
 
-    if(password !== confirmPassword){
+    try{
 
-        showError(
-            "userCreateError",
-            "Password आणि Confirm Password समान नाहीत."
+        const usernameSnap =
+            await getDoc(
+                doc(db,"usernames",username.toLowerCase())
+            );
+
+        if(!usernameSnap.exists()){
+
+            msg(
+                "loginMessage",
+                "Username सापडला नाही.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        const data =
+            usernameSnap.data();
+
+        const uid =
+            data.uid;
+
+        const loginEmail =
+            uid + "@sm-online-nz.local";
+
+        await signInWithEmailAndPassword(
+            auth,
+            loginEmail,
+            password
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        msg(
+            "loginMessage",
+            "Username किंवा Password तपासा.",
+            "error"
+        );
+
+    }
+
+};
+
+
+/* ============================================================
+   USER CREATE OTP
+============================================================ */
+
+async function setupRecaptcha(){
+
+    try{
+
+        if(recaptchaVerifier){
+
+            recaptchaVerifier.clear();
+
+        }
+
+        recaptchaVerifier =
+            new RecaptchaVerifier(
+                auth,
+                "recaptcha-container",
+                {
+                    size:"normal"
+                }
+            );
+
+        await recaptchaVerifier.render();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+window.sendOTP = async function(){
+
+    const phone =
+        el("createPhone").value.trim();
+
+    if(!phone){
+
+        alert("Mobile Number टाका.");
+
+        return;
+
+    }
+
+    let formattedPhone = phone;
+
+    if(!formattedPhone.startsWith("+")){
+
+        if(formattedPhone.startsWith("0")){
+
+            formattedPhone =
+                "+91" +
+                formattedPhone.substring(1);
+
+        }else{
+
+            formattedPhone =
+                "+91" +
+                formattedPhone;
+
+        }
+
+    }
+
+    try{
+
+        await setupRecaptcha();
+
+        confirmationResult =
+            await signInWithPhoneNumber(
+                auth,
+                formattedPhone,
+                recaptchaVerifier
+            );
+
+        hide("createStep1");
+
+        show("createStep2");
+
+        alert("OTP पाठवला आहे.");
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "OTP पाठवता आला नाही: "+
+            error.message
+        );
+
+    }
+
+};
+
+
+window.verifyOTP = async function(){
+
+    const otp =
+        el("createOTP").value.trim();
+
+    if(!otp){
+
+        alert("OTP टाका.");
+
+        return;
+
+    }
+
+    try{
+
+        await confirmationResult.confirm(otp);
+
+        hide("createStep2");
+
+        show("createStep3");
+
+        alert("OTP Verified.");
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("OTP चुकीचा आहे.");
+
+    }
+
+};
+
+
+window.finishUserCreate = async function(){
+
+    const username =
+        el("createUsername")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const password =
+        el("createPassword").value;
+
+    const password2 =
+        el("createPassword2").value;
+
+    const name =
+        el("createName").value.trim();
+
+    if(!username ||
+       !password ||
+       !password2){
+
+        msg(
+            "createMessage",
+            "सर्व माहिती भरा.",
+            "error"
         );
 
         return;
+
+    }
+
+    if(password !== password2){
+
+        msg(
+            "createMessage",
+            "Password जुळत नाही.",
+            "error"
+        );
+
+        return;
+
     }
 
     if(password.length < 6){
 
-        showError(
-            "userCreateError",
-            "Password किमान 6 अक्षरांचा असावा."
-        );
-
-        return;
-    }
-
-    const email =
-        username.toLowerCase() +
-        "@sm-online-nz.firebaseapp.com";
-
-    try{
-
-        const result =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-        currentUser =
-            result.user;
-
-        window.currentUser =
-            currentUser;
-
-        isAdmin =
-            currentUser.uid === ADMIN_UID;
-
-        window.isAdmin =
-            isAdmin;
-
-        showMessage(
-            "userCreateMessage",
-            "User तयार झाला."
-        );
-
-    }catch(error){
-
-        console.error(
-            "User Create Error:",
-            error
-        );
-
-        showError(
-            "userCreateError",
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= USER LOGIN ================= */
-
-window.userLogin =
-async function(){
-
-    hideMessage("userLoginMessage");
-    hideError("userLoginError");
-
-    const username =
-        el("userEmail")?.value.trim();
-
-    const password =
-        el("userPassword")?.value;
-
-    if(!username || !password){
-
-        showError(
-            "userLoginError",
-            "Username आणि Password भरा."
-        );
-
-        return;
-    }
-
-    const email =
-        username.toLowerCase() +
-        "@sm-online-nz.firebaseapp.com";
-
-    try{
-
-        const result =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-        currentUser =
-            result.user;
-
-        window.currentUser =
-            currentUser;
-
-        isAdmin =
-            currentUser.uid === ADMIN_UID;
-
-        window.isAdmin =
-            isAdmin;
-const adminBtn =
-    el("page2AdminLoginBtn");
-
-if(adminBtn){
-
-    adminBtn.style.display = "none";
-
-}
-        showMessage(
-            "userLoginMessage",
-            "User Login झाले."
-        );
-
-        await loadOnlineData();
-
-        await loadMarkets();
-
-        await loadWallet();
-
-        setTimeout(function(){
-
-            el("userLoginBox")
-                ?.classList.add("hidden");
-
-            showPage(2);
-
-        },500);
-
-    }catch(error){
-
-        console.error(
-            "User Login Error:",
-            error 
-        );
-
-        showError(
-            "userLoginError",
-            "Username किंवा Password तपासा."
-        );
-
-    }
-
-};
-window.adminLogin =
-async function(){
-
-    hideMessage("adminLoginMessage");
-
-    hideError("adminLoginError");
-
-
-    const email =
-        el("adminEmail")?.value.trim();
-
-    const password =
-        el("adminPassword")?.value;
-
-
-    if(!email || !password){
-
-        showError(
-            "adminLoginError",
-            "Admin Email आणि Password भरा."
+        msg(
+            "createMessage",
+            "Password किमान 6 अक्षरांचा असावा.",
+            "error"
         );
 
         return;
 
     }
 
-
     try{
 
-        const result =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
+        const usernameRef =
+            doc(
+                db,
+                "usernames",
+                username
             );
 
+        const usernameSnap =
+            await getDoc(usernameRef);
 
-        currentUser =
-            result.user;
+        if(usernameSnap.exists()){
 
-        window.currentUser =
-            currentUser;
-
-
-        isAdmin =
-            currentUser.uid === ADMIN_UID;
-
-        window.isAdmin =
-            isAdmin;
-
-
-        if(!isAdmin){
-
-            await signOut(auth);
-
-            currentUser = null;
-
-            window.currentUser = null;
-
-            isAdmin = false;
-
-            window.isAdmin = false;
-
-
-            showError(
-                "adminLoginError",
-                "हे Admin Account नाही."
+            msg(
+                "createMessage",
+                "हा Username आधीच आहे.",
+                "error"
             );
 
             return;
 
         }
 
+        const user =
+            auth.currentUser;
 
-        showMessage(
-            "adminLoginMessage",
-            "Admin Login झाले."
+        if(!user){
+
+            msg(
+                "createMessage",
+                "OTP पुन्हा verify करा.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        const credential =
+            EmailAuthProvider.credential(
+                user.uid + "@sm-online-nz.local",
+                password
+            );
+
+        await linkWithCredential(
+            user,
+            credential
         );
 
+        if(name){
 
-        el("adminPanel")
-            ?.classList.add("show");
+            await updateProfile(
+                user,
+                {displayName:name}
+            );
 
+        }
 
-        await loadOnlineData();
-
-        await loadMarkets();
-
-        await loadAdminCategoryList();
-
-        await loadRechargeRequests();
-
-        await loadPaymentHistory();
-
-
-        setTimeout(function(){
-
-            el("adminLoginBox")
-                ?.classList.add("hidden");
-
-            showAdminPanel();
-
-        },500);
-
-
-    }catch(error){
-
-        console.error(
-            "Admin Login Error:",
-            error
+        await setDoc(
+            usernameRef,
+            {
+                uid:user.uid,
+                username:username,
+                createdAt:serverTimestamp()
+            }
         );
 
-
-        showError(
-            "adminLoginError",
-            "Email किंवा Password तपासा."
+        await setDoc(
+            doc(db,"users",user.uid),
+            {
+                uid:user.uid,
+                username:username,
+                name:name,
+                phone:user.phoneNumber || "",
+                wallet:0,
+                createdAt:serverTimestamp()
+            },
+            {merge:true}
         );
 
-    }
-
-};
-
-
-/* ================= SHOW ADMIN ================= */
-
-function showAdminPanel(){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
- 
-    el("adminPanel")
-        ?.classList.add("active");
-
-}
-
-
-window.showAdminPanel =
-showAdminPanel;
-
-
-/* ================= ADMIN LOGOUT ================= */
-
-window.adminLogout =
-async function(){
-
-    try{
+        alert(
+            "User Create झाले. आता Login करा."
+        );
 
         await signOut(auth);
 
+        goHome();
+
     }catch(error){
 
         console.error(error);
 
+        msg(
+            "createMessage",
+            error.message,
+            "error"
+        );
+
     }
 
-
-    currentUser = null;
-
-    window.currentUser = null;
-
-    isAdmin = false;
-
-    window.isAdmin = false;
-
-
-    el("adminPanel")
-        ?.classList.remove("show");
-
-    el("adminPanel")
-        ?.classList.remove("active");
-
-
-    showPage(1);
-
 };
 
 
-/* ================= CLOSE ADMIN PANEL ================= */
+/* ============================================================
+   ADMIN LOGIN
+============================================================ */
 
-window.closeAdminPanel =
-function(){
+window.adminLogin = async function(){
 
-    el("adminPanel")
-        ?.classList.remove("show");
+    msg("adminLoginMessage","");
 
-    el("adminPanel")
-        ?.classList.remove("active");
+    const email =
+        el("adminEmail").value.trim();
 
-    showPage(1);
+    const password =
+        el("adminPassword").value;
 
-};
+    if(!email || !password){
 
+        msg(
+            "adminLoginMessage",
+            "Email आणि Password टाका.",
+            "error"
+        );
 
-/* ================= ONLINE DATA ================= */
+        return;
 
-async function loadOnlineData(){
+    }
 
     try{
 
-        const snap =
-            await getDoc(
-                doc(
-                    db,
-                    "settings",
-                    "main"
-                )
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        if(auth.currentUser.uid !== ADMIN_UID){
+
+            await signOut(auth);
+
+            msg(
+                "adminLoginMessage",
+                "हे Admin Account नाही.",
+                "error"
             );
 
+        }
 
-        if(!snap.exists()){
+    }catch(error){
+
+        msg(
+            "adminLoginMessage",
+            "Admin Email किंवा Password तपासा.",
+            "error"
+        );
+
+    }
+
+};
+
+
+/* ============================================================
+   AUTH STATE
+============================================================ */
+
+onAuthStateChanged(
+    auth,
+    async user=>{
+
+        if(!user){
+
+            currentUser = null;
 
             return;
 
         }
 
+        currentUser = user;
 
-        const data =
-            snap.data();
+        if(user.uid === ADMIN_UID){
 
+            openAdminDashboard();
 
-        if(data.appName){
+        }else{
 
-            el("appName").textContent =
-                data.appName;
-
-            el("adminAppName").value =
-                data.appName;
+            openUserDashboard();
 
         }
-
-
-        if(data.appPhoto){
-
-            el("appPhoto").src =
-                data.appPhoto;
-
-        }
-
-
-        if(data.infoText){
-
-            if(el("adminInfoText")){
-
-                el("adminInfoText").value =
-                    data.infoText;
-
-            }
-
-        }
-
-
-        if(data.whatsapp){
-
-            el("whatsappNumber").textContent =
-                data.whatsapp;
-
-            el("rechargeWhatsapp").textContent =
-                data.whatsapp;
-
-            if(el("adminWhatsapp")){
-
-                el("adminWhatsapp").value =
-                    data.whatsapp;
-
-            }
-
-        }
-
-
-        if(data.scannerPhoto){
-
-            el("scannerPhoto").src =
-                data.scannerPhoto;
-
-            el("rechargeScannerPhoto").src =
-                data.scannerPhoto;
-
-        }
-
-
-        if(data.bottomText){
-
-            if(el("adminBottomText")){
-
-                el("adminBottomText").value =
-                    data.bottomText;
-
-            }
-
-        }
-
-
-    }catch(error){
-
-        console.error(
-            "Load Online Data Error:",
-            error
-        );
 
     }
+);
+
+
+/* ============================================================
+   USER DASHBOARD
+============================================================ */
+
+async function openUserDashboard(){
+
+    hideAllPages();
+
+    el("userPage")
+    .classList
+    .add("active");
+
+    await loadSettings();
+
+    await loadUserData();
+
+    await loadMarkets();
+
+    showUserSection("markets");
 
 }
 
 
-window.loadOnlineData =
-loadOnlineData;
+async function loadUserData(){
 
+    if(!currentUser) return;
 
-/* ================= APP NAME UPDATE ================= */
+    const snap =
+        await getDoc(
+            doc(db,"users",currentUser.uid)
+        );
 
-window.updateAppName =
-async function(){
+    let data = {};
 
-    if(!isAdmin){
+    if(snap.exists()){
 
-        alert("फक्त Admin update करू शकतो.");
+        data = snap.data();
 
-        return;
+    }else{
+
+        data = {
+            uid:currentUser.uid,
+            username:"",
+            name:currentUser.displayName || "",
+            wallet:0
+        };
+
+        await setDoc(
+            doc(db,"users",currentUser.uid),
+            data,
+            {merge:true}
+        );
 
     }
 
+    const wallet =
+        Number(data.wallet || 0);
 
-    const value =
-        el("adminAppName")
-            ?.value.trim();
+    el("userBalanceTop").textContent =
+        money(wallet);
+
+    el("walletBalance").textContent =
+        money(wallet);
+
+    el("withdrawBalance").textContent =
+        money(wallet);
+
+    el("profileUsername").textContent =
+        data.username || "-";
+
+    el("profileName").textContent =
+        data.name || "-";
+
+    el("profileUID").textContent =
+        currentUser.uid;
+
+}
 
 
-    if(!value){
+window.showUserSection = async function(section){
 
-        alert("App Name भरा.");
+    [
+        "userMarketsSection",
+        "userRechargeSection",
+        "userWithdrawalSection",
+        "userWalletSection",
+        "userNotificationsSection",
+        "userHistorySection",
+        "userProfileSection",
+        "marketPageSection"
+    ].forEach(hide);
 
-        return;
+    if(section === "markets"){
+
+        show("userMarketsSection");
+
+        await loadMarkets();
 
     }
 
+    if(section === "recharge"){
+
+        show("userRechargeSection");
+
+        await loadSettings();
+
+    }
+
+    if(section === "withdrawal"){
+
+        show("userWithdrawalSection");
+
+        await loadUserData();
+
+    }
+
+    if(section === "wallet"){
+
+        show("userWalletSection");
+
+        await loadUserData();
+
+    }
+
+    if(section === "notifications"){
+
+        show("userNotificationsSection");
+
+        await loadUserNotifications();
+
+    }
+
+    if(section === "history"){
+
+        show("userHistorySection");
+
+        await loadUserHistory();
+
+    }
+
+    if(section === "profile"){
+
+        show("userProfileSection");
+
+        await loadUserData();
+
+    }
+
+};
+
+
+/* ============================================================
+   MARKETS
+============================================================ */
+
+async function loadMarkets(){
+
+    markets = [];
 
     try{
 
-        await setDoc(
+        const settingsSnap =
+            await getDoc(
+                doc(db,"settings","markets")
+            );
 
-            doc(
-                db,
-                "settings",
-                "main"
-            ),
+        if(settingsSnap.exists()){
 
-            {
-                appName:value
-            },
+            const data =
+                settingsSnap.data();
 
-            {
-                merge:true
+            if(Array.isArray(data.markets)){
+
+                markets = data.markets;
+
             }
 
-        );
-
-
-        el("appName").textContent =
-            value;
-
-
-        showMessage(
-            "adminSettingsMessage",
-            "नाव update झाले."
-        );
-
+        }
 
     }catch(error){
 
         console.error(error);
 
-        showError(
-            "adminSettingsError",
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= APP PHOTO UPDATE ================= */
-
-window.updateAppPhoto =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
     }
 
 
-    const file =
-        el("adminAppPhoto")
-            ?.files?.[0];
+    for(let i=1;i<=MARKET_COUNT;i++){
 
-
-    if(!file){
-
-        alert("Photo select करा.");
-
-        return;
-
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-    async function(){
-
-        try{
-
-            const dataUrl =
-                reader.result;
-
-
-            await setDoc(
-
-                doc(
-                    db,
-                    "settings",
-                    "main"
-                ),
-
-                {
-                    appPhoto:dataUrl
-                },
-
-                {
-                    merge:true
-                }
-
+        const existing =
+            markets.find(
+                m=>m.id === "market"+i
             );
 
+        if(!existing){
 
-            el("appPhoto").src =
-                dataUrl;
+            markets.push({
 
+                id:"market"+i,
 
-            showMessage(
-                "adminSettingsMessage",
-                "Photo सेव झाला."
-            );
+                name:"Market "+i,
 
+                openTime:"09:00",
 
-        }catch(error){
+                closeTime:"21:00",
 
-            console.error(error);
+                enabled:true
 
-            showError(
-                "adminSettingsError",
-                error.message
-            );
+            });
 
         }
 
-    };
-
-
-    reader.readAsDataURL(file);
-
-};
-
-
-/* ================= INFO UPDATE ================= */
-
-window.updateInfoText =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
     }
 
 
-    const value =
-        el("adminInfoText")
-            ?.value || "";
-
-
-    try{
-
-        await setDoc(
-
-            doc(
-                db,
-                "settings",
-                "main"
-            ),
-
-            {
-                infoText:value
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        showMessage(
-            "adminSettingsMessage",
-            "माहिती update झाली."
-        );
-
-
-    }catch(error){
-
-        showError(
-            "adminSettingsError",
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= WHATSAPP UPDATE ================= */
-
-window.updateWhatsapp =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
-    }
-
-
-    const value =
-        el("adminWhatsapp")
-            ?.value.trim();
-
-
-    if(!value){
-
-        alert("WhatsApp नंबर भरा.");
-
-        return;
-
-    }
-
-
-    try{
-
-        await setDoc(
-
-            doc(
-                db,
-                "settings",
-                "main"
-            ),
-
-            {
-                whatsapp:value
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        el("whatsappNumber").textContent =
-            value;
-
-        el("rechargeWhatsapp").textContent =
-            value;
-
-
-        showMessage(
-            "adminSettingsMessage",
-            "WhatsApp नंबर update झाला."
-        );
-
-
-    }catch(error){
-
-        showError(
-            "adminSettingsError",
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= SCANNER UPDATE ================= */
-
-window.updateScannerPhoto =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
-    }
-
-
-    const file =
-        el("adminScannerPhoto")
-            ?.files?.[0];
-
-
-    if(!file){
-
-        alert("Scanner Photo select करा.");
-
-        return;
-
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-    async function(){
-
-        try{
-
-            const dataUrl =
-                reader.result;
-
-
-            await setDoc(
-
-                doc(
-                    db,
-                    "settings",
-                    "main"
-                ),
-
-                {
-                    scannerPhoto:dataUrl
-                },
-
-                {
-                    merge:true
-                }
-
-            );
-
-
-            el("scannerPhoto").src =
-                dataUrl;
-
-            el("rechargeScannerPhoto").src =
-                dataUrl;
-
-
-            showMessage(
-                "adminSettingsMessage",
-                "Scanner Photo update झाला."
-            );
-
-
-        }catch(error){
-
-            showError(
-                "adminSettingsError",
-                error.message
-            );
-
-        }
-
-    };
-
-
-    reader.readAsDataURL(file);
-
-};
-
-
-/* ================= BOTTOM TEXT UPDATE ================= */
-
-window.updateBottomText =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
-    }
-
-
-    const value =
-        el("adminBottomText")
-            ?.value || "";
-
-
-    try{
-
-        await setDoc(
-
-            doc(
-                db,
-                "settings",
-                "main"
-            ),
-
-            {
-                bottomText:value
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        showMessage(
-            "adminSettingsMessage",
-            "Box update झाला."
-        );
-
-
-    }catch(error){
-
-        showError(
-            "adminSettingsError",
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= MARKETS ================= */
-
-async function loadMarkets(){
-
-    try{
-
-        const snap =
-            await getDoc(
-
-                doc(
-                    db,
-                    "settings",
-                    "main"
-                )
-
-            );
-
-
-        if(
-            snap.exists() &&
-            snap.data().marketNames
-        ){
-
-            marketNames =
-                snap.data().marketNames;
-
-            window.marketNames =
-                marketNames;
-
-        }
-
-
-        renderMarkets();
+    markets.sort(
+        (a,b)=>
+        Number(
+            a.id.replace("market","")
+        )
+        -
+        Number(
+            b.id.replace("market","")
+        )
+    );
+
+
+    renderMarkets();
+
+    if(isAdmin()){
 
         renderAdminMarkets();
-
-        renderAdminMarketSelect();
-
-
-    }catch(error){
-
-        console.error(
-            "Load Markets Error:",
-            error
-        );
 
     }
 
 }
 
 
-window.loadMarkets =
-loadMarkets;
+function isMarketOpen(market){
 
+    if(market.enabled === false){
 
-/* ================= RENDER MARKETS ================= */
+        return false;
+
+    }
+
+    const now =
+        new Date();
+
+    const current =
+        now.getHours()*60 +
+        now.getMinutes();
+
+    const [oh,om] =
+        String(market.openTime || "09:00")
+        .split(":")
+        .map(Number);
+
+    const [ch,cm] =
+        String(market.closeTime || "21:00")
+        .split(":")
+        .map(Number);
+
+    const open =
+        oh*60+om;
+
+    const close =
+        ch*60+cm;
+
+    return current >= open &&
+           current <= close;
+
+}
+
 
 function renderMarkets(){
 
@@ -2523,421 +2375,353 @@ function renderMarkets(){
 
     if(!box) return;
 
-
     box.innerHTML = "";
 
+    markets.forEach(market=>{
 
-    for(
-        let i=1;
-        i<=16;
-        i++
-    ){
+        const open =
+            isMarketOpen(market);
 
-        const button =
-            document.createElement("button");
+        const div =
+            document.createElement("div");
 
+        div.className =
+            "marketBox " +
+            (!open ? "closed" : "");
 
-        button.className =
-            "marketBtn";
+        div.innerHTML = `
 
+            <div class="marketName">
+                ${escapeHTML(market.name)}
+            </div>
 
-        button.textContent =
-            marketNames[String(i)] ||
-            ("Market " + i);
+            <div class="marketTime">
+                ${escapeHTML(market.openTime || "09:00")}
+                -
+                ${escapeHTML(market.closeTime || "21:00")}
+            </div>
 
+            <div class="${open
+                ? "statusOpen"
+                : "statusClosed"}">
 
-        button.onclick =
-        function(){
+                ${open ? "OPEN" : "CLOSED"}
 
-            openMarket(String(i));
+            </div>
 
-        };
+            <button
+                class="btn ${open ? "" : "gray"}"
+                ${open ? "" : "disabled"}
+                onclick="openMarket('${market.id}')">
 
+                ${open ? "Open Market" : "Market Closed"}
 
-        box.appendChild(button);
+            </button>
 
-    }
+        `;
+
+        box.appendChild(div);
+
+    });
 
 }
 
 
-/* ================= OPEN MARKET ================= */
+window.openMarket = async function(id){
 
-window.openMarket =
-function(marketId){
+    const market =
+        markets.find(
+            m=>m.id === id
+        );
 
-    selectedMarket =
-        String(marketId);
+    if(!market) return;
 
-    window.selectedMarket =
-        selectedMarket;
+    if(!isMarketOpen(market)){
 
-
-    el("marketTitle").textContent =
-        marketNames[selectedMarket] ||
-        ("Market " + selectedMarket);
-
-
-    showPage(4);
-
-    renderMarketPages();
-
-};
-
-
-/* ================= MARKET PAGES ================= */
-
-async function renderMarketPages(){
-
-    const box =
-        el("marketPageList");
-
-    if(!box) return;
-
-
-    box.innerHTML =
-        "Loading...";
-
-
-    box.innerHTML = "";
-
-
-    for(
-        let i=1;
-        i<=4;
-        i++
-    ){
-
-        const button =
-            document.createElement("button");
-
-
-        button.className =
-            "marketPageBtn";
-
-
-        button.textContent =
-            "Page " + i;
-
-
-        button.onclick =
-        function(){
-
-            openMarketPage(
-                selectedMarket,
-                String(i)
-            );
-
-        };
-
-
-        box.appendChild(button);
-
-    }
-
-}
-
-
-/* ================= OPEN MARKET PAGE ================= */
-
-window.openMarketPage =
-async function(
-    marketId,
-    pageId
-){
-
-    selectedMarket =
-        String(marketId);
-
-    selectedMarketPage =
-        String(pageId);
-
-
-    window.selectedMarket =
-        selectedMarket;
-
-    window.selectedMarketPage =
-        selectedMarketPage;
-
-
-    const box =
-        el("marketItemsBox");
-
-    const title =
-        el("marketPageTitle");
-
-    const itemsBox =
-        el("marketItems");
-
-
-    if(!box || !itemsBox){
+        alert("हा Market सध्या बंद आहे.");
 
         return;
 
     }
 
+    currentMarket = market;
 
-    box.classList.remove("hidden");
+    currentMarketPage = 1;
+
+    hide("userMarketsSection");
+
+    show("marketPageSection");
+
+    await loadMarketPage();
+
+};
 
 
-    title.textContent =
-        "Page " + pageId;
+window.backToMarkets = function(){
+
+    hide("marketPageSection");
+
+    show("userMarketsSection");
+
+};
 
 
-    itemsBox.innerHTML =
-        "Loading...";
+async function loadMarketPage(){
 
+    if(!currentMarket) return;
+
+    el("selectedMarketTitle")
+        .textContent =
+        currentMarket.name;
+
+    const open =
+        isMarketOpen(currentMarket);
+
+    el("selectedMarketStatus")
+        .innerHTML =
+        `<div class="${open
+            ? "success"
+            : "error"}">
+            ${open ? "Market OPEN" : "Market CLOSED"}
+        </div>`;
+
+    el("marketPageTitle")
+        .textContent =
+        "Page " + currentMarketPage;
+
+    const id =
+        currentMarket.id +
+        "_page" +
+        currentMarketPage;
 
     try{
 
         const snap =
             await getDoc(
-
-                doc(
-                    db,
-                    "marketPages",
-                    selectedMarket +
-                    "_page" +
-                    selectedMarketPage
-                )
-
+                doc(db,"marketPages",id)
             );
 
+        let categories = [];
 
-        itemsBox.innerHTML = "";
+        if(snap.exists()){
 
+            const data =
+                snap.data();
 
-        if(
-            !snap.exists()
-        ){
-
-            itemsBox.innerHTML =
-                "<div class='smallText'>या Page मध्ये Category नाही.</div>";
-
-            return;
-
-        }
-
-
-        const data =
-            snap.data();
-
-
-        const categories =
-            Array.isArray(data.categories)
+            categories =
+                Array.isArray(data.categories)
                 ? data.categories
                 : [];
 
-
-        if(categories.length === 0){
-
-            itemsBox.innerHTML =
-                "<div class='smallText'>या Page मध्ये Category नाही.</div>";
-
-            return;
-
         }
 
-
-        categories.forEach(
-        function(name){
-
-            const button =
-                document.createElement("button");
-
-
-            button.className =
-                "itemBtn";
-
-
-            button.textContent =
-                name;
-
-
-            button.onclick =
-            function(){
-
-                selectMarketItem(name);
-
-            };
-
-
-            itemsBox.appendChild(button);
-
-        });
-
+        renderCategories(categories);
 
     }catch(error){
 
         console.error(error);
 
-
-        itemsBox.innerHTML =
-            "<div class='smallText'>Category Load झाली नाही.</div>";
+        el("categoriesContainer")
+            .innerHTML =
+            `<div class="error">
+            Categories load झाले नाहीत.
+            </div>`;
 
     }
 
-};
+}
 
 
-/* ================= SELECT ITEM ================= */
+function renderCategories(categories){
 
-window.selectMarketItem =
-function(name){
+    const box =
+        el("categoriesContainer");
 
-    selectedItem =
-        String(name);
+    box.innerHTML = "";
 
-    window.selectedItem =
-        selectedItem;
+    if(!categories.length){
 
-
-    el("selectedItemName").textContent =
-        selectedItem;
-
-
-    el("payBox")
-        ?.classList.remove("hidden");
-
-
-    el("paymentAmount").value =
-        "";
-
-    hideMessage("paymentMessage");
-
-    hideError("paymentError");
-
-};
-
-
-/* ================= WALLET ================= */
-
-async function loadWallet(){
-
-    if(!currentUser){
+        box.innerHTML =
+            `<div class="message">
+            या Page वर Category उपलब्ध नाही.
+            </div>`;
 
         return;
 
     }
 
+    categories.forEach((item,index)=>{
 
-    try{
+        let name = "";
 
-        const snap =
-            await getDoc(
+        let value = "";
 
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid
-                )
+        if(typeof item === "string"){
 
-            );
+            name = item;
 
+        }else{
 
-        let wallet =
-            0;
+            name =
+                item.name ||
+                item.title ||
+                item.category ||
+                ("Category "+(index+1));
 
-
-        if(snap.exists()){
-
-            wallet =
-                Number(
-                    snap.data().wallet || 0
-                );
+            value =
+                item.value ||
+                item.price ||
+                "";
 
         }
 
+        const div =
+            document.createElement("div");
 
-        el("walletBalance").textContent =
-            wallet;
-if(el("page2WalletBalance")){
-    el("page2WalletBalance").textContent =
-        wallet;
+        div.className =
+            "category";
+
+        div.innerHTML = `
+
+            <div class="categoryHeader">
+
+                <div>
+                    <b>
+                        ${escapeHTML(name)}
+                    </b>
+
+                    ${
+                        value
+                        ? `<div>₹${escapeHTML(value)}</div>`
+                        : ""
+                    }
+
+                </div>
+
+                <button
+                    class="smallBtn btn green"
+                    onclick="makeCategoryPayment(
+                        '${escapeHTML(name)}',
+                        '${escapeHTML(value)}'
+                    )">
+
+                    Pay
+
+                </button>
+
+            </div>
+
+        `;
+
+        box.appendChild(div);
+
+    });
+
 }
 
-        el("rechargeWalletBalance").textContent =
-            wallet;
 
+window.previousMarketPage =
+async function(){
 
-        el("withdrawWalletBalance").textContent =
-            wallet;
+    if(currentMarketPage > 1){
 
+        currentMarketPage--;
 
-    }catch(error){
-
-        console.error(
-            "Wallet Error:",
-            error
-        );
+        await loadMarketPage();
 
     }
 
-}
+};
 
 
-window.loadWallet =
-loadWallet;
-
-
-/* ================= MARKET PAYMENT ================= */
-
-window.makeMarketPayment =
+window.nextMarketPage =
 async function(){
 
-    hideMessage("paymentMessage");
+    if(currentMarketPage < 4){
 
-    hideError("paymentError");
+        currentMarketPage++;
 
+        await loadMarketPage();
+
+    }
+
+};
+
+
+/* ============================================================
+   PAYMENT
+============================================================ */
+
+window.makeCategoryPayment =
+async function(categoryName,value){
 
     if(!currentUser){
 
-        showError(
-            "paymentError",
-            "आधी User Login करा."
-        );
+        alert("Login करा.");
 
         return;
 
     }
-
 
     const amount =
-        Number(
-            el("paymentAmount")
-                ?.value || 0
-        );
+        Number(value);
 
+    if(!amount || amount <= 0){
 
-    const itemName =
-        window.selectedItem ||
-        selectedItem ||
-        "";
+        const input =
+            prompt(
+                "Payment Amount टाका:"
+            );
 
+        if(!input) return;
 
-    if(!itemName){
+        const entered =
+            Number(input);
 
-        showError(
-            "paymentError",
-            "Category select करा."
+        if(!entered || entered < 5){
+
+            alert("Minimum Payment ₹5 आहे.");
+
+            return;
+
+        }
+
+        await processPayment(
+            entered,
+            categoryName
         );
 
         return;
 
     }
-
 
     if(amount < 5){
 
-        showError(
-            "paymentError",
-            "कमीत कमी ₹5 Payment करा."
-        );
+        alert("Minimum Payment ₹5 आहे.");
 
         return;
 
     }
 
+    const ok =
+        confirm(
+            categoryName +
+            " साठी ₹" +
+            amount +
+            " Payment करायचे?"
+        );
+
+    if(!ok) return;
+
+    await processPayment(
+        amount,
+        categoryName
+    );
+
+};
+
+
+async function processPayment(amount,category){
 
     try{
 
@@ -2948,41 +2732,33 @@ async function(){
                 currentUser.uid
             );
 
-
         const paymentRef =
             doc(
-                collection(
-                    db,
-                    "payments"
-                )
+                collection(db,"payments")
             );
 
-
         await runTransaction(
-
             db,
-
-            async function(transaction){
+            async transaction=>{
 
                 const userSnap =
                     await transaction.get(
                         userRef
                     );
 
+                if(!userSnap.exists()){
 
-                let wallet =
-                    0;
-
-
-                if(userSnap.exists()){
-
-                    wallet =
-                        Number(
-                            userSnap.data().wallet || 0
-                        );
+                    throw new Error(
+                        "User account सापडले नाही."
+                    );
 
                 }
 
+                const data =
+                    userSnap.data();
+
+                const wallet =
+                    Number(data.wallet || 0);
 
                 if(wallet < amount){
 
@@ -2992,252 +2768,160 @@ async function(){
 
                 }
 
-
-                const newWallet =
-                    wallet - amount;
-
-
-                transaction.set(
-
+                transaction.update(
                     userRef,
-
                     {
-                        wallet:newWallet,
-                        updatedAt:serverTimestamp()
-                    },
-
-                    {
-                        merge:true
+                        wallet:
+                            wallet - amount
                     }
-
                 );
 
-
                 transaction.set(
-
                     paymentRef,
-
                     {
-
-                        userId:
+                        uid:
                             currentUser.uid,
 
-                        userEmail:
-                            currentUser.email || "",
+                        username:
+                            data.username || "",
 
-                        marketId:
-                            selectedMarket,
-
-                        marketName:
-                            marketNames[selectedMarket] ||
-                            ("Market " + selectedMarket),
-
-                        page:
-                            selectedMarketPage,
-
-                        itemName:
-                            itemName,
+                        category:
+                            category,
 
                         amount:
                             amount,
 
                         status:
-                            "Paid",
-
-                        type:
-                            "MarketPay",
+                            "completed",
 
                         createdAt:
                             serverTimestamp()
-
                     }
-
                 );
 
             }
-
         );
 
-
-        showMessage(
-            "paymentMessage",
-            "Payment झाले."
+        await createNotification(
+            currentUser.uid,
+            "Payment Successful",
+            "₹"+amount+
+            " payment "+category+
+            " साठी झाले."
         );
 
+        alert("Payment Successful.");
 
-        await loadWallet();
-
+        await loadUserData();
 
     }catch(error){
 
-        console.error(
-            "Payment Error:",
-            error
-        );
-
-
-        showError(
-            "paymentError",
-            error.message ||
-            "Payment झाले नाही."
-        );
+        alert(error.message);
 
     }
-
-};
-
-
-/* ================= RECHARGE ================= */
-
-window.openRechargePage =
-async function(){
-
-    await loadWallet();
-
-    showPageById(
-        "rechargePage"
-    );
-
-};
-
-
-function showPageById(id){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(function(page){
-
-            page.classList.remove("active");
-
-        });
-
-
-    el(id)
-        ?.classList.add("active");
 
 }
 
 
-window.showPageById =
-showPageById;
+/* ============================================================
+   RECHARGE
+============================================================ */
 
-
-/* ================= RECHARGE REQUEST ================= */
-
-window.submitRechargeRequest =
+window.submitRecharge =
 async function(){
-
-    hideMessage("rechargeMessage");
-
-    hideError("rechargeError");
-
-
-    if(!currentUser){
-
-        showError(
-            "rechargeError",
-            "आधी User Login करा."
-        );
-
-        return;
-
-    }
-
 
     const amount =
         Number(
-            el("rechargeAmount")
-                ?.value || 0
+            el("rechargeAmount").value
         );
 
+    const transactionId =
+        el("rechargeTransaction")
+        .value
+        .trim();
 
-    const txn =
-        el("rechargeTxn")
-            ?.value.trim();
+    if(!amount || amount < 200){
 
-
-    if(amount <= 0){
-
-        showError(
-            "rechargeError",
-            "Recharge Amount भरा."
-        );
-
-        return;
-
-    }
-
-
-    if(!txn){
-
-        showError(
-            "rechargeError",
-            "Transaction ID भरा."
+        msg(
+            "rechargeMessage",
+            "Minimum Recharge ₹200 आहे.",
+            "error"
         );
 
         return;
 
     }
 
+    if(!transactionId){
+
+        msg(
+            "rechargeMessage",
+            "Transaction ID / UTR टाका.",
+            "error"
+        );
+
+        return;
+
+    }
 
     try{
 
+        const userSnap =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+            );
+
+        const userData =
+            userSnap.exists()
+            ? userSnap.data()
+            : {};
+
         await addDoc(
-
-            collection(
-                db,
-                "walletRequests"
-            ),
-
+            collection(db,"walletRequests"),
             {
-
-                userId:
+                uid:
                     currentUser.uid,
 
-                userEmail:
-                    currentUser.email || "",
+                username:
+                    userData.username || "",
+
+                type:
+                    "recharge",
 
                 amount:
                     amount,
 
                 transactionId:
-                    txn,
+                    transactionId,
 
                 status:
-                    "Pending",
+                    "pending",
 
                 createdAt:
                     serverTimestamp()
-
             }
-
         );
 
-
-        showMessage(
+        msg(
             "rechargeMessage",
-            "Recharge Request पाठवली."
+            "Recharge Request पाठवली आहे. Admin approval नंतर Wallet मध्ये रक्कम जमा होईल.",
+            "success"
         );
 
+        el("rechargeAmount").value = "";
 
-        el("rechargeAmount").value =
-            "";
-
-        el("rechargeTxn").value =
-            "";
-
-
-        await loadMyRechargeRequests();
-
+        el("rechargeTransaction").value = "";
 
     }catch(error){
 
-        console.error(error);
-
-
-        showError(
-            "rechargeError",
-            error.message
+        msg(
+            "rechargeMessage",
+            error.message,
+            "error"
         );
 
     }
@@ -3245,668 +2929,118 @@ async function(){
 };
 
 
-/* ================= MY RECHARGE REQUESTS ================= */
-
-async function loadMyRechargeRequests(){
-
-    const box =
-        el("myRechargeRequests");
-
-    if(!box) return;
-
-
-    if(!currentUser){
-
-        box.innerHTML =
-            "User Login करा.";
-
-        return;
-
-    }
-
-
-    try{
-
-        const snap =
-            await getDocs(
-
-                collection(
-                    db,
-                    "walletRequests"
-                )
-
-            );
-
-
-        box.innerHTML = "";
-
-
-        let count = 0;
-
-
-        snap.forEach(
-        function(docSnap){
-
-            const data =
-                docSnap.data();
-
-
-            if(
-                data.userId !==
-                currentUser.uid
-            ){
-
-                return;
-
-            }
-
-
-            count++;
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "requestCard";
-
-
-            card.innerHTML =
-
-                "<b>₹" +
-                Number(data.amount || 0) +
-                "</b><br>" +
-
-                "Transaction: " +
-                (data.transactionId || "") +
-                "<br>" +
-
-                "Status: " +
-                (data.status || "Pending");
-
-
-            box.appendChild(card);
-
-        });
-
-
-        if(count === 0){
-
-            box.innerHTML =
-                "अजून Recharge Request नाही.";
-
-        }
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        box.innerHTML =
-            "Requests Load झाल्या नाहीत.";
-
-    }
-
-}
-
-
-window.loadMyRechargeRequests =
-loadMyRechargeRequests;
-
-
-/* ================= ADMIN MARKET RENDER ================= */
-
-function renderAdminMarkets(){
-
-    const box =
-        el("adminMarkets");
-
-    if(!box) return;
-
-
-    box.innerHTML = "";
-
-
-    for(
-        let i=1;
-        i<=16;
-        i++
-    ){
-
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.className =
-            "categoryRow";
-
-
-        const input =
-            document.createElement(
-                "input"
-            );
-
-
-        input.id =
-            "marketName_" + i;
-
-
-        input.value =
-            marketNames[String(i)] ||
-            ("Market " + i);
-
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.className =
-            "adminBtn";
-
-
-        button.textContent =
-            "Update";
-
-
-        button.onclick =
-        function(){
-
-            updateMarketName(
-                String(i)
-            );
-
-        };
-
-
-        row.appendChild(input);
-
-        row.appendChild(button);
-
-        box.appendChild(row);
-
-    }
-
-}
-
-
-/* ================= ADMIN MARKET SELECT ================= */
-
-function renderAdminMarketSelect(){
-
-    const select =
-        el("adminMarketSelect");
-
-    if(!select) return;
-
-
-    select.innerHTML = "";
-
-
-    for(
-        let i=1;
-        i<=16;
-        i++
-    ){
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-
-        option.value =
-            String(i);
-
-
-        option.textContent =
-            marketNames[String(i)] ||
-            ("Market " + i);
-
-
-        select.appendChild(option);
-
-    }
-
-
-    loadAdminPageList();
-
-}
-
-
-/* ================= UPDATE MARKET NAME ================= */
-
-window.updateMarketName =
-async function(id){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
-    }
-
-
-    const input =
-        el("marketName_" + id);
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-    const value =
-        input.value.trim();
-
-
-    if(!value){
-
-        alert("Market Name भरा.");
-
-        return;
-
-    }
-
-
-    try{
-
-        const oldNames =
-            {
-                ...(window.marketNames || marketNames)
-            };
-
-
-        oldNames[String(id)] =
-            value;
-
-
-        await setDoc(
-
-            doc(
-                db,
-                "settings",
-                "main"
-            ),
-
-            {
-                marketNames:
-                    oldNames
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        marketNames =
-            oldNames;
-
-        window.marketNames =
-            marketNames;
-
-
-        renderMarkets();
-
-        renderAdminMarketSelect();
-
-
-        alert(
-            "Market Name Update झाला."
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "Update झाले नाही: " +
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= ADMIN PAGE LIST ================= */
-
-window.loadAdminPageList =
+/* ============================================================
+   WITHDRAWAL
+============================================================ */
+
+window.submitWithdrawal =
 async function(){
 
-    const select =
-        el("adminPageSelect");
+    const amount =
+        Number(
+            el("withdrawAmount").value
+        );
 
-    if(!select) return;
+    const upi =
+        el("withdrawUPI")
+        .value
+        .trim();
 
+    if(!amount || amount <= 0){
 
-    select.innerHTML = "";
+        msg(
+            "withdrawMessage",
+            "Amount टाका.",
+            "error"
+        );
 
-
-    for(
-        let i=1;
-        i<=4;
-        i++
-    ){
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-
-        option.value =
-            String(i);
-
-
-        option.textContent =
-            "Page " + i;
-
-
-        select.appendChild(option);
+        return;
 
     }
 
+    if(!upi){
 
-    await loadAdminCategoryList();
+        msg(
+            "withdrawMessage",
+            "UPI ID टाका.",
+            "error"
+        );
 
-};
+        return;
 
-
-/* ================= ADMIN CATEGORY LIST ================= */
-
-window.loadAdminCategoryList =
-async function(){
-
-    const box =
-        el("adminCategoryList");
-
-    if(!box) return;
-
-
-    const market =
-        el("adminMarketSelect")
-            ?.value || "1";
-
-    const page =
-        el("adminPageSelect")
-            ?.value || "1";
-
-
-    box.innerHTML =
-        "Loading...";
-
+    }
 
     try{
 
         const snap =
             await getDoc(
-
                 doc(
                     db,
-                    "marketPages",
-                    market +
-                    "_page" +
-                    page
+                    "users",
+                    currentUser.uid
                 )
-
             );
 
+        const data =
+            snap.data();
 
-        box.innerHTML = "";
+        const wallet =
+            Number(data.wallet || 0);
 
+        if(amount > wallet){
 
-        let categories = [];
+            msg(
+                "withdrawMessage",
+                "Wallet Balance कमी आहे.",
+                "error"
+            );
 
+            return;
 
-        if(snap.exists()){
+        }
 
-            const data =
-                snap.data();
+        await addDoc(
+            collection(db,"walletRequests"),
+            {
+                uid:
+                    currentUser.uid,
 
+                username:
+                    data.username || "",
 
-            if(
-                Array.isArray(
-                    data.categories
-                )
-            ){
+                type:
+                    "withdrawal",
 
-                categories =
-                    data.categories;
+                amount:
+                    amount,
 
+                upi:
+                    upi,
+
+                status:
+                    "pending",
+
+                createdAt:
+                    serverTimestamp()
             }
+        );
 
-        }
+        msg(
+            "withdrawMessage",
+            "Withdrawal Request पाठवली आहे.",
+            "success"
+        );
 
+        el("withdrawAmount").value = "";
 
-        if(categories.length === 0){
-
-            categories =
-                ["Category 1"];
-
-        }
-
-
-        categories.forEach(
-        function(name,index){
-
-            createCategoryRow(
-                box,
-                name,
-                index
-            );
-
-        });
-
+        el("withdrawUPI").value = "";
 
     }catch(error){
 
-        console.error(error);
-
-
-        box.innerHTML =
-            "Category Load झाली नाही.";
-
-    }
-
-};
-
-
-/* ================= CREATE CATEGORY ROW ================= */
-
-function createCategoryRow(
-    box,
-    name,
-    index
-){
-
-    const row =
-        document.createElement(
-            "div"
-        );
-
-
-    row.className =
-        "categoryRow";
-
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.className =
-        "adminCategoryInput";
-
-
-    input.value =
-        name || "";
-
-
-    const remove =
-        document.createElement(
-            "button"
-        );
-
-
-    remove.className =
-        "backBtn";
-
-
-    remove.textContent =
-        "Remove";
-
-
-    remove.onclick =
-    function(){
-
-        row.remove();
-
-    };
-
-
-    row.appendChild(input);
-
-    row.appendChild(remove);
-
-    box.appendChild(row);
-
-}
-
-
-/* ================= ADD CATEGORY ================= */
-
-window.addCategory =
-function(){
-
-    const box =
-        el("adminCategoryList");
-
-    if(!box) return;
-
-
-    createCategoryRow(
-        box,
-        "",
-        box.children.length
-    );
-
-};
-
-
-/* ================= SAVE CATEGORIES ================= */
-
-window.saveCategories =
-async function(){
-
-    if(!isAdmin){
-
-        alert("फक्त Admin update करू शकतो.");
-
-        return;
-
-    }
-
-
-    const market =
-        el("adminMarketSelect")
-            ?.value || "1";
-
-
-    const page =
-        el("adminPageSelect")
-            ?.value || "1";
-
-
-    const inputs =
-        document.querySelectorAll(
-            ".adminCategoryInput"
-        );
-
-
-    const categories = [];
-
-
-    inputs.forEach(
-    function(input){
-
-        const value =
-            input.value.trim();
-
-
-        if(value){
-
-            categories.push(value);
-
-        }
-
-    });
-
-
-    try{
-
-        await setDoc(
-
-            doc(
-                db,
-                "marketPages",
-                market +
-                "_page" +
-                page
-            ),
-
-            {
-                categories:
-                    categories
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        alert(
-            "Categories Save झाल्या."
-        );
-
-
-        if(
-            selectedMarket === market &&
-            selectedMarketPage === page
-        ){
-
-            await openMarketPage(
-                market,
-                page
-            );
-
-        }
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        alert(
-            "Save झाले नाही: " +
-            error.message
+        msg(
+            "withdrawMessage",
+            error.message,
+            "error"
         );
 
     }
@@ -3914,207 +3048,365 @@ async function(){
 };
 
 
-/* ================= ADMIN RECHARGE REQUESTS ================= */
+/* ============================================================
+   USER HISTORY
+============================================================ */
 
-window.loadRechargeRequests =
-async function(){
+async function loadUserHistory(){
 
-    const box =
-        el("adminRechargeRequests");
+    if(!currentUser) return;
 
-    if(!box) return;
-
-
-    if(!isAdmin){
-
-        box.innerHTML =
-            "फक्त Admin Requests पाहू शकतो.";
-
-        return;
-
-    }
+    const uid =
+        currentUser.uid;
 
 
-    box.innerHTML =
+    const rechargeBox =
+        el("rechargeHistory");
+
+    const withdrawalBox =
+        el("withdrawalHistory");
+
+    const paymentBox =
+        el("paymentHistory");
+
+
+    rechargeBox.innerHTML =
+        "Loading...";
+
+    withdrawalBox.innerHTML =
+        "Loading...";
+
+    paymentBox.innerHTML =
         "Loading...";
 
 
     try{
 
-        const snap =
-            await getDocs(
-
-                collection(
-                    db,
-                    "walletRequests"
-                )
-
+        const q =
+            query(
+                collection(db,"walletRequests"),
+                where("uid","==",uid)
             );
 
+        const snap =
+            await getDocs(q);
 
-        box.innerHTML = "";
+        const recharge = [];
+
+        const withdrawal = [];
+
+        snap.forEach(docSnap=>{
+
+            const data =
+                docSnap.data();
+
+            if(data.type === "recharge"){
+
+                recharge.push(data);
+
+            }
+
+            if(data.type === "withdrawal"){
+
+                withdrawal.push(data);
+
+            }
+
+        });
+
+        recharge.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
+
+        withdrawal.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
 
 
-        const requests = [];
+        rechargeBox.innerHTML =
+            recharge.length
+            ? recharge.map(
+                x=>historyHTML(x)
+              ).join("")
+            : "No Recharge History";
 
 
-        snap.forEach(
-        function(docSnap){
+        withdrawalBox.innerHTML =
+            withdrawal.length
+            ? withdrawal.map(
+                x=>historyHTML(x)
+              ).join("")
+            : "No Withdrawal History";
 
-            requests.push({
 
-                id:
-                    docSnap.id,
+    }catch(error){
 
-                data:
-                    docSnap.data()
+        rechargeBox.innerHTML =
+            error.message;
 
+        withdrawalBox.innerHTML =
+            error.message;
+
+    }
+
+
+    try{
+
+        const q =
+            query(
+                collection(db,"payments"),
+                where("uid","==",uid)
+            );
+
+        const snap =
+            await getDocs(q);
+
+        const payments = [];
+
+        snap.forEach(docSnap=>{
+
+            payments.push(
+                docSnap.data()
+            );
+
+        });
+
+        payments.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
+
+        paymentBox.innerHTML =
+            payments.length
+            ? payments.map(
+                x=>historyHTML(x)
+            ).join("")
+            : "No Payment History";
+
+    }catch(error){
+
+        paymentBox.innerHTML =
+            error.message;
+
+    }
+
+}
+
+
+function historyHTML(data){
+
+    return `
+
+    <div class="historyItem">
+
+        <b>
+            ${escapeHTML(
+                data.type ||
+                data.category ||
+                "Transaction"
+            )}
+        </b>
+
+        <br>
+
+        Amount:
+        ₹${money(data.amount)}
+
+        <br>
+
+        Status:
+        <span class="badge ${escapeHTML(
+            data.status || ""
+        )}">
+            ${escapeHTML(
+                data.status || "-"
+            )}
+        </span>
+
+        <br>
+
+        ${
+            data.transactionId
+            ? "UTR: "+
+              escapeHTML(data.transactionId)+
+              "<br>"
+            : ""
+        }
+
+        ${
+            data.upi
+            ? "UPI: "+
+              escapeHTML(data.upi)+
+              "<br>"
+            : ""
+        }
+
+        ${
+            data.category
+            ? "Category: "+
+              escapeHTML(data.category)+
+              "<br>"
+            : ""
+        }
+
+        Date:
+        ${formatDate(data.createdAt)}
+
+    </div>
+
+    `;
+
+}
+
+
+/* ============================================================
+   NOTIFICATIONS
+============================================================ */
+
+async function createNotification(
+    uid,
+    title,
+    message
+){
+
+    try{
+
+        await addDoc(
+            collection(db,"notifications"),
+            {
+                uid:uid,
+
+                title:title,
+
+                message:message,
+
+                target:
+                    uid ? "user" : "all",
+
+                read:false,
+
+                createdAt:
+                    serverTimestamp()
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+window.loadUserNotifications =
+async function(){
+
+    if(!currentUser) return;
+
+    const box =
+        el("userNotifications");
+
+    box.innerHTML =
+        "Loading...";
+
+    try{
+
+        const result = [];
+
+        const userQuery =
+            query(
+                collection(db,"notifications"),
+                where("uid","==",currentUser.uid)
+            );
+
+        const userSnap =
+            await getDocs(userQuery);
+
+        userSnap.forEach(s=>{
+            result.push({
+                id:s.id,
+                ...s.data()
             });
-
         });
 
 
-        requests.sort(
-        function(a,b){
+        const allQuery =
+            query(
+                collection(db,"notifications"),
+                where("target","==","all")
+            );
 
-            const aTime =
-                a.data.createdAt?.seconds || 0;
+        const allSnap =
+            await getDocs(allQuery);
 
-            const bTime =
-                b.data.createdAt?.seconds || 0;
-
-
-            return bTime - aTime;
-
+        allSnap.forEach(s=>{
+            result.push({
+                id:s.id,
+                ...s.data()
+            });
         });
 
 
-        if(requests.length === 0){
+        result.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
+
+
+        if(!result.length){
 
             box.innerHTML =
-                "<div class='smallText'>अजून Recharge Request नाही.</div>";
+                "No Notifications.";
 
             return;
 
         }
 
 
-        requests.forEach(
-        function(item){
+        box.innerHTML =
+            result.map(
+                x=>`
 
-            const data =
-                item.data;
+                <div class="notification
+                    ${x.read ? "" : "unread"}">
 
+                    <b>
+                        ${escapeHTML(
+                            x.title || "Notification"
+                        )}
+                    </b>
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+                    <p>
+                        ${escapeHTML(
+                            x.message || ""
+                        )}
+                    </p>
 
+                    <small>
+                        ${formatDate(
+                            x.createdAt
+                        )}
+                    </small>
 
-            card.className =
-                "requestCard";
+                </div>
 
-
-            card.innerHTML =
-
-                "<b>Recharge: ₹" +
-                Number(data.amount || 0) +
-                "</b><br>" +
-
-                "User: " +
-                (data.userEmail || "") +
-                "<br>" +
-
-                "Transaction: " +
-                (data.transactionId || "") +
-                "<br>" +
-
-                "Status: " +
-                (data.status || "Pending");
-
-
-            if(
-                data.status ===
-                "Pending"
-            ){
-
-                const approve =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                approve.className =
-                    "payBtn";
-
-
-                approve.textContent =
-                    "Approve";
-
-
-                approve.onclick =
-                function(){
-
-                    approveRecharge(
-                        item.id,
-                        data
-                    );
-
-                };
-
-
-                card.appendChild(
-                    approve
-                );
-
-
-                const reject =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                reject.className =
-                    "backBtn";
-
-
-                reject.textContent =
-                    "Reject";
-
-
-                reject.onclick =
-                function(){
-
-                    rejectRecharge(
-                        item.id
-                    );
-
-                };
-
-
-                card.appendChild(
-                    reject
-                );
-
-            }
-
-
-            box.appendChild(card);
-
-        });
-
+                `
+            ).join("");
 
     }catch(error){
 
-        console.error(
-            "Recharge Requests Error:",
-            error
-        );
-
-
         box.innerHTML =
-            "Requests Load झाल्या नाहीत: " +
             error.message;
 
     }
@@ -4122,64 +3414,775 @@ async function(){
 };
 
 
-/* ================= APPROVE RECHARGE ================= */
+/* ============================================================
+   ADMIN DASHBOARD
+============================================================ */
 
-window.approveRecharge =
-async function(
-    requestId,
-    requestData
-){
+function openAdminDashboard(){
 
-    if(!isAdmin){
+    hideAllPages();
+
+    el("adminPage")
+    .classList
+    .add("active");
+
+    loadSettings();
+
+    loadMarkets();
+
+    loadAdminRequests();
+
+    loadAdminPayments();
+
+    loadAdminUsers();
+
+    loadAdminNotifications();
+
+    showAdminSection("settings");
+
+}
+
+
+window.showAdminSection =
+async function(section){
+
+    [
+        "adminSettingsSection",
+        "adminMarketsSection",
+        "adminRechargeSection",
+        "adminWithdrawalSection",
+        "adminPaymentsSection",
+        "adminNotificationsSection",
+        "adminUsersSection"
+    ].forEach(hide);
+
+
+    if(section === "settings"){
+
+        show("adminSettingsSection");
+
+        await loadSettings();
+
+    }
+
+    if(section === "markets"){
+
+        show("adminMarketsSection");
+
+        await loadMarkets();
+
+    }
+
+    if(section === "recharge"){
+
+        show("adminRechargeSection");
+
+        await loadAdminRequests();
+
+    }
+
+    if(section === "withdrawal"){
+
+        show("adminWithdrawalSection");
+
+        await loadAdminRequests();
+
+    }
+
+    if(section === "payments"){
+
+        show("adminPaymentsSection");
+
+        await loadAdminPayments();
+
+    }
+
+    if(section === "notifications"){
+
+        show("adminNotificationsSection");
+
+        await loadAdminNotifications();
+
+    }
+
+    if(section === "users"){
+
+        show("adminUsersSection");
+
+        await loadAdminUsers();
+
+    }
+
+};
+
+
+/* ============================================================
+   ADMIN MARKET MANAGEMENT
+============================================================ */
+
+function renderAdminMarkets(){
+
+    const box =
+        el("adminMarketsList");
+
+    if(!box) return;
+
+    box.innerHTML = "";
+
+    markets.forEach(market=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "card";
+
+        div.innerHTML = `
+
+            <h3>
+                ${escapeHTML(market.name)}
+            </h3>
+
+            <input
+                id="mname_${market.id}"
+                value="${escapeHTML(market.name)}"
+                placeholder="Market Name">
+
+            <label>Open Time</label>
+
+            <input
+                id="mopen_${market.id}"
+                type="time"
+                value="${escapeHTML(
+                    market.openTime || "09:00"
+                )}">
+
+            <label>Close Time</label>
+
+            <input
+                id="mclose_${market.id}"
+                type="time"
+                value="${escapeHTML(
+                    market.closeTime || "21:00"
+                )}">
+
+            <label>
+                <input
+                    id="menabled_${market.id}"
+                    type="checkbox"
+                    style="width:auto"
+                    ${market.enabled !== false
+                        ? "checked"
+                        : ""}>
+                Market Enabled
+            </label>
+
+            <button
+                class="btn"
+                onclick="saveMarket(
+                    '${market.id}'
+                )">
+
+                Save Market
+
+            </button>
+
+            <button
+                class="btn purple"
+                onclick="manageMarketPages(
+                    '${market.id}'
+                )">
+
+                Manage Pages/Categories
+
+            </button>
+
+        `;
+
+        box.appendChild(div);
+
+    });
+
+
+    box.innerHTML += `
+
+        <div class="card">
+
+            <h3>Add Market</h3>
+
+            <input id="newMarketName"
+                   placeholder="Market Name">
+
+            <button
+                class="btn green"
+                onclick="addMarket()">
+
+                Add Market
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+window.saveMarket =
+async function(id){
+
+    if(!isAdmin()) return;
+
+    const market =
+        markets.find(
+            m=>m.id === id
+        );
+
+    if(!market) return;
+
+    market.name =
+        el("mname_"+id).value.trim();
+
+    market.openTime =
+        el("mopen_"+id).value;
+
+    market.closeTime =
+        el("mclose_"+id).value;
+
+    market.enabled =
+        el("menabled_"+id).checked;
+
+    await setDoc(
+        doc(db,"settings","markets"),
+        {markets:markets},
+        {merge:true}
+    );
+
+    alert("Market Save झाला.");
+
+    renderMarkets();
+
+};
+
+
+window.addMarket =
+async function(){
+
+    if(!isAdmin()) return;
+
+    const name =
+        el("newMarketName")
+        .value
+        .trim();
+
+    if(!name){
+
+        alert("Market Name टाका.");
 
         return;
 
     }
 
+    if(markets.length >= 16){
+
+        alert(
+            "सध्या 16 Markets ठेवले आहेत."
+        );
+
+        return;
+
+    }
+
+    const id =
+        "market"+
+        (markets.length+1);
+
+    markets.push({
+
+        id:id,
+
+        name:name,
+
+        openTime:"09:00",
+
+        closeTime:"21:00",
+
+        enabled:true
+
+    });
+
+    await setDoc(
+        doc(db,"settings","markets"),
+        {markets:markets},
+        {merge:true}
+    );
+
+    renderAdminMarkets();
+
+    renderMarkets();
+
+};
+
+
+window.manageMarketPages =
+async function(id){
+
+    const market =
+        markets.find(
+            m=>m.id===id
+        );
+
+    if(!market) return;
+
+    let html =
+        "<h3>"+
+        escapeHTML(market.name)+
+        " Pages</h3>";
+
+    for(let p=1;p<=4;p++){
+
+        const pageId =
+            id+"_page"+p;
+
+        let categories = [];
+
+        try{
+
+            const snap =
+                await getDoc(
+                    doc(
+                        db,
+                        "marketPages",
+                        pageId
+                    )
+                );
+
+            if(snap.exists()){
+
+                categories =
+                    snap.data().categories || [];
+
+            }
+
+        }catch(e){}
+
+
+        html += `
+
+        <div class="card">
+
+            <h3>Page ${p}</h3>
+
+            <div id="cats_${id}_${p}">
+
+                ${
+                    categories.map(
+                        (x,i)=>`
+
+                        <div class="category">
+
+                            ${
+                                typeof x === "string"
+                                ? escapeHTML(x)
+                                : escapeHTML(
+                                    x.name || ""
+                                )
+                            }
+
+                        </div>
+
+                        `
+                    ).join("")
+                }
+
+            </div>
+
+            <input
+                id="newcat_${id}_${p}"
+                placeholder="New Category">
+
+            <button
+                class="btn green"
+                onclick="addCategory(
+                    '${id}',
+                    ${p}
+                )">
+
+                Add Category
+
+            </button>
+
+            <button
+                class="btn"
+                onclick="savePageCategories(
+                    '${id}',
+                    ${p}
+                )">
+
+                Save Page
+
+            </button>
+
+        </div>
+
+        `;
+
+    }
+
+    const modal =
+        document.createElement("div");
+
+    modal.id =
+        "marketManagerModal";
+
+    modal.style.position =
+        "fixed";
+
+    modal.style.inset =
+        "0";
+
+    modal.style.background =
+        "rgba(0,0,0,.7)";
+
+    modal.style.zIndex =
+        "1000";
+
+    modal.style.overflow =
+        "auto";
+
+    modal.style.padding =
+        "15px";
+
+    modal.innerHTML = `
+
+        <div class="card"
+             style="max-width:600px;
+                    margin:20px auto">
+
+            ${html}
+
+            <button
+                class="btn gray"
+                onclick="closeMarketManager()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(modal);
+
+};
+
+
+window.closeMarketManager =
+function(){
+
+    el("marketManagerModal")
+    ?.remove();
+
+};
+
+
+window.addCategory =
+async function(id,page){
+
+    const input =
+        el("newcat_"+id+"_"+page);
+
+    const value =
+        input.value.trim();
+
+    if(!value) return;
+
+    const ref =
+        doc(
+            db,
+            "marketPages",
+            id+"_page"+page
+        );
+
+    const snap =
+        await getDoc(ref);
+
+    let categories =
+        snap.exists()
+        ? (snap.data().categories || [])
+        : [];
+
+    categories.push(value);
+
+    await setDoc(
+        ref,
+        {
+            marketId:id,
+            page:page,
+            categories:categories
+        },
+        {merge:true}
+    );
+
+    input.value = "";
+
+    alert("Category Add झाली.");
+
+    closeMarketManager();
+
+    await manageMarketPages(id);
+
+};
+
+
+window.savePageCategories =
+async function(id,page){
+
+    const ref =
+        doc(
+            db,
+            "marketPages",
+            id+"_page"+page
+        );
+
+    const snap =
+        await getDoc(ref);
+
+    if(!snap.exists()){
+
+        await setDoc(
+            ref,
+            {
+                marketId:id,
+                page:page,
+                categories:[]
+            }
+        );
+
+    }
+
+    alert("Page Save झाली.");
+
+};
+
+
+/* ============================================================
+   ADMIN REQUESTS
+============================================================ */
+
+async function loadAdminRequests(){
+
+    if(!isAdmin()) return;
+
+    const rechargeBox =
+        el("adminRechargeList");
+
+    const withdrawalBox =
+        el("adminWithdrawalList");
 
     try{
 
-        const userId =
-            requestData.userId;
-
-
-        const amount =
-            Number(
-                requestData.amount || 0
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "walletRequests"
+                )
             );
 
+        const recharge = [];
 
-        const requestRef =
-            doc(
-                db,
-                "walletRequests",
-                requestId
-            );
+        const withdrawal = [];
+
+        snap.forEach(s=>{
+
+            const data =
+                s.data();
+
+            const obj = {
+                id:s.id,
+                ...data
+            };
+
+            if(data.type === "recharge"){
+
+                recharge.push(obj);
+
+            }
+
+            if(data.type === "withdrawal"){
+
+                withdrawal.push(obj);
+
+            }
+
+        });
 
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                userId
-            );
+        recharge.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
 
+        withdrawal.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
+
+
+        rechargeBox.innerHTML =
+            recharge.length
+            ? recharge
+                .map(
+                    x=>adminRequestHTML(x)
+                )
+                .join("")
+            : "No Recharge Requests";
+
+
+        withdrawalBox.innerHTML =
+            withdrawal.length
+            ? withdrawal
+                .map(
+                    x=>adminRequestHTML(x)
+                )
+                .join("")
+            : "No Withdrawal Requests";
+
+    }catch(error){
+
+        rechargeBox.innerHTML =
+            error.message;
+
+        withdrawalBox.innerHTML =
+            error.message;
+
+    }
+
+}
+
+
+function adminRequestHTML(data){
+
+    return `
+
+    <div class="card">
+
+        <b>
+            ${escapeHTML(
+                data.username || data.uid
+            )}
+        </b>
+
+        <p>
+            Type:
+            ${escapeHTML(data.type)}
+        </p>
+
+        <p>
+            Amount:
+            ₹${money(data.amount)}
+        </p>
+
+        ${
+            data.transactionId
+            ? `<p>UTR:
+               ${escapeHTML(
+                   data.transactionId
+               )}</p>`
+            : ""
+        }
+
+        ${
+            data.upi
+            ? `<p>UPI:
+               ${escapeHTML(
+                   data.upi
+               )}</p>`
+            : ""
+        }
+
+        <p>
+            Status:
+            <span class="badge">
+                ${escapeHTML(
+                    data.status || "pending"
+                )}
+            </span>
+        </p>
+
+        <p>
+            ${formatDate(data.createdAt)}
+        </p>
+
+        ${
+            data.status === "pending"
+            ? `
+
+            <button
+                class="smallBtn btn green"
+                onclick="approveRequest(
+                    '${data.id}'
+                )">
+
+                Approve
+
+            </button>
+
+            <button
+                class="smallBtn btn red"
+                onclick="rejectRequest(
+                    '${data.id}'
+                )">
+
+                Reject
+
+            </button>
+
+            `
+            : ""
+        }
+
+    </div>
+
+    `;
+
+}
+
+
+/* ============================================================
+   APPROVE REQUEST
+============================================================ */
+
+window.approveRequest =
+async function(requestId){
+
+    if(!isAdmin()) return;
+
+    const requestRef =
+        doc(
+            db,
+            "walletRequests",
+            requestId
+        );
+
+    try{
 
         await runTransaction(
-
             db,
-
-            async function(transaction){
+            async transaction=>{
 
                 const requestSnap =
                     await transaction.get(
                         requestRef
                     );
 
-
-                if(
-                    !requestSnap.exists()
-                ){
+                if(!requestSnap.exists()){
 
                     throw new Error(
                         "Request सापडली नाही."
@@ -4187,743 +4190,642 @@ async function(
 
                 }
 
-
                 const request =
                     requestSnap.data();
 
-
-                if(
-                    request.status !==
-                    "Pending"
-                ){
+                if(request.status !== "pending"){
 
                     throw new Error(
-                        "ही Request आधीच Process झाली आहे."
+                        "Request आधीच process झाली आहे."
                     );
 
                 }
 
+                const userRef =
+                    doc(
+                        db,
+                        "users",
+                        request.uid
+                    );
 
                 const userSnap =
                     await transaction.get(
                         userRef
                     );
 
+                if(!userSnap.exists()){
 
-                let wallet =
-                    0;
+                    throw new Error(
+                        "User सापडला नाही."
+                    );
 
+                }
 
-                if(userSnap.exists()){
+                const user =
+                    userSnap.data();
 
-                    wallet =
-                        Number(
-                            userSnap.data().wallet || 0
-                        );
+                const wallet =
+                    Number(
+                        user.wallet || 0
+                    );
+
+                if(request.type === "recharge"){
+
+                    transaction.update(
+                        userRef,
+                        {
+                            wallet:
+                                wallet +
+                                Number(
+                                    request.amount
+                                )
+                        }
+                    );
 
                 }
 
 
-                transaction.set(
+                if(request.type === "withdrawal"){
 
-                    userRef,
+                    const amount =
+                        Number(
+                            request.amount
+                        );
 
-                    {
-                        wallet:
-                            wallet + amount,
+                    if(wallet < amount){
 
-                        updatedAt:
-                            serverTimestamp()
-                    },
+                        throw new Error(
+                            "User wallet मध्ये पुरेशी रक्कम नाही."
+                        );
 
-                    {
-                        merge:true
                     }
 
-                );
+                    transaction.update(
+                        userRef,
+                        {
+                            wallet:
+                                wallet -
+                                amount
+                        }
+                    );
+
+                }
 
 
                 transaction.update(
-
                     requestRef,
-
                     {
-                        status:
-                            "Approved",
+                        status:"approved",
 
                         approvedAt:
-                            serverTimestamp()
-                    }
+                            serverTimestamp(),
 
+                        approvedBy:
+                            ADMIN_UID
+                    }
                 );
 
             }
-
         );
 
 
-        alert(
-            "Recharge Approved."
-        );
+        const snap =
+            await getDoc(requestRef);
 
+        if(snap.exists()){
 
-        await loadRechargeRequests();
+            const data =
+                snap.data();
 
+            await createNotification(
+                data.uid,
+                data.type === "recharge"
+                ? "Recharge Approved"
+                : "Withdrawal Approved",
+                "₹"+
+                money(data.amount)+
+                " request approved झाली."
+            );
+
+        }
+
+        alert("Request Approved.");
+
+        await loadAdminRequests();
 
     }catch(error){
 
-        console.error(error);
-
-
-        alert(
-            "Approve झाले नाही: " +
-            error.message
-        );
+        alert(error.message);
 
     }
 
 };
 
 
-/* ================= REJECT RECHARGE ================= */
+/* ============================================================
+   REJECT REQUEST
+============================================================ */
 
-window.rejectRecharge =
+window.rejectRequest =
 async function(requestId){
 
-    if(!isAdmin){
+    if(!isAdmin()) return;
 
-        return;
+    const ok =
+        confirm(
+            "ही Request Reject करायची?"
+        );
 
-    }
-
+    if(!ok) return;
 
     try{
 
-        await setDoc(
-
+        const ref =
             doc(
                 db,
                 "walletRequests",
                 requestId
-            ),
-
-            {
-                status:
-                    "Rejected",
-
-                rejectedAt:
-                    serverTimestamp()
-            },
-
-            {
-                merge:true
-            }
-
-        );
-
-
-        alert(
-            "Recharge Request Reject झाली."
-        );
-
-
-        await loadRechargeRequests();
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        alert(
-            "Reject झाले नाही: " +
-            error.message
-        );
-
-    }
-
-};
-
-
-/* ================= PAYMENT HISTORY ================= */
-
-window.loadPaymentHistory =
-async function(){
-
-    const box =
-        el("paymentHistory");
-
-    if(!box) return;
-
-
-    if(!window.isAdmin){
-
-        box.innerHTML =
-            "फक्त Admin Payment History पाहू शकतो.";
-
-        return;
-
-    }
-
-
-    box.innerHTML =
-        "Loading...";
-
-
-    try{
-
-        const snap =
-            await getDocs(
-
-                collection(
-                    db,
-                    "payments"
-                )
-
             );
 
+        const snap =
+            await getDoc(ref);
 
-        box.innerHTML = "";
+        if(!snap.exists()){
 
-
-        const payments = [];
-
-
-        snap.forEach(
-        function(docSnap){
-
-            const data =
-                docSnap.data();
-
-
-            payments.push({
-
-                id:
-                    docSnap.id,
-
-                data:
-                    data
-
-            });
-
-        });
-
-
-        payments.sort(
-        function(a,b){
-
-            const aTime =
-                a.data.createdAt?.seconds || 0;
-
-            const bTime =
-                b.data.createdAt?.seconds || 0;
-
-
-            return bTime - aTime;
-
-        });
-
-
-        if(payments.length === 0){
-
-            box.innerHTML =
-                "<div class='smallText'>अजून Payment झालेले नाही.</div>";
+            alert("Request सापडली नाही.");
 
             return;
 
         }
 
+        const data =
+            snap.data();
 
-        payments.forEach(
-        function(item){
+        if(data.status !== "pending"){
 
-            const data =
-                item.data;
+            alert("Request आधीच process झाली आहे.");
 
+            return;
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        }
 
+        await updateDoc(
+            ref,
+            {
+                status:"rejected",
 
-            card.className =
-                "requestCard";
+                rejectedAt:
+                    serverTimestamp(),
 
-
-            let dateText =
-                "";
-
-
-            if(data.createdAt){
-
-                try{
-
-                    const date =
-                        data.createdAt.toDate();
-
-
-                    dateText =
-                        date.toLocaleString(
-                            "en-IN"
-                        );
-
-                }catch(error){
-
-                    dateText =
-                        "";
-
-                }
-
+                rejectedBy:
+                    ADMIN_UID
             }
+        );
+
+        await createNotification(
+            data.uid,
+            data.type === "recharge"
+            ? "Recharge Rejected"
+            : "Withdrawal Rejected",
+            "₹"+
+            money(data.amount)+
+            " request reject झाली."
+        );
+
+        alert("Request Rejected.");
+
+        await loadAdminRequests();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
 
 
-            card.innerHTML =
+/* ============================================================
+   ADMIN PAYMENTS
+============================================================ */
 
-                "<b>Payment: ₹" +
-                Number(
-                    data.amount || 0
-                ) +
-                "</b><br>" +
+async function loadAdminPayments(){
 
-                "User: " +
-                (data.userEmail || "") +
-                "<br>" +
+    if(!isAdmin()) return;
 
-                "Market: " +
-                (
-                    data.marketName ||
-                    data.market ||
-                    ""
-                ) +
-                "<br>" +
+    const box =
+        el("adminPaymentsList");
 
-                "Page: " +
-                (data.page || "") +
-                "<br>" +
+    box.innerHTML =
+        "Loading...";
 
-                "Category: " +
-                (data.itemName || "") +
-                "<br>" +
+    try{
 
-                "Status: " +
-                (data.status || "") +
-                "<br>" +
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "payments"
+                )
+            );
 
-                "Date/Time: " +
-                dateText;
+        const list = [];
 
+        snap.forEach(s=>{
 
-            box.appendChild(card);
+            list.push({
+                id:s.id,
+                ...s.data()
+            });
 
         });
 
-
-    }catch(error){
-
-        console.error(
-            "Payment History Error:",
-            error
+        list.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
         );
 
+        if(!list.length){
+
+            box.innerHTML =
+                "No Payment History.";
+
+            return;
+
+        }
 
         box.innerHTML =
-            "<div class='smallText'>Payment History Load झाली नाही: " +
-            (
-                error.code ||
-                error.message
-            ) +
-            "</div>";
+            list.map(
+                x=>`
 
-    }
+                <div class="historyItem">
 
-};
+                    <b>
+                        ${escapeHTML(
+                            x.username ||
+                            x.uid ||
+                            ""
+                        )}
+                    </b>
 
+                    <br>
 
-/* ================= REFRESH ADMIN DATA ================= */
+                    Category:
+                    ${escapeHTML(
+                        x.category || ""
+                    )}
 
-window.refreshAdminData =
-async function(){
+                    <br>
 
-    if(!isAdmin){
+                    Amount:
+                    ₹${money(x.amount)}
 
-        return;
+                    <br>
 
-    }
+                    Status:
+                    ${escapeHTML(
+                        x.status || ""
+                    )}
 
+                    <br>
 
-    await window.loadOnlineData();
+                    ${formatDate(
+                        x.createdAt
+                    )}
 
-    await window.loadMarkets();
+                </div>
 
-    await window.loadAdminCategoryList();
-
-    await window.loadRechargeRequests();
-
-    await window.loadPaymentHistory();
-
-};
-
-
-/* ================= WALLET PAGE ================= */
-
-window.openWalletPage =
-async function(){
-
-    await loadWallet();
-
-    await loadMyRechargeRequests();
-
-    showPage(3);
-
-};
-
-
-/* ================= WITHDRAWAL ================= */
-
-window.openWithdrawalPage =
-async function(){
-
-    await loadWallet();
-
-    showPageById(
-        "withdrawalPage"
-    );
-
-};
-
-
-window.submitWithdrawal =
-async function(){
-
-    hideMessage("withdrawMessage");
-
-    hideError("withdrawError");
-
-
-    if(!currentUser){
-
-        showError(
-            "withdrawError",
-            "आधी User Login करा."
-        );
-
-        return;
-
-    }
-
-
-    const amount =
-        Number(
-            el("withdrawAmount")
-                ?.value || 0
-        );
-
-
-    const upi =
-        el("withdrawUPI")
-            ?.value.trim();
-
-
-    if(amount <= 0){
-
-        showError(
-            "withdrawError",
-            "Withdrawal Amount भरा."
-        );
-
-        return;
-
-    }
-
-
-    if(!upi){
-
-        showError(
-            "withdrawError",
-            "UPI ID भरा."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        alert(
-            "Withdrawal Request नोंदवली."
-        );
-
-
-        el("withdrawAmount").value =
-            "";
-
-        el("withdrawUPI").value =
-            "";
-
+                `
+            ).join("");
 
     }catch(error){
 
-        showError(
-            "withdrawError",
-            error.message
-        );
+        box.innerHTML =
+            error.message;
 
     }
 
-};
+}
 
 
-/* ================= AUTH STATE ================= */
+/* ============================================================
+   ADMIN USERS
+============================================================ */
 
-onAuthStateChanged(
-    auth,
-    async function(user){
+async function loadAdminUsers(){
 
-        currentUser =
-            user;
+    if(!isAdmin()) return;
 
-        window.currentUser =
-            user;
+    const box =
+        el("adminUsersList");
 
-
-        if(user){
-
-            isAdmin =
-                user.uid === ADMIN_UID;
-
-            window.isAdmin =
-                isAdmin;
-
-
-            await loadOnlineData();
-
-            await loadMarkets();
-
-            await loadWallet();
-
-
-            if(isAdmin){
-
-                el("adminPanel")
-                    ?.classList.add("show");
-
-            }
-
-        }else{
-
-            isAdmin = false;
-
-            window.isAdmin = false;
-
-        }
-
-    }
-
-);
-
-
-/* ================= START ================= */
-
-loadOnlineData();
-
-loadMarkets();
-
-</script>
-
-
-<script>
-
-/* ================= EXTRA MARKET WRAPPER ================= */
-
-window.selectedMarket =
-    window.selectedMarket || "1";
-
-window.selectedMarketPage =
-    window.selectedMarketPage || "1";
-
-window.selectedItem =
-    window.selectedItem || "";
-
-
-/* ================= PAYMENT ITEM DISPLAY FIX ================= */
-
-const originalSelectMarketItem =
-    window.selectMarketItem;
-
-
-window.selectMarketItem =
-function(name){
-
-    window.selectedItem =
-        String(name);
-
-
-    const itemBox =
-        document.getElementById(
-            "selectedItemName"
-        );
-
-
-    if(itemBox){
-
-        itemBox.textContent =
-            String(name);
-
-    }
-
-
-    const payBox =
-        document.getElementById(
-            "payBox"
-        );
-
-
-    if(payBox){
-
-        payBox.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
-    const amount =
-        document.getElementById(
-            "paymentAmount"
-        );
-
-
-    if(amount){
-
-        amount.value = "";
-
-    }
-
-};
-
-
-/* ================= OPEN MARKET FIX ================= */
-
-const originalOpenMarket =
-    window.openMarket;
-
-
-window.openMarket =
-function(marketId){
-
-    window.selectedMarket =
-        String(marketId);
-
-
-    return originalOpenMarket(
-        marketId
-    );
-
-};
-
-
-/* ================= OPEN MARKET PAGE FIX ================= */
-
-const originalOpenMarketPage =
-    window.openMarketPage;
-
-
-window.openMarketPage =
-async function(
-    marketId,
-    pageId
-){
-
-    window.selectedMarket =
-        String(marketId);
-
-    window.selectedMarketPage =
-        String(pageId);
-
-
-    return originalOpenMarketPage(
-        marketId,
-        pageId
-    );
-
-};
-
-
-/* ================= PAGE 3 DATA REFRESH ================= */
-
-window.refreshUserData =
-async function(){
+    box.innerHTML =
+        "Loading...";
 
     try{
 
-        if(window.loadWallet){
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "users"
+                )
+            );
 
-            await window.loadWallet();
+        const users = [];
+
+        snap.forEach(s=>{
+
+            users.push({
+                id:s.id,
+                ...s.data()
+            });
+
+        });
+
+        users.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
+        );
+
+        if(!users.length){
+
+            box.innerHTML =
+                "No Users.";
+
+            return;
 
         }
 
-        if(window.loadMyRechargeRequests){
+        box.innerHTML =
+            users.map(
+                x=>`
 
-            await window.loadMyRechargeRequests();
+                <div class="historyItem">
 
-        }
+                    <b>
+                        ${escapeHTML(
+                            x.username || "-"
+                        )}
+                    </b>
+
+                    <br>
+
+                    Name:
+                    ${escapeHTML(
+                        x.name || "-"
+                    )}
+
+                    <br>
+
+                    Wallet:
+                    ₹${money(x.wallet)}
+
+                    <br>
+
+                    UID:
+                    <small>
+                        ${escapeHTML(
+                            x.uid || x.id
+                        )}
+                    </small>
+
+                    <br>
+
+                    ${formatDate(
+                        x.createdAt
+                    )}
+
+                </div>
+
+                `
+            ).join("");
 
     }catch(error){
 
-        console.error(error);
+        box.innerHTML =
+            error.message;
+
+    }
+
+}
+
+
+/* ============================================================
+   ADMIN SEND NOTIFICATION
+============================================================ */
+
+window.sendAdminNotification =
+async function(){
+
+    if(!isAdmin()) return;
+
+    const target =
+        el("notificationTarget")
+        .value;
+
+    const title =
+        el("notificationTitle")
+        .value
+        .trim();
+
+    const message =
+        el("notificationMessage")
+        .value
+        .trim();
+
+    if(!title || !message){
+
+        msg(
+            "adminNotificationMessage",
+            "Title आणि Message टाका.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        await addDoc(
+            collection(db,"notifications"),
+            {
+                uid:
+                    target === "all"
+                    ? ""
+                    : target,
+
+                target:
+                    target === "all"
+                    ? "all"
+                    : "user",
+
+                title:
+                    title,
+
+                message:
+                    message,
+
+                read:false,
+
+                createdAt:
+                    serverTimestamp(),
+
+                createdBy:
+                    ADMIN_UID
+            }
+        );
+
+        msg(
+            "adminNotificationMessage",
+            "Notification Send झाली.",
+            "success"
+        );
+
+        el("notificationTitle").value = "";
+
+        el("notificationMessage").value = "";
+
+        await loadAdminNotifications();
+
+    }catch(error){
+
+        msg(
+            "adminNotificationMessage",
+            error.message,
+            "error"
+        );
 
     }
 
 };
 
-</script>
 
+/* ============================================================
+   ADMIN NOTIFICATIONS
+============================================================ */
 
-<script>
+async function loadAdminNotifications(){
 
-/* ================= START USER DATA ================= */
+    if(!isAdmin()) return;
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+    const box =
+        el("adminNotificationsList");
 
-        setTimeout(
-        async function(){
+    if(!box) return;
 
-            try{
+    try{
 
-                if(
-                    window.loadOnlineData
-                ){
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "notifications"
+                )
+            );
 
-                    await window.loadOnlineData();
+        const list = [];
 
-                }
+        snap.forEach(s=>{
 
+            list.push({
+                id:s.id,
+                ...s.data()
+            });
 
-                if(
-                    window.loadMarkets
-                ){
+        });
 
-                    await window.loadMarkets();
-
-                }
-
-            }catch(error){
-
-                console.error(error);
-
-            }
-
-        },
-        500
+        list.sort(
+            (a,b)=>
+            (b.createdAt?.seconds || 0)
+            -
+            (a.createdAt?.seconds || 0)
         );
+
+        box.innerHTML =
+            list.length
+            ? list.map(
+                x=>`
+
+                <div class="notification">
+
+                    <b>
+                        ${escapeHTML(
+                            x.title || ""
+                        )}
+                    </b>
+
+                    <p>
+                        ${escapeHTML(
+                            x.message || ""
+                        )}
+                    </p>
+
+                    <small>
+                        Target:
+                        ${escapeHTML(
+                            x.target || ""
+                        )}
+                        <br>
+                        ${formatDate(
+                            x.createdAt
+                        )}
+                    </small>
+
+                </div>
+
+                `
+            ).join("")
+            : "No Notifications.";
+
+    }catch(error){
+
+        box.innerHTML =
+            error.message;
 
     }
 
-);
+}
+
+
+/* ============================================================
+   ADMIN LOGOUT
+============================================================ */
+
+window.adminLogout =
+async function(){
+
+    await signOut(auth);
+
+    goHome();
+
+};
+
+
+/* ============================================================
+   USER LOGOUT
+============================================================ */
+
+window.logoutUser =
+async function(){
+
+    await signOut(auth);
+
+    goHome();
+
+};
+
+
+/* ============================================================
+   START
+============================================================ */
+
+await loadSettings();
 
 </script>
 
