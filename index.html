@@ -550,14 +550,13 @@ hr{
         Back
     </button>
 
-    <button
-        class="adminBtn"
-        onclick="openAdminLogin()"
-    >
-        Admin Login
-    </button>
-
-
+<button
+    id="page2AdminLoginBtn"
+    class="adminBtn"
+    onclick="openAdminLogin()"
+>
+    Admin Login
+</button>
 </div>
 
 </div>
@@ -1119,7 +1118,6 @@ import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-
 import {
     getFirestore,
     doc,
@@ -1134,7 +1132,6 @@ import {
     runTransaction
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -1142,6 +1139,12 @@ import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+    getMessaging,
+    getToken,
+    onMessage
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
 
 
 /* ================= FIREBASE CONFIG ================= */
@@ -1172,6 +1175,8 @@ const firebaseConfig = {
 };
 
 
+/* ================= FIREBASE START ================= */
+
 const app =
     initializeApp(firebaseConfig);
 
@@ -1181,6 +1186,69 @@ const db =
 const auth =
     getAuth(app);
 
+const messaging =
+    getMessaging(app);
+
+
+/* ================= WEB PUSH PUBLIC KEY ================= */
+
+const VAPID_KEY =
+    "BL5YB8zIjT8--Tbc7DO51_XAuE0ngiPXeLa7rPyGEdBdlsS1HsTQehDr1v0duqIX5cUtu-LMhxaGCHNRw7fmDwk";
+async function saveNotificationToken(){
+
+    try{
+
+        if(!currentUser) return;
+
+        if(!("Notification" in window)) return;
+
+        if(!("serviceWorker" in navigator)) return;
+
+        const permission = await Notification.requestPermission();
+
+        if(permission !== "granted"){
+            console.log("Notification permission denied");
+            return;
+        }
+
+        const registration =
+            await navigator.serviceWorker.register(
+                "./firebase-messaging-sw.js"
+            );
+
+        const token = await getToken(messaging,{
+            vapidKey: VAPID_KEY,
+            serviceWorkerRegistration: registration
+        });
+
+        if(!token){
+            console.log("FCM Token मिळाला नाही.");
+            return;
+        }
+
+        await setDoc(
+            doc(db,"fcmTokens",currentUser.uid),
+            {
+                userId: currentUser.uid,
+                token: token,
+                updatedAt: serverTimestamp()
+            },
+            {merge:true}
+        );
+
+        console.log("Notification Token Save झाला.");
+
+    }catch(error){
+
+        console.error(
+            "Notification Token Error:",
+            error
+        );
+
+    }
+}
+
+window.saveNotificationToken = saveNotificationToken;
 
 /* ================= ADMIN UID ================= */
 
@@ -1201,31 +1269,64 @@ let selectedMarketPage = "1";
 let selectedItem = "";
 
 
+/* ================= 16 MARKETS ================= */
+
 let marketNames = {
 
     "1":"Market 1",
+
     "2":"Market 2",
+
     "3":"Market 3",
+
     "4":"Market 4",
+
     "5":"Market 5",
+
     "6":"Market 6",
+
     "7":"Market 7",
+
     "8":"Market 8",
+
     "9":"Market 9",
-    "10":"Market 10"
+
+    "10":"Market 10",
+
+    "11":"Market 11",
+
+    "12":"Market 12",
+
+    "13":"Market 13",
+
+    "14":"Market 14",
+
+    "15":"Market 15",
+
+    "16":"Market 16"
 
 };
 
 
 /* ================= GLOBALS ================= */
 
-window.db = db;
+window.db =
+    db;
 
-window.auth = auth;
+window.auth =
+    auth;
 
-window.currentUser = null;
+window.messaging =
+    messaging;
 
-window.isAdmin = false;
+window.VAPID_KEY =
+    VAPID_KEY;
+
+window.currentUser =
+    null;
+
+window.isAdmin =
+    false;
 
 window.runTransaction =
     runTransaction;
@@ -1236,9 +1337,6 @@ window.serverTimestamp =
 window.doc =
     doc;
 
-window.getDocs =
-    getDocs;
-
 window.getDoc =
     getDoc;
 
@@ -1248,12 +1346,14 @@ window.setDoc =
 window.addDoc =
     addDoc;
 
+window.getDocs =
+    getDocs;
+
 window.collection =
     collection;
 
 window.marketNames =
     marketNames;
-
 
 /* ================= HELPER ================= */
 
@@ -1520,21 +1620,25 @@ async function(){
     hideMessage("userLoginMessage");
     hideError("userLoginError");
 
-    const email =
+    const username =
         el("userEmail")?.value.trim();
 
     const password =
         el("userPassword")?.value;
 
-    if(!email || !password){
+    if(!username || !password){
 
         showError(
             "userLoginError",
-            "Email आणि Password भरा."
+            "Username आणि Password भरा."
         );
 
         return;
     }
+
+    const email =
+        username.toLowerCase() +
+        "@sm-online-nz.firebaseapp.com";
 
     try{
 
@@ -1556,7 +1660,14 @@ async function(){
 
         window.isAdmin =
             isAdmin;
+const adminBtn =
+    el("page2AdminLoginBtn");
 
+if(adminBtn){
+
+    adminBtn.style.display = "none";
+
+}
         showMessage(
             "userLoginMessage",
             "User Login झाले."
@@ -1581,20 +1692,17 @@ async function(){
 
         console.error(
             "User Login Error:",
-            error
+            error 
         );
 
         showError(
             "userLoginError",
-            "Email किंवा Password तपासा."
+            "Username किंवा Password तपासा."
         );
 
     }
 
 };
-        
-/* ================= ADMIN LOGIN ================= */
-
 window.adminLogin =
 async function(){
 
@@ -2421,7 +2529,7 @@ function renderMarkets(){
 
     for(
         let i=1;
-        i<=10;
+        i<=16;
         i++
     ){
 
@@ -3265,7 +3373,7 @@ function renderAdminMarkets(){
 
     for(
         let i=1;
-        i<=10;
+        i<=16;
         i++
     ){
 
@@ -3344,7 +3452,7 @@ function renderAdminMarketSelect(){
 
     for(
         let i=1;
-        i<=10;
+        i<=16;
         i++
     ){
 
@@ -3532,7 +3640,6 @@ async function(){
     const market =
         el("adminMarketSelect")
             ?.value || "1";
-
 
     const page =
         el("adminPageSelect")
