@@ -1051,51 +1051,62 @@ window.openAdminLogin=function(){
 };
 
 
-window.doAdminLogin=async function(){
+window.doAdminLogin = async function(){
 
-  const email=$("adminEmail")?.value.trim();
-  const password=$("adminPassword")?.value;
+    const email = $("adminEmail")?.value.trim();
+    const password = $("adminPassword")?.value;
 
-  if(!email || !password){
-    showMsg(
-      "adminLoginMsg",
-      "Email आणि Password टाका.",
-      "err"
-    );
-    return;
-  }
-
-  try{
-
-    const cred=await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    if(cred.user.uid!==ADMIN_UID){
-      await signOut(auth);
-      showMsg(
-        "adminLoginMsg",
-        "हे Admin Account नाही.",
-        "err"
-      );
-      return;
+    if(!email || !password){
+        showMsg("adminLoginMsg","ईमेल आणि पासवर्ड टाका.","err");
+        return;
     }
 
-  }catch(err){
+    try{
 
-    console.error(err);
+        const cred = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-    showMsg(
-      "adminLoginMsg",
-      "Admin Email किंवा Password चुकीचा आहे.",
-      "err"
-    );
-  }
+        console.log("Firebase Login Success");
+        console.log("Logged UID:", cred.user.uid);
+        console.log("Expected Admin UID:", ADMIN_UID);
+
+        if(cred.user.uid !== ADMIN_UID){
+
+            await signOut(auth);
+
+            showMsg(
+                "adminLoginMsg",
+                "Firebase Login झाले, पण हा Admin UID नाही. UID: " + cred.user.uid,
+                "err"
+            );
+
+            return;
+        }
+
+        showMsg(
+            "adminLoginMsg",
+            "Admin Login यशस्वी झाले! 👍",
+            "ok"
+        );
+
+        setTimeout(() => {
+            showPage(4);
+        }, 500);
+
+    }catch(err){
+
+        console.error("ADMIN LOGIN ERROR:", err);
+
+        showMsg(
+            "adminLoginMsg",
+            "Firebase Error: " + err.code + " — " + err.message,
+            "err"
+        );
+    }
 };
-
-
 /* =========================================================
    USER PAGE 2
 ========================================================= */
